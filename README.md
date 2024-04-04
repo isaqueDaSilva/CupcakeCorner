@@ -6,7 +6,7 @@
 - List of available Cupcakes;
 - Page to check Cupcake details;
 - Page to place a cupcake order
-- Shopping cart;
+- Shopping cart page;
 - Profile page;
 - Authentication;
 
