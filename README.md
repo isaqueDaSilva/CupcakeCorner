@@ -1,7 +1,7 @@
-# Cupcake Corner
+# Cupcake Corner Overview
  Cupcake Corner is an App, which helps users place their cupcake orders.
 
-# Existing features
+# Features
 
 - List of available Cupcakes;
 - Page to check Cupcake details;
