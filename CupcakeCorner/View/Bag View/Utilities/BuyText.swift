@@ -8,7 +8,11 @@
 import Foundation
 import SwiftUI
 
-enum Text: String {
-    case freeShipping = "Free Shipping"
-    case freeShippingText = ""
+enum BuyText: String {
+    case freeShippingTitle = "Free Shipping"
+    case freeShippingDescription = "From Friday to Sunday, in all locations in Cupertino."
+    
+    var text: Text {
+        Text(self.rawValue)
+    }
 }
