@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
+
+enum Icon: String {
+    case house = "house"
+    case bag = "bag"
+    case shippingBox = "shippingbox"
+    case personCircle = "person.circle"
+    
+    var systemImage: Image {
+        Image(systemName: self.rawValue)
+    }
+}
