@@ -28,4 +28,5 @@ struct SubtotalLabel: View {
 
 #Preview {
     SubtotalLabel(15)
+        .padding()
 }
