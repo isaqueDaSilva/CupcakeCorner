@@ -12,6 +12,7 @@ struct BagView: View {
         NavigationStack {
             Group {
                 BagViewPopulated()
+                //BagViewEmpty()
             }
             .navigationTitle("Bag")
         }
@@ -20,22 +21,4 @@ struct BagView: View {
 
 #Preview {
     BagView()
-}
-
-extension BagView {
-    @ViewBuilder
-    func BagViewPopulated() -> some View {
-        List {
-            
-        }
-    }
-}
-
-extension BagView {
-    @ViewBuilder
-    func BagViewEmpty() -> some View {
-        List {
-            
-        }
-    }
 }
