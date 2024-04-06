@@ -7,26 +7,28 @@
 
 import SwiftUI
 
-struct FreeShipping: View {
-    var body: some View {
-        HStack(alignment: .top) {
-            Icon.shippingBox.systemImage
-                .font(.largeTitle)
-            
-            VStack(alignment: .leading) {
-                BuyText.freeShippingTitle.text
-                    .font(.title3)
-                    .bold()
+extension BuyView {
+    struct FreeShipping: View {
+        var body: some View {
+            HStack(alignment: .top) {
+                Icon.shippingBox.systemImage
+                    .font(.largeTitle)
                 
-                BuyText.freeShippingDescription.text
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading) {
+                    BuyText.freeShippingTitle.text
+                        .font(.title3)
+                        .bold()
+                    
+                    BuyText.freeShippingDescription.text
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }
 }
 
 #Preview {
-    FreeShipping()
+    BuyView.FreeShipping()
         .previewLayout(.sizeThatFits)
 }
