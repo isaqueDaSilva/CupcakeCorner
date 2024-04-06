@@ -18,19 +18,23 @@ struct BuyView: View {
                 }
                 .listRowSeparator(.hidden, edges: .bottom)
                 
+                
                 Section {
+                    Text("New")
+                        .headerSessionText()
+                    
                     NewCupcakeHighlights(
                         name: "Name",
                         description: "Description",
                         price: 5
                     )
-                } header: {
-                    Text("New")
-                        .headerSessionText()
                 }
                 .listRowSeparator(.hidden)
                 
                 Section {
+                    Text("Cupcakes")
+                        .headerSessionText()
+                    
                     LazyVGrid(columns: colums) {
                         ForEach(0..<10) { index in
                             CupcakeCard(
@@ -39,9 +43,6 @@ struct BuyView: View {
                             )
                         }
                     }
-                } header: {
-                    Text("Cupcakes")
-                        .headerSessionText()
                 }
                 .listRowSeparator(.hidden)
             }
