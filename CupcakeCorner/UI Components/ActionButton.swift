@@ -23,4 +23,5 @@ struct ActionButton: View {
 
 #Preview {
     ActionButton(label: "Action") { }
+        .padding()
 }
