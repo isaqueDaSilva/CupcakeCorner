@@ -13,6 +13,8 @@ enum Icon: String {
     case bag = "bag"
     case shippingBox = "shippingbox"
     case personCircle = "person.circle"
+    case bookmark = "bookmark"
+    case bookmarkFill = "bookmark.fill"
     
     var systemImage: Image {
         Image(systemName: self.rawValue)
