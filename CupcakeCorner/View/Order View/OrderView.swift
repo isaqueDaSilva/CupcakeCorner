@@ -17,7 +17,6 @@ struct OrderView: View {
     
     var body: some View {
         List {
-            
             Section {
                 ProductHighlight(
                     flavor: "Chocolate",
@@ -67,11 +66,7 @@ struct OrderView: View {
             }
             
             ToolbarItem(placement: .bottomBar) {
-                VStack {
-                    SubtotalLabel(15)
-                    
-                }
-                .padding(.bottom)
+                SubtotalLabel(15)
             }
         }
         .toolbarBackground(.visible, for: .automatic)
@@ -81,53 +76,5 @@ struct OrderView: View {
 #Preview {
     NavigationStack {
         OrderView()
-    }
-}
-
-
-extension OrderView {
-    struct ProductHighlight: View {
-        let flavor: String
-        let image: Image
-        
-        var body: some View {
-            VStack {
-                Text("Buy the \(flavor) Cupcake")
-                    .font(.title)
-                    .bold()
-                    .multilineTextAlignment(.center)
-                
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: 150, maxHeight: 150)
-                    .padding()
-            }
-            .frame(maxWidth: .infinity)
-        }
-    }
-}
-
-extension OrderView {
-    struct SpecialRequestButton: View {
-        @Binding var isActive: Bool
-        let requestName: String
-        
-        var body: some View {
-            Button {
-                withAnimation(.spring) {
-                    isActive.toggle()
-                }
-            } label: {
-                GroupBox {
-                    LabeledContent(requestName, value: "\(isActive ? "-" : "+") \(Double(5).currency)")
-                }
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(lineWidth: 2.0)
-                        .fill(isActive ? .blue : Color(uiColor: .systemGray6))
-                }
-            }
-        }
     }
 }
