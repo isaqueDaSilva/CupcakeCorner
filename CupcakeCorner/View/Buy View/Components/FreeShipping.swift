@@ -30,5 +30,4 @@ extension BuyView {
 
 #Preview {
     BuyView.FreeShipping()
-        .previewLayout(.sizeThatFits)
 }
