@@ -13,28 +13,16 @@ extension BuyView {
         let image: Image
         
         var body: some View {
-            ZStack {
-                Text(name)
-                    .font(.headline)
-                    .bold()
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .topLeading
-                    )
-                    .padding([.top, .leading])
-                
+            GroupBox(name) {
                 image
                     .resizable()
                     .scaledToFit()
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(.black.opacity(0.2))
-                            .frame(height: 250)
-                    )
-                    .frame(height: 250)
             }
         }
     }
+}
+
+#Preview {
+    BuyView.CupcakeCard(name: "Dummy Name", image: Icon.house.systemImage)
+        
 }
