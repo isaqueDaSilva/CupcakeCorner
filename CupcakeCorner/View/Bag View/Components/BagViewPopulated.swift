@@ -33,7 +33,7 @@ extension BagView {
             }
             
             ToolbarItem(placement: .bottomBar) {
-                SubtotalLabel(15)
+                InformationLabel(15)
             }
         }
     }
