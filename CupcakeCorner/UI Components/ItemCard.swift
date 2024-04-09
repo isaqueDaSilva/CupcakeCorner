@@ -43,4 +43,5 @@ struct ItemCard: View {
 
 #Preview {
     ItemCard(name: "Some Name", price: 15)
+        .padding()
 }
