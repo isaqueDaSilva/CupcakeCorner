@@ -66,7 +66,7 @@ struct OrderView: View {
             }
             
             ToolbarItem(placement: .bottomBar) {
-                SubtotalLabel(15)
+                InformationLabel(15)
             }
         }
         .toolbarBackground(.visible, for: .automatic)
