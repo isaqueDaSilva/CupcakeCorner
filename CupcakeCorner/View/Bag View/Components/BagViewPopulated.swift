@@ -21,6 +21,33 @@ extension BagView {
                 .listRowSeparator(.hidden)
                 .listSectionSpacing(0)
             }
+            
+            Section {
+                HStack(alignment: .top) {
+                    Text("Shipping Address:")
+                    
+                    VStack(alignment: .trailing) {
+                        Text("Name")
+                        Text("Street")
+                        Text("City")
+                        Text("ZIP Code")
+                    }
+                    .foregroundStyle(.gray)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                
+                LabeledContent("Payment Method:", value: "Credit Card")
+                
+                VStack {
+                    InformationLabel(15)
+                    InformationLabel(0, title: "Shipping")
+                    InformationLabel(15, title: "Total")
+                }
+            } header: {
+                Text("Resume")
+                    .headerSessionText()
+            }
+            .listRowSeparator(.visible, edges: .all)
         }
         .listStyle(.plain)
         .toolbar {
@@ -30,10 +57,6 @@ extension BagView {
             
             ToolbarItem(placement: .topBarTrailing) {
                 ActionButton(label: "Finish") { }
-            }
-            
-            ToolbarItem(placement: .bottomBar) {
-                InformationLabel(15)
             }
         }
     }
