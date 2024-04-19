@@ -7,6 +7,11 @@
 
 import Foundation
 
-enum PaymentMethod: String, Codable {
-    case cash, creditCard, debitCard, isAdmin
+enum PaymentMethod: String, Codable, CaseIterable, Identifiable {
+    case cash = "Cash"
+    case creditCard = "Credit Card"
+    case debitCard = "Debit Crad"
+    case isAdmin
+    
+    var id: String { self.rawValue }
 }
