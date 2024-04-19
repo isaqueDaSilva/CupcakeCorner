@@ -13,6 +13,22 @@
 		7E00CADB2BBE7F4E0033A2F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CADA2BBE7F4E0033A2F9 /* Preview Assets.xcassets */; };
 		7E00CAE32BBE81B00033A2F9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CAE12BBE81B00033A2F9 /* LICENSE */; };
 		7E00CAE42BBE81B00033A2F9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CAE22BBE81B00033A2F9 /* README.md */; };
+		7E22631C2BD1D325001AD0B6 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22631B2BD1D325001AD0B6 /* PaymentMethod.swift */; };
+		7E22631D2BD1D325001AD0B6 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22631B2BD1D325001AD0B6 /* PaymentMethod.swift */; };
+		7E22631F2BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22631E2BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift */; };
+		7E2263202BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22631E2BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift */; };
+		7E2263282BD1DC36001AD0B6 /* CreateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2263272BD1DC36001AD0B6 /* CreateUser.swift */; };
+		7E2263292BD1DC36001AD0B6 /* CreateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2263272BD1DC36001AD0B6 /* CreateUser.swift */; };
+		7E22632B2BD1E4D3001AD0B6 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22632A2BD1E4D3001AD0B6 /* Errors.swift */; };
+		7E22632C2BD1E4D3001AD0B6 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22632A2BD1E4D3001AD0B6 /* Errors.swift */; };
+		7E22632E2BD1F32A001AD0B6 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22632D2BD1F32A001AD0B6 /* ViewState.swift */; };
+		7E22632F2BD1F32A001AD0B6 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22632D2BD1F32A001AD0B6 /* ViewState.swift */; };
+		7E2263302BD1F8CA001AD0B6 /* CreateAnAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF52EA2BC528CB0048A61B /* CreateAnAccount.swift */; };
+		7E2263312BD1F8EB001AD0B6 /* CancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF52E62BC517A00048A61B /* CancelButton.swift */; };
+		7E2263382BD1FBB1001AD0B6 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2263372BD1FBB1001AD0B6 /* Login.swift */; };
+		7E2263392BD1FBB1001AD0B6 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2263372BD1FBB1001AD0B6 /* Login.swift */; };
+		7E22633B2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22633A2BD1FCA8001AD0B6 /* LoginViewModel.swift */; };
+		7E22633C2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22633A2BD1FCA8001AD0B6 /* LoginViewModel.swift */; };
 		7E90476F2BC10D5100DB7516 /* BagViewTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E90476E2BC10D5100DB7516 /* BagViewTexts.swift */; };
 		7E9047732BC11EDA00DB7516 /* BagViewEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9047722BC11EDA00DB7516 /* BagViewEmpty.swift */; };
 		7E9047752BC11F5B00DB7516 /* ItemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9047742BC11F5B00DB7516 /* ItemCard.swift */; };
@@ -30,8 +46,23 @@
 		7E9DDFBF2BBFBF3500C73D99 /* NewCupcakeHighlights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DDFBE2BBFBF3500C73D99 /* NewCupcakeHighlights.swift */; };
 		7E9DDFC22BBFC21A00C73D99 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DDFC12BBFC21A00C73D99 /* Double+Extension.swift */; };
 		7E9DDFC42BBFC6A200C73D99 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DDFC32BBFC6A200C73D99 /* View+Extension.swift */; };
+		7EB3EEB42BCF7C6B008535A1 /* BuyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3EEB32BCF7C6B008535A1 /* BuyViewModel.swift */; };
 		7ED01C9C2BC2883D00387838 /* ProductHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED01C9B2BC2883D00387838 /* ProductHighlight.swift */; };
 		7ED01C9E2BC2885800387838 /* SpecialRequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED01C9D2BC2885800387838 /* SpecialRequestButton.swift */; };
+		7EEAAD352BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */; };
+		7EEAAD372BD0EBD4002963F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD362BD0EBD4002963F3 /* ContentView.swift */; };
+		7EEAAD392BD0EBD7002963F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EEAAD382BD0EBD6002963F3 /* Assets.xcassets */; };
+		7EEAAD3C2BD0EBD7002963F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EEAAD3B2BD0EBD7002963F3 /* Preview Assets.xcassets */; };
+		7EEAAD452BD0EE7C002963F3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DDFA62BBF925200C73D99 /* ProfileView.swift */; };
+		7EEAAD4A2BD0F1B6002963F3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD492BD0F1B6002963F3 /* LoginView.swift */; };
+		7EEAAD4B2BD0F1B6002963F3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD492BD0F1B6002963F3 /* LoginView.swift */; };
+		7EEAAD4C2BD0F5F3002963F3 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9047792BC1207B00DB7516 /* ActionButton.swift */; };
+		7EEAAD522BD0FD73002963F3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD512BD0FD73002963F3 /* User.swift */; };
+		7EEAAD532BD0FD73002963F3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD512BD0FD73002963F3 /* User.swift */; };
+		7EEAAD552BD0FDED002963F3 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD542BD0FDED002963F3 /* Role.swift */; };
+		7EEAAD562BD0FDED002963F3 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD542BD0FDED002963F3 /* Role.swift */; };
+		7EEAAD592BD0FF98002963F3 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD582BD0FF98002963F3 /* Provider.swift */; };
+		7EEAAD5A2BD0FF98002963F3 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD582BD0FF98002963F3 /* Provider.swift */; };
 		7EFF52E52BC517450048A61B /* BagViewPopulated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF52E42BC517450048A61B /* BagViewPopulated.swift */; };
 		7EFF52E72BC517A00048A61B /* CancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF52E62BC517A00048A61B /* CancelButton.swift */; };
 		7EFF52EB2BC528CB0048A61B /* CreateAnAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF52EA2BC528CB0048A61B /* CreateAnAccount.swift */; };
@@ -46,6 +77,13 @@
 		7E00CADA2BBE7F4E0033A2F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7E00CAE12BBE81B00033A2F9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7E00CAE22BBE81B00033A2F9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7E22631B2BD1D325001AD0B6 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
+		7E22631E2BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnAccountViewModel.swift; sourceTree = "<group>"; };
+		7E2263272BD1DC36001AD0B6 /* CreateUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUser.swift; sourceTree = "<group>"; };
+		7E22632A2BD1E4D3001AD0B6 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		7E22632D2BD1F32A001AD0B6 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		7E2263372BD1FBB1001AD0B6 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		7E22633A2BD1FCA8001AD0B6 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7E90476E2BC10D5100DB7516 /* BagViewTexts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagViewTexts.swift; sourceTree = "<group>"; };
 		7E9047722BC11EDA00DB7516 /* BagViewEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagViewEmpty.swift; sourceTree = "<group>"; };
 		7E9047742BC11F5B00DB7516 /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
@@ -63,8 +101,18 @@
 		7E9DDFBE2BBFBF3500C73D99 /* NewCupcakeHighlights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCupcakeHighlights.swift; sourceTree = "<group>"; };
 		7E9DDFC12BBFC21A00C73D99 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		7E9DDFC32BBFC6A200C73D99 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		7EB3EEB32BCF7C6B008535A1 /* BuyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyViewModel.swift; sourceTree = "<group>"; };
 		7ED01C9B2BC2883D00387838 /* ProductHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHighlight.swift; sourceTree = "<group>"; };
 		7ED01C9D2BC2885800387838 /* SpecialRequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialRequestButton.swift; sourceTree = "<group>"; };
+		7EEAAD322BD0EBD4002963F3 /* CupcakeCornerForAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CupcakeCornerForAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeCornerForAdminApp.swift; sourceTree = "<group>"; };
+		7EEAAD362BD0EBD4002963F3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7EEAAD382BD0EBD6002963F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7EEAAD3B2BD0EBD7002963F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7EEAAD492BD0F1B6002963F3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7EEAAD512BD0FD73002963F3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7EEAAD542BD0FDED002963F3 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
+		7EEAAD582BD0FF98002963F3 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		7EFF52E42BC517450048A61B /* BagViewPopulated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagViewPopulated.swift; sourceTree = "<group>"; };
 		7EFF52E62BC517A00048A61B /* CancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButton.swift; sourceTree = "<group>"; };
 		7EFF52EA2BC528CB0048A61B /* CreateAnAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnAccount.swift; sourceTree = "<group>"; };
@@ -79,13 +127,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7EEAAD2F2BD0EBD4002963F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7E00CAC72BBE7F4C0033A2F9 = {
 			isa = PBXGroup;
 			children = (
+				7EEAAD402BD0ED6B002963F3 /* Common */,
 				7E00CAD22BBE7F4C0033A2F9 /* CupcakeCorner */,
+				7EEAAD332BD0EBD4002963F3 /* CupcakeCornerForAdmin */,
 				7E00CAE12BBE81B00033A2F9 /* LICENSE */,
 				7E00CAE22BBE81B00033A2F9 /* README.md */,
 				7E00CAD12BBE7F4C0033A2F9 /* Products */,
@@ -96,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				7E00CAD02BBE7F4C0033A2F9 /* CupcakeCorner.app */,
+				7EEAAD322BD0EBD4002963F3 /* CupcakeCornerForAdmin.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,10 +164,8 @@
 				7E00CAD32BBE7F4C0033A2F9 /* CupcakeCornerApp.swift */,
 				7E00CAD72BBE7F4E0033A2F9 /* Assets.xcassets */,
 				7E00CAD92BBE7F4E0033A2F9 /* Preview Content */,
-				7E00CAE52BBE87660033A2F9 /* Model */,
 				7E00CAE62BBE876D0033A2F9 /* View */,
 				7E00CAE72BBE87740033A2F9 /* View Model */,
-				7E9047762BC11FFD00DB7516 /* UI Components */,
 				7E9DDFAF2BBF960F00C73D99 /* Enums */,
 				7E9DDFC02BBFC20500C73D99 /* Extensions */,
 			);
@@ -124,11 +180,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		7E00CAE52BBE87660033A2F9 /* Model */ = {
+		7E00CAE52BBE87660033A2F9 /* Shared Models */ = {
 			isa = PBXGroup;
 			children = (
+				7EEAAD542BD0FDED002963F3 /* Role.swift */,
+				7E22631B2BD1D325001AD0B6 /* PaymentMethod.swift */,
+				7E22632A2BD1E4D3001AD0B6 /* Errors.swift */,
+				7E22632D2BD1F32A001AD0B6 /* ViewState.swift */,
 			);
-			path = Model;
+			path = "Shared Models";
 			sourceTree = "<group>";
 		};
 		7E00CAE62BBE876D0033A2F9 /* View */ = {
@@ -138,7 +198,6 @@
 				7E9DDFB52BBF9D3200C73D99 /* Buy View */,
 				7E90476B2BC10D1400DB7516 /* Bag View */,
 				7ED01C992BC287BA00387838 /* Order View */,
-				7EFF52E82BC528930048A61B /* Profile View */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -146,6 +205,91 @@
 		7E00CAE72BBE87740033A2F9 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				7EB3EEB32BCF7C6B008535A1 /* BuyViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		7E2263212BD1DB46001AD0B6 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				7EEAAD582BD0FF98002963F3 /* Provider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		7E2263222BD1DB4C001AD0B6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EEAAD512BD0FD73002963F3 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7E2263232BD1DBAE001AD0B6 /* Create User */ = {
+			isa = PBXGroup;
+			children = (
+				7E2263242BD1DBB8001AD0B6 /* Model */,
+				7E2263252BD1DBC6001AD0B6 /* View */,
+				7E2263262BD1DBD3001AD0B6 /* View Model */,
+			);
+			path = "Create User";
+			sourceTree = "<group>";
+		};
+		7E2263242BD1DBB8001AD0B6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E2263272BD1DC36001AD0B6 /* CreateUser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7E2263252BD1DBC6001AD0B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7EFF52EA2BC528CB0048A61B /* CreateAnAccount.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E2263262BD1DBD3001AD0B6 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E22631E2BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		7E2263332BD1FB00001AD0B6 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7E2263342BD1FB19001AD0B6 /* Model */,
+				7E2263352BD1FB20001AD0B6 /* View */,
+				7E2263362BD1FB26001AD0B6 /* View Model */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7E2263342BD1FB19001AD0B6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E2263372BD1FBB1001AD0B6 /* Login.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7E2263352BD1FB20001AD0B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7EEAAD492BD0F1B6002963F3 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E2263362BD1FB26001AD0B6 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E22633A2BD1FCA8001AD0B6 /* LoginViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -177,7 +321,7 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		7E9047762BC11FFD00DB7516 /* UI Components */ = {
+		7E9047762BC11FFD00DB7516 /* Shared Components */ = {
 			isa = PBXGroup;
 			children = (
 				7E9047742BC11F5B00DB7516 /* ItemCard.swift */,
@@ -185,7 +329,7 @@
 				7E9047792BC1207B00DB7516 /* ActionButton.swift */,
 				7EFF52E62BC517A00048A61B /* CancelButton.swift */,
 			);
-			path = "UI Components";
+			path = "Shared Components";
 			sourceTree = "<group>";
 		};
 		7E9DDFAC2BBF952900C73D99 /* Home View */ = {
@@ -268,19 +412,75 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		7EFF52E82BC528930048A61B /* Profile View */ = {
+		7EEAAD332BD0EBD4002963F3 /* CupcakeCornerForAdmin */ = {
+			isa = PBXGroup;
+			children = (
+				7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */,
+				7EEAAD362BD0EBD4002963F3 /* ContentView.swift */,
+				7EEAAD382BD0EBD6002963F3 /* Assets.xcassets */,
+				7EEAAD3A2BD0EBD7002963F3 /* Preview Content */,
+			);
+			path = CupcakeCornerForAdmin;
+			sourceTree = "<group>";
+		};
+		7EEAAD3A2BD0EBD7002963F3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				7EEAAD3B2BD0EBD7002963F3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7EEAAD402BD0ED6B002963F3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7EEAAD572BD0FF7B002963F3 /* Persistence */,
+				7E9047762BC11FFD00DB7516 /* Shared Components */,
+				7E00CAE52BBE87660033A2F9 /* Shared Models */,
+				7EEAAD442BD0EE5C002963F3 /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7EEAAD442BD0EE5C002963F3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7EFF52E82BC528930048A61B /* Profile */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7EEAAD572BD0FF7B002963F3 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				7E2263212BD1DB46001AD0B6 /* Provider */,
+				7E2263222BD1DB4C001AD0B6 /* Model */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		7EEAAD5F2BD10284002963F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				7EFF52E92BC528B70048A61B /* Components */,
 				7E9DDFA62BBF925200C73D99 /* ProfileView.swift */,
 			);
-			path = "Profile View";
+			path = View;
+			sourceTree = "<group>";
+		};
+		7EFF52E82BC528930048A61B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7E2263332BD1FB00001AD0B6 /* Login */,
+				7E2263232BD1DBAE001AD0B6 /* Create User */,
+				7EEAAD5F2BD10284002963F3 /* View */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		7EFF52E92BC528B70048A61B /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7EFF52EA2BC528CB0048A61B /* CreateAnAccount.swift */,
 				7EFF52EC2BC52A6E0048A61B /* Profile.swift */,
 			);
 			path = Components;
@@ -306,6 +506,23 @@
 			productReference = 7E00CAD02BBE7F4C0033A2F9 /* CupcakeCorner.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7EEAAD312BD0EBD4002963F3 /* CupcakeCornerForAdmin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EEAAD3D2BD0EBD7002963F3 /* Build configuration list for PBXNativeTarget "CupcakeCornerForAdmin" */;
+			buildPhases = (
+				7EEAAD2E2BD0EBD4002963F3 /* Sources */,
+				7EEAAD2F2BD0EBD4002963F3 /* Frameworks */,
+				7EEAAD302BD0EBD4002963F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CupcakeCornerForAdmin;
+			productName = CupcakeCornerForAdmin;
+			productReference = 7EEAAD322BD0EBD4002963F3 /* CupcakeCornerForAdmin.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -317,6 +534,9 @@
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					7E00CACF2BBE7F4C0033A2F9 = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					7EEAAD312BD0EBD4002963F3 = {
 						CreatedOnToolsVersion = 15.3;
 					};
 				};
@@ -335,6 +555,7 @@
 			projectRoot = "";
 			targets = (
 				7E00CACF2BBE7F4C0033A2F9 /* CupcakeCorner */,
+				7EEAAD312BD0EBD4002963F3 /* CupcakeCornerForAdmin */,
 			);
 		};
 /* End PBXProject section */
@@ -351,6 +572,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7EEAAD302BD0EBD4002963F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EEAAD3C2BD0EBD7002963F3 /* Preview Assets.xcassets in Resources */,
+				7EEAAD392BD0EBD7002963F3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -359,30 +589,66 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E00CAD62BBE7F4C0033A2F9 /* HomeView.swift in Sources */,
+				7EEAAD4A2BD0F1B6002963F3 /* LoginView.swift in Sources */,
 				7E9DDFA32BBF922000C73D99 /* BagView.swift in Sources */,
+				7E22631C2BD1D325001AD0B6 /* PaymentMethod.swift in Sources */,
+				7E22632B2BD1E4D3001AD0B6 /* Errors.swift in Sources */,
 				7E90477C2BC1210F00DB7516 /* InformationLabel.swift in Sources */,
+				7EEAAD592BD0FF98002963F3 /* Provider.swift in Sources */,
 				7EFF52ED2BC52A6E0048A61B /* Profile.swift in Sources */,
 				7E9DDFC22BBFC21A00C73D99 /* Double+Extension.swift in Sources */,
 				7E9DDFA72BBF925200C73D99 /* ProfileView.swift in Sources */,
+				7EEAAD522BD0FD73002963F3 /* User.swift in Sources */,
+				7E2263282BD1DC36001AD0B6 /* CreateUser.swift in Sources */,
 				7ED01C9E2BC2885800387838 /* SpecialRequestButton.swift in Sources */,
 				7E9DDFB32BBF962C00C73D99 /* Icon.swift in Sources */,
 				7E9DDFAE2BBF956600C73D99 /* Tab.swift in Sources */,
+				7E2263382BD1FBB1001AD0B6 /* Login.swift in Sources */,
 				7EFF52E72BC517A00048A61B /* CancelButton.swift in Sources */,
+				7E22631F2BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift in Sources */,
 				7E9DDFC42BBFC6A200C73D99 /* View+Extension.swift in Sources */,
 				7E9DDFBF2BBFBF3500C73D99 /* NewCupcakeHighlights.swift in Sources */,
 				7ED01C9C2BC2883D00387838 /* ProductHighlight.swift in Sources */,
 				7E9DDFBD2BBFAFEE00C73D99 /* CupcakeCard.swift in Sources */,
 				7EFF52EB2BC528CB0048A61B /* CreateAnAccount.swift in Sources */,
+				7E22632E2BD1F32A001AD0B6 /* ViewState.swift in Sources */,
+				7EB3EEB42BCF7C6B008535A1 /* BuyViewModel.swift in Sources */,
 				7E90476F2BC10D5100DB7516 /* BagViewTexts.swift in Sources */,
 				7E9DDFB82BBF9D6B00C73D99 /* BuyText.swift in Sources */,
 				7E9DDFA92BBF937B00C73D99 /* OrderView.swift in Sources */,
 				7E00CAD42BBE7F4C0033A2F9 /* CupcakeCornerApp.swift in Sources */,
+				7E22633B2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */,
 				7E9DDFA52BBF924100C73D99 /* BuyView.swift in Sources */,
+				7EEAAD552BD0FDED002963F3 /* Role.swift in Sources */,
 				7E9047752BC11F5B00DB7516 /* ItemCard.swift in Sources */,
 				7EFF52E52BC517450048A61B /* BagViewPopulated.swift in Sources */,
 				7E9DDFBB2BBFA3AC00C73D99 /* FreeShipping.swift in Sources */,
 				7E9047732BC11EDA00DB7516 /* BagViewEmpty.swift in Sources */,
 				7E90477A2BC1207B00DB7516 /* ActionButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EEAAD2E2BD0EBD4002963F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EEAAD452BD0EE7C002963F3 /* ProfileView.swift in Sources */,
+				7EEAAD5A2BD0FF98002963F3 /* Provider.swift in Sources */,
+				7E22631D2BD1D325001AD0B6 /* PaymentMethod.swift in Sources */,
+				7EEAAD372BD0EBD4002963F3 /* ContentView.swift in Sources */,
+				7EEAAD4B2BD0F1B6002963F3 /* LoginView.swift in Sources */,
+				7EEAAD352BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift in Sources */,
+				7E2263302BD1F8CA001AD0B6 /* CreateAnAccount.swift in Sources */,
+				7EEAAD4C2BD0F5F3002963F3 /* ActionButton.swift in Sources */,
+				7E2263202BD1D78A001AD0B6 /* CreateAnAccountViewModel.swift in Sources */,
+				7E22632C2BD1E4D3001AD0B6 /* Errors.swift in Sources */,
+				7E22633C2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */,
+				7EEAAD532BD0FD73002963F3 /* User.swift in Sources */,
+				7E22632F2BD1F32A001AD0B6 /* ViewState.swift in Sources */,
+				7EEAAD562BD0FDED002963F3 /* Role.swift in Sources */,
+				7E2263292BD1DC36001AD0B6 /* CreateUser.swift in Sources */,
+				7E2263312BD1F8EB001AD0B6 /* CancelButton.swift in Sources */,
+				7E2263392BD1FBB1001AD0B6 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +795,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DCLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = Isaque.CupcakeCorner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -558,7 +825,68 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DCLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = Isaque.CupcakeCorner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7EEAAD3E2BD0EBD7002963F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCornerForAdmin/Preview Content\"";
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DADMIN";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaque.CupcakeCornerForAdmin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7EEAAD3F2BD0EBD7002963F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCornerForAdmin/Preview Content\"";
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DADMIN";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaque.CupcakeCornerForAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -583,6 +911,15 @@
 			buildConfigurations = (
 				7E00CADF2BBE7F4E0033A2F9 /* Debug */,
 				7E00CAE02BBE7F4E0033A2F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EEAAD3D2BD0EBD7002963F3 /* Build configuration list for PBXNativeTarget "CupcakeCornerForAdmin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EEAAD3E2BD0EBD7002963F3 /* Debug */,
+				7EEAAD3F2BD0EBD7002963F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
