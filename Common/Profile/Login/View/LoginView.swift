@@ -1,5 +1,5 @@
 //
-//  Login.swift
+//  LoginView.swift
 //  CupcakeCorner
 //
 //  Created by Isaque da Silva on 18/04/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-extension ProfileView {
-    @ViewBuilder
-    func Login() -> some View {
+struct LoginView: View {
+    @State private var name = ""
+    var body: some View {
         Form {
             Section {
                 LabeledContent("Email:") {
@@ -51,6 +51,6 @@ extension ProfileView {
 
 #Preview {
     NavigationStack {
-        ProfileView().Login()
+        LoginView()
     }
 }
