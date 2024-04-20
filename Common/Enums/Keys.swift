@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum Keys: String {
+    case userToken = "user_token"
+    case authorized = "authorized"
+}
