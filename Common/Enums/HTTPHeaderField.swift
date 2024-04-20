@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum HTTPHeaderField: String {
+    case authorization = "Authorization"
+}
