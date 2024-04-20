@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CreateAnAccount: View {
+    @Binding var navigation: Navigation
+    
     @State private var viewModel = ViewModel()
     
     var body: some View {
@@ -72,7 +74,9 @@ struct CreateAnAccount: View {
                     label: "Create",
                     width: .infinity
                 ) { 
-                    viewModel.createUser()
+                    viewModel.createUser {
+                        navigation.remove()
+                    }
                 }
             }
             .listSectionSpacing(.compact)
@@ -81,16 +85,29 @@ struct CreateAnAccount: View {
         .navigationTitle("Create Account")
         .alert(
             viewModel.error?.title ?? "No Title.",
-            isPresented: $viewModel.showingError) {
-            } message: {
-                Text(viewModel.error?.description ?? "No Description...")
+            isPresented: $viewModel.showingError
+        ) {
+        } message: {
+            Text(viewModel.error?.description ?? "No Description...")
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    navigation.remove()
+                } label: {
+                    HStack {
+                        Icon.chevronLeft.systemImage
+                        Text("Back")
+                    }
+                }
             }
-
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        CreateAnAccount()
+        CreateAnAccount(navigation: .constant(Navigation()))
     }
 }
