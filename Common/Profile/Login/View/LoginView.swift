@@ -8,44 +8,64 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var name = ""
+    @State private var viewModel = ViewModel()
+    @State private var navigation = Navigation()
+    
     var body: some View {
-        Form {
-            Section {
-                LabeledContent("Email:") {
-                    TextField("Insert your email here...", text: $name)
-                        .multilineTextAlignment(.trailing)
-                }
-                
-                LabeledContent("Passowrd:") {
-                    SecureField("Insert your password here...", text: $name)
-                        .multilineTextAlignment(.trailing)
-                }
-                
-//                ActionButton(
-//                    label: "Sign In",
-//                    width: .infinity
-//                ) { }
-            }
-        }
-        .navigationTitle("Login")
-        #if CLIENT
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                HStack {
-                    Text("No Account?")
-                        .bold()
+        NavigationStack(path: $navigation.path) {
+            Form {
+                Section {
+                    LabeledContent("Email:") {
+                        TextField("Insert your email here...", text: $viewModel.email)
+                            .multilineTextAlignment(.trailing)
+                    }
                     
-                    NavigationLink {
-                        CreateAnAccount()
-                    } label: {
-                        Text("Create an Account")
-                            .underline()
+                    LabeledContent("Passowrd:") {
+                        SecureField("Insert your password here...", text: $viewModel.password)
+                            .multilineTextAlignment(.trailing)
+                    }
+                    
+                    ActionButton(
+                        viewState: $viewModel.viewState,
+                        label: "Sign In",
+                        width: .infinity
+                    ) { 
+                        viewModel.login()
                     }
                 }
             }
+            .navigationTitle("Login")
+            #if CLIENT
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    HStack {
+                        Text("No Account?")
+                            .bold()
+                        
+                        Button {
+                            navigation.append(true)
+                        } label: {
+                            Text("Create an Account")
+                                .foregroundStyle(.blue)
+                                .underline()
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+            .navigationDestination(for: Bool.self) { _ in
+                CreateAnAccount(navigation: $navigation)
+            }
+            #endif
+            .alert(
+                viewModel.error?.title ?? "No title",
+                isPresented: $viewModel.showingError
+            ) {
+                
+            } message: {
+                Text(viewModel.error?.description ?? "No description")
+            }
         }
-        #endif
     }
 }
 
