@@ -9,7 +9,7 @@ import Foundation
 import Security
 
 struct KeychainService {
-    private static let key = "user_token"
+    private static let key = Keys.userToken.rawValue
     
     static func store(for token: Token) throws -> OSStatus {
         let encoder = JSONEncoder()
