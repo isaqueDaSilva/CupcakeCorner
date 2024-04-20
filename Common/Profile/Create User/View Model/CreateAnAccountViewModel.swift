@@ -33,13 +33,13 @@ extension CreateAnAccount {
         
         var viewState: ViewState = .load
         
-        func createUser() {
+        func createUser(_ completationHandler: @escaping () -> Void) {
             Task {
                 await MainActor.run {
                     viewState = .loading
                 }
                 
-                let endpoint = "http://127.0.0.1:8080/create"
+                let endpoint = "http://127.0.0.1:8080/api/user/create"
                 
                 let newUser = CreateUser(
                     name: self.name,
@@ -72,11 +72,12 @@ extension CreateAnAccount {
                         throw APIError.badResponse
                     }
                     
+                    completationHandler()
                 } catch let error {
                     await MainActor.run {
                         self.error = AppError(title: "Falied to Create User", description: error.localizedDescription)
-                        showingError = true
                         viewState = .load
+                        showingError = true
                     }
                 }
             }
