@@ -22,8 +22,16 @@ struct Login {
         return "\(basicValue) \(loginData)"
     }
     
+    private var appType: String {
+        #if CLIENT
+        return ApplicationType.forClient.rawValue
+        #elseif ADMIN
+        return ApplicationType.forAdmin.rawValue
+        #endif
+    }
+    
     func login() async throws {
-        let endpoint = "http://127.0.0.1:8080/api/login"
+        let endpoint = "http://127.0.0.1:8080/api/login/\(appType)"
         
         guard let url = URL(string: endpoint) else {
             throw APIError.badURL
@@ -42,7 +50,13 @@ struct Login {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw APIError.badResponse
+            let response = response as? HTTPURLResponse
+            
+            if response?.statusCode == 401 {
+                throw APIError.accessDenied
+            } else {
+                throw APIError.badResponse
+            }
         }
         
         let decoder = JSONDecoder()
@@ -51,6 +65,11 @@ struct Login {
         let token = try decoder.decode(Token.self, from: data)
         
         _ = try KeychainService.store(for: token)
+    }
+    
+    private enum ApplicationType: String {
+        case forAdmin
+        case forClient
     }
     
     init(email: String, password: String) {
