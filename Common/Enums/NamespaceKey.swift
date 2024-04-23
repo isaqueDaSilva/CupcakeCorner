@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum NamespaceKey: String {
+    case transition = "TRANSITION"
+}
