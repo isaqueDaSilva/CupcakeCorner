@@ -9,11 +9,14 @@ import Foundation
 
 enum SwiftDataError: Error, LocalizedError {
     case notFound
+    case noData
     
     var errorDescription: String? {
         switch self {
         case .notFound:
-            NSLocalizedString("Item not found in persistence store.", comment: ")
+            NSLocalizedString("Item not found in persistence store.", comment: "")
+        case .noData:
+            NSLocalizedString("No Data was found for continue the task.", comment: "")
         }
     }
 }

@@ -8,10 +8,20 @@
 import Foundation
 
 enum PaymentMethod: String, Codable, CaseIterable, Identifiable {
-    case cash = "Cash"
-    case creditCard = "Credit Card"
-    case debitCard = "Debit Crad"
-    case isAdmin
+    case cash, creditCard, debitCard, isAdmin
     
-    var id: String { self.rawValue }
+    var id: Self { self }
+    
+    var displayedName: String {
+        switch self {
+        case .cash:
+            "Cash"
+        case .creditCard:
+            "Credit Card"
+        case .debitCard:
+            "Debit Crad"
+        case .isAdmin:
+            ""
+        }
+    }
 }

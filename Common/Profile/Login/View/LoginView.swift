@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var pageController: PageController
+    
     @State private var viewModel = ViewModel()
     @State private var navigation = Navigation()
     
@@ -23,6 +25,7 @@ struct LoginView: View {
                     LabeledContent("Passowrd:") {
                         SecureField("Insert your password here...", text: $viewModel.password)
                             .multilineTextAlignment(.trailing)
+                            .keyboardType(.emailAddress)
                     }
                     
                     ActionButton(
@@ -30,7 +33,9 @@ struct LoginView: View {
                         label: "Sign In",
                         width: .infinity
                     ) { 
-                        viewModel.login()
+                        viewModel.login {
+                            pageController.setNewValue(true)
+                        }
                     }
                 }
             }
@@ -72,5 +77,6 @@ struct LoginView: View {
 #Preview {
     NavigationStack {
         LoginView()
+            .environmentObject(PageController())
     }
 }

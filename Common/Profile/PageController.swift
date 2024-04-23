@@ -5,34 +5,24 @@
 //  Created by Isaque da Silva on 21/04/24.
 //
 
-import Combine
 import Foundation
+import SwiftUI
 
 final class PageController: ObservableObject {
-    private var cancellables = Set<AnyCancellable>()
-    
     @Published var isAuthorized = false
     
+    private let key = Keys.authorized.rawValue
+    
     func setNewValue(_ isAuthorizedStatus: Bool) {
-        UserDefaults.standard.set(isAuthorizedStatus, forKey: Keys.authorized.rawValue)
+        UserDefaults.standard.set(isAuthorizedStatus, forKey: key)
         isAuthorized = isAuthorizedStatus
     }
     
-    private func observe() {
-        $isAuthorized
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] newValue in
-                guard let self else { return }
-                
-            }
+    func getCurrentValue() {
+        isAuthorized = UserDefaults.standard.bool(forKey: key)
     }
-}
-
-extension ProfileView {
-    @Observable
-    final class ViewModel {
-        var isAuthorized: Bool {
-            UserDefaults.standard.bool(forKey: Keys.authorized.rawValue)
-        }
+    
+    init() {
+        getCurrentValue()
     }
 }

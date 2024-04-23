@@ -7,17 +7,57 @@
 
 import SwiftUI
 
-extension ProfileView {
+struct AccountView: View {
+    @EnvironmentObject var pageController: PageController
+    
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var viewModel = ViewModel()
+    @State private var navigation = Navigation()
+    
+    var body: some View {
+        NavigationStack(path: $navigation.path) {
+            Group {
+                switch viewModel.viewState {
+                case .load:
+                    AccountViewLoad()
+                case .loading, .faliedToLoad:
+                    ProgressView()
+                }
+            }
+            .navigationTitle("Account")
+            #if CLIENT
+            .toolbar {
+                ActionButton(
+                    viewState: $viewModel.buttonViewState,
+                    label: "OK"
+                ) {
+                    dismiss()
+                }
+            }
+            #endif
+            .alert(
+                viewModel.error?.title ?? "No Title",
+                isPresented: $viewModel.showingError
+            ) {
+            } message: {
+                Text(viewModel.error?.description ?? "No description.")
+            }
+        }
+    }
+}
+
+extension AccountView {
     @ViewBuilder
-    func Profile() -> some View {
+    func AccountViewLoad() -> some View {
         List {
             Section {
                 VStack(alignment: .leading) {
-                    Text("Dummy Name")
+                    Text(viewModel.name)
                         .font(.title3)
                         .bold()
                     
-                    Text("dummyemail@icloud.com")
+                    Text(viewModel.email)
                         .font(.subheadline)
                 }
             }
@@ -36,13 +76,15 @@ extension ProfileView {
             
             Section {
                 #if CLIENT
-                NavigationLink(value: "abc") {
-                    Text("Main Shipping")
+                LabeledContent("Main Shipping:") {
+                    Text(viewModel.mainShipping)
+                        .multilineTextAlignment(.trailing)
+                }
+                LabeledContent("Main Payment:") {
+                    Text(viewModel.mainPayment)
+                        .multilineTextAlignment(.trailing)
                 }
                 
-                NavigationLink(value: "abc") {
-                    Text("Main Payment")
-                }
                 #elseif ADMIN
                 NavigationLink(value: "abc") {
                     Text("Cupcakes")
@@ -53,19 +95,29 @@ extension ProfileView {
                 }
                 #endif
             }
+            
+            Section {
+                Button(role: .destructive) {
+                    viewModel.logout {
+                        pageController.setNewValue(false)
+                    }
+                } label: {
+                    switch viewModel.signOutViewState {
+                    case .load, .faliedToLoad:
+                        Text("Sign Out")
+                    case .loading:
+                        ProgressView()
+                    }
+                }
+                .disabled(viewModel.signOutViewState == .loading)
+            }
         }
-        .navigationTitle("Account")
-        #if CLIENT
-        .toolbar {
-            //ActionButton(label: "OK") { }
-        }
-        #endif
     }
 }
 
-
 #Preview {
     NavigationStack {
-        ProfileView().Profile()
+        AccountView().AccountViewLoad()
+            .environmentObject(PageController())
     }
 }

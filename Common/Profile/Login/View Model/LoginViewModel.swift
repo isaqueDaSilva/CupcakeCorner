@@ -15,16 +15,12 @@ extension LoginView {
         
         var viewState: ViewState = .load
         
-        private var authorized = false {
-            didSet {
-                UserDefaults.standard.set(authorized, forKey: Keys.authorized.rawValue)
-            }
-        }
-        
         var showingError = false
         var error: AppError?
         
-        func login() {
+        let persistenceStore = SwiftDataService<User>()
+        
+        func login(_ completation: @escaping () -> Void) {
             Task {
                 await MainActor.run {
                     viewState = .loading
@@ -32,18 +28,20 @@ extension LoginView {
                 
                 do {
                     let userCredentials = Login(email: self.email, password: self.password)
-                    let tokenValue = try await userCredentials.login()
+                    try await userCredentials.login()
                     
-                    let endpoint = "http://127.0.0.1:8080/api/login"
+                    let endpoint = "http://127.0.0.1:8080/api/user/get"
                     
                     guard let url = URL(string: endpoint) else {
                         throw APIError.badURL
                     }
                     
+                    let tokenValue = try KeychainService.retrive()
+                    
                     let bearerValue = AuthorizationHeader.bearer.rawValue
                     
                     var request = URLRequest(url: url)
-                    request.setValue("\(bearerValue) \(tokenValue.value)", forHTTPHeaderField: HTTPHeaderField.authorization.rawValue)
+                    request.setValue("\(bearerValue) \(tokenValue)", forHTTPHeaderField: HTTPHeaderField.authorization.rawValue)
                     request.httpMethod = HTTPMethod.get.rawValue
                     
                     let (data, response) = try await URLSession.shared.data(for: request)
@@ -53,16 +51,18 @@ extension LoginView {
                     }
                     
                     let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
-                    let token = try decoder.decode(Token.self, from: data)
+                    let userData = try decoder.decode(UserPublic.self, from: data)
                     
-                    _ = try KeychainService.store(for: token)
+                    let user = User(from: userData)
+                    
+                    try persistenceStore.create(new: user)
                     
                     await MainActor.run {
                         viewState = .load
+                        completation()
                     }
-                    
-                    authorized = true
                 } catch let error {
                     self.error = AppError(title: "Login Falied", description: error.localizedDescription)
                     viewState = .load

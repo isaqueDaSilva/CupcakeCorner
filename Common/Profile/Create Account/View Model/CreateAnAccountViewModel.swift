@@ -62,7 +62,10 @@ extension CreateAnAccount {
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                     request.httpMethod = "POST"
                     
-                    guard let data = try? JSONEncoder().encode(newUser) else {
+                    let encoder = JSONEncoder()
+//                    encoder.keyEncodingStrategy = .convertToSnakeCase
+                    
+                    guard let data = try? encoder.encode(newUser) else {
                         throw APIError.badEncoding
                     }
                     

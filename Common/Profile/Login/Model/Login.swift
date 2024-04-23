@@ -11,14 +11,19 @@ struct Login {
     private let email: String
     private let password: String
     
-    private func value() -> String? {
+    private func value() throws -> String {
         let loginData = ("\(email):\(password)".data(using: .utf8)?.base64EncodedString())
         let basicValue = AuthorizationHeader.basic.rawValue
-        return "\(basicValue) \(String(describing: loginData))"
+        
+        guard let loginData else {
+            throw APIError.fieldsEmpty
+        }
+        
+        return "\(basicValue) \(loginData)"
     }
     
-    func login() async throws -> Token {
-        let endpoint = "http://127.0.0.1:8080/api/user/login"
+    func login() async throws {
+        let endpoint = "http://127.0.0.1:8080/api/login"
         
         guard let url = URL(string: endpoint) else {
             throw APIError.badURL
@@ -28,8 +33,10 @@ struct Login {
             throw APIError.fieldsEmpty
         }
         
+        let value = try self.value()
+        
         var request = URLRequest(url: url)
-        request.setValue(value(), forHTTPHeaderField: "Authorization")
+        request.setValue(value, forHTTPHeaderField: "Authorization")
         request.httpMethod = HTTPMethod.post.rawValue
         
         let (data, response) = try await URLSession.shared.data(for: request)
@@ -39,8 +46,11 @@ struct Login {
         }
         
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        return try decoder.decode(Token.self, from: data)
+        let token = try decoder.decode(Token.self, from: data)
+        
+        _ = try KeychainService.store(for: token)
     }
     
     init(email: String, password: String) {

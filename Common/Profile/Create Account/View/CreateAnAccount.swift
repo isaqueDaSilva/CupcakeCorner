@@ -23,6 +23,7 @@ struct CreateAnAccount: View {
                 LabeledContent("Email:") {
                     TextField("Insert your email here...", text: $viewModel.email)
                         .multilineTextAlignment(.trailing)
+                        .keyboardType(.emailAddress)
                 }
                 
                 LabeledContent("Password:") {
@@ -38,9 +39,10 @@ struct CreateAnAccount: View {
                 #if CLIENT
                 LabeledContent("Payment Method") {
                     Picker("Payment Method", selection: $viewModel.paymentMethod) {
-                        ForEach(PaymentMethod.allCases) { method in
+                        ForEach(PaymentMethod.allCases, id: \.rawValue) { method in
                             if method != .isAdmin {
-                                Text(method.rawValue)
+                                Text(method.displayedName)
+                                    .tag(method.id)
                             }
                         }
                     }

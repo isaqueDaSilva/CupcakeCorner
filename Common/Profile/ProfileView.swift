@@ -13,32 +13,30 @@ struct ProfileView: View {
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
     
-    @State private var viewModel = ViewModel()
+    @StateObject private var pageController = PageController()
     
     var body: some View {
         Group {
-            switch viewModel.isAuthorized {
+            switch pageController.isAuthorized {
             case true:
                 AccountView()
                     .matchedGeometryEffect(id: transitionKey, in: transition)
             case false:
                 LoginView()
-                    .animation(
-                        .spring,
-                        value: viewModel.isAuthorized
-                    )
+                    .matchedGeometryEffect(id: transitionKey, in: transition)
                     .transition(
-                        .asymmetric(
-                            insertion: AnyTransition.move(
+                        AnyTransition.asymmetric(
+                            insertion: .move(
                                 edge: .leading
                             ),
-                            removal: AnyTransition.move(
+                            removal: .move(
                                 edge: .trailing
                             )
-                        )
+                        ).animation(.spring())
                     )
             }
         }
+        .environmentObject(pageController)
     }
 }
 

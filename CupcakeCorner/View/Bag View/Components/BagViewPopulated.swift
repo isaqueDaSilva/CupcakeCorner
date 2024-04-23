@@ -56,7 +56,7 @@ extension BagView {
             }
             
             ToolbarItem(placement: .topBarTrailing) {
-                ActionButton(label: "Finish") { }
+                //ActionButton(label: "Finish") { }
             }
         }
     }
