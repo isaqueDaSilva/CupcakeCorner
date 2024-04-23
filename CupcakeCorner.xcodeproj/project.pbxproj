@@ -29,6 +29,9 @@
 		7E2263392BD1FBB1001AD0B6 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2263372BD1FBB1001AD0B6 /* Login.swift */; };
 		7E22633B2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22633A2BD1FCA8001AD0B6 /* LoginViewModel.swift */; };
 		7E22633C2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22633A2BD1FCA8001AD0B6 /* LoginViewModel.swift */; };
+		7E26AE162BD768C700036AD0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DDFA62BBF925200C73D99 /* ProfileView.swift */; };
+		7E26AE172BD768DE00036AD0 /* NamespaceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFD35A2BD4CD6C00171C7C /* NamespaceKey.swift */; };
+		7E26AE182BD7690500036AD0 /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFD3552BD4C89100171C7C /* PageController.swift */; };
 		7E440FF02BD4695000F740E5 /* SwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E440FEF2BD4695000F740E5 /* SwiftDataService.swift */; };
 		7E90476F2BC10D5100DB7516 /* BagViewTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E90476E2BC10D5100DB7516 /* BagViewTexts.swift */; };
 		7E9047732BC11EDA00DB7516 /* BagViewEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9047722BC11EDA00DB7516 /* BagViewEmpty.swift */; };
@@ -86,7 +89,6 @@
 		7ECFD3542BD4ACDD00171C7C /* BuyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9DDFB72BBF9D6B00C73D99 /* BuyText.swift */; };
 		7ECFD3562BD4C89100171C7C /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFD3552BD4C89100171C7C /* PageController.swift */; };
 		7ECFD35B2BD4CD6C00171C7C /* NamespaceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFD35A2BD4CD6C00171C7C /* NamespaceKey.swift */; };
-		7ECFD35D2BD4CE9000171C7C /* CupcakeCornerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E00CAD32BBE7F4C0033A2F9 /* CupcakeCornerApp.swift */; };
 		7ED01C9C2BC2883D00387838 /* ProductHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED01C9B2BC2883D00387838 /* ProductHighlight.swift */; };
 		7ED01C9E2BC2885800387838 /* SpecialRequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED01C9D2BC2885800387838 /* SpecialRequestButton.swift */; };
 		7EEAAD352BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */; };
@@ -212,6 +214,7 @@
 		7E00CAD22BBE7F4C0033A2F9 /* CupcakeCorner */ = {
 			isa = PBXGroup;
 			children = (
+				7E00CAD32BBE7F4C0033A2F9 /* CupcakeCornerApp.swift */,
 				7E00CAD72BBE7F4E0033A2F9 /* Assets.xcassets */,
 				7E00CAD92BBE7F4E0033A2F9 /* Preview Content */,
 				7E00CAE62BBE876D0033A2F9 /* View */,
@@ -249,7 +252,6 @@
 		7E00CAE62BBE876D0033A2F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7E9DDFAC2BBF952900C73D99 /* Home View */,
 				7E9DDFB52BBF9D3200C73D99 /* Buy View */,
 				7E90476B2BC10D1400DB7516 /* Bag View */,
 				7ED01C992BC287BA00387838 /* Order View */,
@@ -493,14 +495,6 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
-		7ECFD35C2BD4CE7E00171C7C /* Entrypoint */ = {
-			isa = PBXGroup;
-			children = (
-				7E00CAD32BBE7F4C0033A2F9 /* CupcakeCornerApp.swift */,
-			);
-			path = Entrypoint;
-			sourceTree = "<group>";
-		};
 		7ED01C992BC287BA00387838 /* Order View */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,13 +535,13 @@
 		7EEAAD402BD0ED6B002963F3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				7ECFD35C2BD4CE7E00171C7C /* Entrypoint */,
 				7EA204552BD390B100C8A6DF /* Erros */,
 				7E00CAE52BBE87660033A2F9 /* Enums */,
 				7EA204362BD32EC600C8A6DF /* Navigation */,
 				7EEAAD572BD0FF7B002963F3 /* Persistence */,
 				7E9047762BC11FFD00DB7516 /* UI Components */,
 				7EFF52E82BC528930048A61B /* Profile */,
+				7E9DDFAC2BBF952900C73D99 /* Home View */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -764,8 +758,8 @@
 				7EA2043C2BD3379300C8A6DF /* Icon.swift in Sources */,
 				7ECFD3512BD4ACA000171C7C /* FreeShipping.swift in Sources */,
 				7ECFD34F2BD4A94F00171C7C /* SwiftDataError.swift in Sources */,
-				7ECFD35D2BD4CE9000171C7C /* CupcakeCornerApp.swift in Sources */,
 				7EA204412BD342A000C8A6DF /* Double+Extension.swift in Sources */,
+				7E26AE182BD7690500036AD0 /* PageController.swift in Sources */,
 				7EA2043E2BD337AB00C8A6DF /* ItemCard.swift in Sources */,
 				7E22632F2BD1F32A001AD0B6 /* ViewState.swift in Sources */,
 				7EEAAD562BD0FDED002963F3 /* Role.swift in Sources */,
@@ -780,8 +774,10 @@
 				7ECFD3502BD4AC9300171C7C /* BuyView.swift in Sources */,
 				7E2263312BD1F8EB001AD0B6 /* CancelButton.swift in Sources */,
 				7ECFD3452BD497FB00171C7C /* AccountView.swift in Sources */,
+				7E26AE172BD768DE00036AD0 /* NamespaceKey.swift in Sources */,
 				7ECFD3542BD4ACDD00171C7C /* BuyText.swift in Sources */,
 				7ECFD34E2BD4A93400171C7C /* AccountViewModel.swift in Sources */,
+				7E26AE162BD768C700036AD0 /* ProfileView.swift in Sources */,
 				7E2263392BD1FBB1001AD0B6 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
