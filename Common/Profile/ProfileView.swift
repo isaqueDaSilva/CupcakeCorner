@@ -8,19 +8,35 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @Environment(\.dismiss) var dismiss
-    @State var name = ""
+    @Environment(\.dismiss) private var dismiss
+    
+    @Namespace private var transition
+    private var transitionKey = NamespaceKey.transition.rawValue
+    
+    @State private var viewModel = ViewModel()
+    
     var body: some View {
-        NavigationStack {
-            Group {
-                
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    CancelButton {
-                        dismiss()
-                    }
-                }
+        Group {
+            switch viewModel.isAuthorized {
+            case true:
+                AccountView()
+                    .matchedGeometryEffect(id: transitionKey, in: transition)
+            case false:
+                LoginView()
+                    .animation(
+                        .spring,
+                        value: viewModel.isAuthorized
+                    )
+                    .transition(
+                        .asymmetric(
+                            insertion: AnyTransition.move(
+                                edge: .leading
+                            ),
+                            removal: AnyTransition.move(
+                                edge: .trailing
+                            )
+                        )
+                    )
             }
         }
     }

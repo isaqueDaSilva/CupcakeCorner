@@ -16,6 +16,7 @@ enum Icon: String {
     case bookmark = "bookmark"
     case bookmarkFill = "bookmark.fill"
     case chevronLeft = "chevron.left"
+    case chevronRight = "chevron.right"
     
     var systemImage: Image {
         Image(systemName: self.rawValue)
