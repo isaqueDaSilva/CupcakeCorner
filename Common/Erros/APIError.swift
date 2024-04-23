@@ -13,7 +13,7 @@ enum APIError: Error {
     case badResponse
     case incorrectAuthenticationMethod
     case fieldsEmpty
-    case unknown(Error)
+    case accessDenied
 }
 
 extension APIError: LocalizedError {
@@ -25,8 +25,8 @@ extension APIError: LocalizedError {
             NSLocalizedString("Unable to encode data, please try again or contact us.", comment: "")
         case .badResponse:
             NSLocalizedString("There was a problem getting a response, please check your connection and try again or contact us.", comment: "")
-        case .unknown(let error):
-            NSLocalizedString("An unknown error \(error) was generated.", comment: "")
+        case .accessDenied:
+            NSLocalizedString("You do not have permission to access this route.", comment: "")
         case .incorrectAuthenticationMethod:
             NSLocalizedString("Unable to login, please try again.", comment: "")
         case .fieldsEmpty:
