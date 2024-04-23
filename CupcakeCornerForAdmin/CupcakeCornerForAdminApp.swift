@@ -11,7 +11,7 @@ import SwiftUI
 struct CupcakeCornerForAdminApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProfileView()
         }
     }
 }

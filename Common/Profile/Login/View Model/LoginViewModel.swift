@@ -47,7 +47,7 @@ extension LoginView {
                     let (data, response) = try await URLSession.shared.data(for: request)
                     
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                        throw APIError.accessDenied
                     }
                     
                     let decoder = JSONDecoder()
