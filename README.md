@@ -14,4 +14,4 @@
 - Swift as main language of the project;
 - SwiftUI for create an UI;
 - Keychain for stores sensitive user data;
-- NSCache to reduce the number of times the app will be make download data from the server;
+- SwiftData for store data as cache.
