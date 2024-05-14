@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 final class CacheStorageService: ObservableObject {
-    @Published var storage: CacheStorage?
+    @Published var storage: [CacheStorage] = []
     
     private let context: ModelContext
     
@@ -19,6 +19,21 @@ final class CacheStorageService: ObservableObject {
     
     private func create(new storage: CacheStorage) throws {
         context.insert(storage)
+        try save()
+    }
+    
+    func addNewUser(_ newUser: User.Get) throws {
+        self.storage[0].user = newUser
+        try save()
+    }
+    
+    func addNewCupcakes(_ newCupcakes: [Cupcake.Get]) throws {
+        if !storage[0].cupcakes.isEmpty {
+            storage[0].cupcakes.removeAll()
+        }
+        
+        storage[0].cupcakes.append(contentsOf: newCupcakes)
+        
         try save()
     }
     
@@ -39,46 +54,36 @@ final class CacheStorageService: ObservableObject {
         return storage
     }
     
-    func update(
-        with newUser: User.Get? = nil,
-        and newCupcakes: [Cupcake.Get]? = nil,
-        or singleCupcakeUpdated: Cupcake.Get? = nil
-    ) throws {
-        if let newUser {
-            self.storage?.user = newUser
-        }
-        
-        if let newCupcakes {
-            if ((storage?.cupcakes.isEmpty) != nil) {
-                storage?.cupcakes.append(contentsOf: newCupcakes)
-            } else {
-                storage?.cupcakes = newCupcakes
-            }
-        }
-        
-        if let singleCupcakeUpdated {
-            guard let index = storage?.cupcakes.firstIndex(of: singleCupcakeUpdated) else {
-                return
+    func updateOrAddSingleNewCupcake(_ cupcake: Cupcake.Get) throws {
+        guard storage[0].cupcakes.isEmpty else {
+            guard let index = storage[0].cupcakes.firstIndex(of: cupcake) else {
+                throw PersistenceDataError.notFound
             }
             
-            storage?.cupcakes.remove(at: index)
-            storage?.cupcakes.insert(singleCupcakeUpdated, at: index)
+            storage[0].cupcakes.remove(at: index)
+            storage[0].cupcakes.insert(cupcake, at: index)
+            
+            return
         }
+        
+        storage[0].cupcakes.append(cupcake)
         
         try save()
     }
     
     func deleteUser(_ user: User.Get) throws {
-        storage?.user = nil
+        storage[0].user = nil
         try save()
     }
     
     func deleteCupcake(_ cupcake: Cupcake.Get) throws {
-        guard let index = storage?.cupcakes.firstIndex(of: cupcake) else {
+        guard let index = storage[0].cupcakes.firstIndex(of: cupcake) else {
             throw PersistenceDataError.notFound
         }
         
-        storage?.cupcakes.remove(at: index)
+        storage[0].cupcakes.remove(at: index)
+        
+        try save()
     }
     
     init(inMemoryOnly: Bool = false) {
@@ -87,9 +92,9 @@ final class CacheStorageService: ObservableObject {
             let container = try ModelContainer(for: CacheStorage.self, configurations: config)
             self.context = ModelContext(container)
             
-            let savedStorages = try get()
+            let storagesSaved = try get()
             
-            _storage = Published(initialValue: savedStorages[0])
+            _storage = Published(initialValue: storagesSaved)
             
         } catch {
             fatalError("Unable to initialize provider.")
