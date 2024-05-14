@@ -49,10 +49,11 @@ struct CupcakeView: View {
             } message: {
                 Text(viewModel.error?.description ?? "No Description")
             }
-            .onAppear {
-                getCupcakes()
-            }
             .onChange(of: scenePhase) { oldValue , newValue in
+                if oldValue == .inactive && newValue == .active {
+                    getCupcakes()
+                }
+                
                 if newValue == .inactive {
                     viewModel.task?.cancel()
                     viewModel.task = nil
