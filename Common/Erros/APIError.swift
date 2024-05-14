@@ -11,7 +11,6 @@ enum APIError: Error {
     case badURL
     case badEncoding
     case badResponse
-    case incorrectAuthenticationMethod
     case fieldsEmpty
     case accessDenied
 }
@@ -27,8 +26,6 @@ extension APIError: LocalizedError {
             NSLocalizedString("There was a problem getting a response, please check your connection and try again or contact us.", comment: "")
         case .accessDenied:
             NSLocalizedString("You do not have permission to access this route.", comment: "")
-        case .incorrectAuthenticationMethod:
-            NSLocalizedString("Unable to login, please try again.", comment: "")
         case .fieldsEmpty:
             NSLocalizedString("There are empty fields in the form, please fill them in before proceeding.", comment: "")
         }
