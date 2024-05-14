@@ -10,6 +10,7 @@ import Foundation
 extension CreateAnAccount {
     final class ViewModel: ObservableObject {
         @Published var newUser: User.Create
+        @Published var task: Task<Void, Never>? = nil
         
         #if CLIENT
         @Published var fullAdress: String = ""
@@ -17,22 +18,34 @@ extension CreateAnAccount {
         @Published var zip: String = ""
         #endif
         
-        @Published var showingError = false
-        @Published var error: AppAlert?
+        @Published var showingAlert = false
+        @Published var alert: AppAlert?
         
         @Published var viewState: ViewState = .load
+        @Published var isSuccessed = false
         
-        func createUser(_ completationHandler: @escaping () -> Void) {
-            Task {
+        private func showingConfirmationAlert() {
+            alert = AppAlert(
+                title: "Account Created",
+                description: "Your account was created with success, click in OK and log in the system for gets the full access in the App."
+            )
+            viewState = .load
+            showingAlert = true
+        }
+        
+        func createUser() {
+            task = Task {
                 await MainActor.run {
                     viewState = .loading
                 }
                 
                 do {
                     #if CLIENT
-                    newUser.fullAdress = self.fullAdress
-                    newUser.city = self.city
-                    newUser.zip = self.zip
+                    await MainActor.run {
+                        newUser.fullAdress = self.fullAdress
+                        newUser.city = self.city
+                        newUser.zip = self.zip
+                    }
                     #endif
                     
                     let encoder = JSONEncoder()
@@ -54,12 +67,17 @@ extension CreateAnAccount {
                         throw APIError.badResponse
                     }
                     
-                    completationHandler()
+                    await MainActor.run {
+                        viewState = .load
+                        isSuccessed = true
+                        showingConfirmationAlert()
+                    }
                 } catch let error {
                     await MainActor.run {
-                        self.error = AppAlert(title: "Falied to Create User", description: error.localizedDescription)
+                        self.alert = AppAlert(title: "Falied to Create User", description: error.localizedDescription)
                         viewState = .load
-                        showingError = true
+                        isSuccessed = false
+                        showingAlert = true
                     }
                 }
             }
