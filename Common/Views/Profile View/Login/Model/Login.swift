@@ -12,11 +12,15 @@ struct Login {
     var password: String
     
     private func value() throws -> String {
+        guard !email.isEmpty && !password.isEmpty else {
+            throw APIError.fieldsEmpty
+        }
+        
         let loginData = ("\(email):\(password)".data(using: .utf8)?.base64EncodedString())
         let basicValue = AuthorizationHeader.basic.rawValue
         
         guard let loginData else {
-            throw APIError.fieldsEmpty
+            throw APIError.badEncoding
         }
         
         return "\(basicValue) \(loginData)"
@@ -30,11 +34,7 @@ struct Login {
         #endif
     }
     
-    func makeLogin() async throws {
-        guard !email.isEmpty && !password.isEmpty else {
-            throw APIError.fieldsEmpty
-        }
-        
+    func getTokenValue() async throws -> String {
         let value = try self.value()
         
         let request = NetworkService(
@@ -57,11 +57,12 @@ struct Login {
         }
         
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         let token = try decoder.decode(Token.self, from: data)
         
         _ = try KeychainService.store(for: token)
+        
+        return token.value
     }
     
     init(email: String, password: String) {
