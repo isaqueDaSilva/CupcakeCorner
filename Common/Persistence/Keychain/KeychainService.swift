@@ -12,6 +12,10 @@ struct KeychainService {
     private static let key = Keys.userToken.rawValue
     
     static func store(for token: Token) throws -> OSStatus {
+        if (try? !retrive().isEmpty) != nil {
+            _ = try delete()
+        }
+        
         let encoder = JSONEncoder()
         let tokenData = try encoder.encode(token)
         
