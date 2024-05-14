@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum ApplicationType: String {
+    case forAdmin
+    case forClient
+}
