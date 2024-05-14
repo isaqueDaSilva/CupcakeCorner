@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum WebSocketConnectionError: Error {
+    case encodingError
+    case decodingError
+    case unknownError(Error)
+}
