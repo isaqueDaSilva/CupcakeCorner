@@ -1,5 +1,5 @@
 //
-//  BuyViewModel.swift
+//  CupcakeViewModel.swift
 //  CupcakeCorner
 //
 //  Created by Isaque da Silva on 25/04/24.
@@ -19,14 +19,21 @@ extension CupcakeView {
         @Published var showingCreateNewCupcakeView = false
         #endif
         
+        #if CLIENT
         var newestCupcake: Cupcake.Get? { cupcakes.min { $0.createdAt < $1.createdAt } }
+        #endif
         
         func getCupcakes(
-            _ cacheCupcakes: @escaping (Cupcake.Get) -> Void,
-            loadCupcakes: @escaping () throws -> [Cupcake.Get]
+            _ cacheCupcakes: @escaping ([Cupcake.Get]) throws -> Void,
+            loadCupcakes: @escaping () -> [Cupcake.Get]
         ) {
-            task = Task {
+            task = Task(priority: .background) {
                 do {
+                    await MainActor.run { [weak self] in
+                        guard let self else { return }
+                        self.viewState = .loading
+                    }
+                    
                     let request = NetworkService(
                         endpoint: "http://127.0.0.1:8080/api/cupcake/all",
                         httpMethod: .get,
@@ -40,42 +47,29 @@ extension CupcakeView {
                     }
                     
                     let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
                     
                     let cupcakesResults = try decoder.decode([Cupcake.Get].self, from: data)
                     
-                    for cupcakeResult in cupcakesResults {
-                        cacheCupcakes(cupcakeResult)
-                    }
+                    try cacheCupcakes(cupcakesResults)
                     
-                    try await MainActor.run {
-                        cupcakes = try loadCupcakes
-                        viewState = .load
+                    await MainActor.run { [weak self] in
+                        guard let self else { return }
+                        
+                        self.cupcakes = loadCupcakes()
+                        self.viewState = .load
                     }
                     
                 } catch let error {
-                    await MainActor.run {
+                    await MainActor.run { [weak self] in
+                        guard let self else { return }
+                        
                         self.error = AppAlert(title: "Falied to load Cupcakes", description: error.localizedDescription)
-                        viewState = .faliedToLoad
-                        showingError = true
+                        self.viewState = .load
+                        self.cupcakes = cupcakes
+                        self.showingError = true
                     }
                 }
-            }
-        }
-        
-        init(inMemoryOnly: Bool = false) {
-            persistenceStore = SwiftDataService<Cupcake>(inMemoryOnly: inMemoryOnly)
-            
-            if inMemoryOnly {
-                let samples = Cupcake.sampleCupcakes
-                
-                for sample in samples {
-                    try? persistenceStore.create(new: sample)
-                }
-                
-                let getCupcakes = try? persistenceStore.get()
-                _cupcakes = Published(initialValue: getCupcakes ?? [])
-            } else {
-                getCupcakes()
             }
         }
     }
