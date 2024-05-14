@@ -9,29 +9,21 @@ import Foundation
 
 extension LoginView {
     final class ViewModel: ObservableObject {
-        @Published var login: Login
+        @Published var loginCredentials: Login
+        @Published var viewState: ViewState = .load
+        @Published var showingError = false
+        @Published var error: AppAlert?
         
-        var viewState: ViewState = .load
+        @Published var task: Task<Void, Never>? = nil
         
-        var showingError = false
-        var error: AppAlert?
-        
-        let persistenceStore = SwiftDataService<User>()
-        
-        func login(_ completation: @escaping () -> Void) {
-            Task {
-                await MainActor.run {
-                    viewState = .loading
-                }
-                
+        func login(_ completation: @escaping () -> Void, cacheUser: @escaping (User.Get) throws -> Void) {
+            task = Task {
                 do {
-                    guard !login.email.isEmpty && !login.password.isEmpty else {
-                        throw APIError.fieldsEmpty
+                    await MainActor.run {
+                        self.viewState = .loading
                     }
                     
-                    try await login.makeLogin()
-                    
-                    let tokenValue = try KeychainService.retrive()
+                    let tokenValue = try await loginCredentials.getTokenValue()
                     
                     let bearerValue = AuthorizationHeader.bearer.rawValue
                     
@@ -49,29 +41,27 @@ extension LoginView {
                     }
                     
                     let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let userGetted = try decoder.decode(User.Get.self, from: data)
                     
-                    let user = User(from: userGetted)
-                    try persistenceStore.create(new: user)
+                    try cacheUser(userGetted)
                     
                     await MainActor.run {
-                        viewState = .load
+                        self.viewState = .load
                         completation()
                     }
                 } catch let error {
                     await MainActor.run {
                         self.error = AppAlert(title: "Login Falied", description: error.localizedDescription)
-                        viewState = .load
-                        showingError = true
+                        self.viewState = .load
+                        self.showingError = true
                     }
                 }
             }
         }
         
         init() {
-            _login = Published(initialValue: .init(email: "", password: ""))
+            _loginCredentials = Published(initialValue: .init(email: "", password: ""))
         }
     }
 }
