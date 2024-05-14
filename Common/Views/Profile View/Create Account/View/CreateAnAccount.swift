@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CreateAnAccount: View {
     @Environment(\.dismiss) var dismiss
-    @State private var viewModel = ViewModel()
+    @Environment(\.scenePhase) var scenePhase
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         Form {
@@ -75,9 +76,7 @@ struct CreateAnAccount: View {
                     label: "Create",
                     width: .infinity
                 ) { 
-                    viewModel.createUser {
-                        dismiss()
-                    }
+                    viewModel.createUser()
                 }
             }
             .listSectionSpacing(.compact)
@@ -85,11 +84,22 @@ struct CreateAnAccount: View {
         }
         .navigationTitle("Create Account")
         .alert(
-            viewModel.error?.title ?? "No Title.",
-            isPresented: $viewModel.showingError
+            viewModel.alert?.title ?? "No Title.",
+            isPresented: $viewModel.showingAlert
         ) {
+            Button("OK") {
+                if viewModel.isSuccessed {
+                    dismiss()
+                }
+            }
         } message: {
-            Text(viewModel.error?.description ?? "No Description...")
+            Text(viewModel.alert?.description ?? "No Description...")
+        }
+        .onChange(of: scenePhase) { _ , newValue in
+            if (newValue == .inactive) {
+                viewModel.task?.cancel()
+                viewModel.task = nil
+            }
         }
     }
 }
