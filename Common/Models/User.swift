@@ -6,57 +6,115 @@
 //
 
 import Foundation
-import SwiftData
 
-@Model
-final class User: Identifiable {
-    let id: UUID
-    var name: String
-    let email: String
-    var role: Role
-    var paymentMethod: PaymentMethod
-    var bag: [UUID]
-    var favorites: [UUID]
-    var street: String?
-    var city: String?
-    var zip: String?
-    
-    init(
-        id: UUID,
-        name: String,
-        email: String,
-        role: Role,
-        paymentMethod: PaymentMethod,
-        bag: [UUID],
-        favorites: [UUID],
-        street: String? = nil,
-        city: String? = nil,
-        zip: String? = nil
-    ) {
-        self.id = id
-        self.name = name
-        self.email = email
-        self.role = role
-        self.paymentMethod = paymentMethod
-        self.bag = bag
-        self.favorites = favorites
-        self.street = street
-        self.city = city
-        self.zip = zip
+struct User { }
+
+extension User {
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case email = "email"
+        case password = "password"
+        case confirmPassword = "confirmPassword"
+        case role = "role"
+        case paymentMethod = "payment_method"
+        case fullAdress = "full_adress"
+        case city = "city"
+        case zip = "zip"
+    }
+}
+
+extension User {
+    struct Get: Codable {
+        let id: UUID
+        let name: String
+        let email: String
+        let role: Role
+        let paymentMethod: PaymentMethod
+        let fullAdress: String?
+        let city: String?
+        let zip: String?
+    }
+}
+
+extension User {
+    struct Create: Encodable {
+        var name: String
+        var email: String
+        var password: String
+        var confirmPassword: String
+        let role: Role
+        var paymentMethod: PaymentMethod
+        var fullAdress: String?
+        var city: String?
+        var zip: String?
+        
+        init(
+            name: String,
+            email: String,
+            password: String,
+            confirmPassword: String,
+            role: Role,
+            paymentMethod: PaymentMethod,
+            fullAdress: String? = nil,
+            city: String? = nil,
+            zip: String? = nil
+        ) {
+            self.name = name
+            self.email = email
+            self.password = password
+            self.confirmPassword = confirmPassword
+            self.role = role
+            self.paymentMethod = paymentMethod
+            self.fullAdress = fullAdress
+            self.city = city
+            self.zip = zip
+        }
+    }
+}
+
+extension User {
+    struct Update: Encodable {
+        let name: String?
+        let fullAdress: String?
+        let city: String?
+        let zip: String?
+        
+        func encode(to encoder: any Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encodeIfPresent(self.name, forKey: CodingKeys.name)
+            try container.encodeIfPresent(self.fullAdress, forKey: CodingKeys.fullAdress)
+            try container.encodeIfPresent(self.city, forKey: CodingKeys.city)
+            try container.encodeIfPresent(self.zip, forKey: CodingKeys.zip)
+        }
+    }
+}
+
+// Sample User Data.
+extension User.Get {
+    static var sampleUserAdmin: User.Get {
+        .init(
+            id: .init(),
+            name: "Tim Cook",
+            email: "timcook@apple.com",
+            role: .admin,
+            paymentMethod: .isAdmin,
+            fullAdress: nil,
+            city: nil,
+            zip: nil
+        )
     }
     
-    convenience init(from userPublic: UserPublic) {
-        self.init(
-            id: userPublic.id,
-            name: userPublic.name,
-            email: userPublic.email,
-            role: userPublic.role,
-            paymentMethod: userPublic.paymentMethod,
-            bag: userPublic.bag,
-            favorites: userPublic.favorites,
-            street: userPublic.street,
-            city: userPublic.city,
-            zip: userPublic.zip
+    static var sampleUserClient: User.Get {
+        .init(
+            id: .init(),
+            name: "John Ternus",
+            email: "johnternus@apple.com",
+            role: .client,
+            paymentMethod: .creditCard,
+            fullAdress: "One Apple Park Way",
+            city: "Cupertino",
+            zip: "CA 95014"
         )
     }
 }
