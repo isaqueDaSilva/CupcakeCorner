@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject private var cacheStorage: CacheStorageService
+    
     var body: some View {
         TabView {
             CupcakeView()
@@ -54,6 +56,7 @@ struct HomeView: View {
                 }
                 .tag("Profile")
         }
+        .environmentObject(cacheStorage)
     }
 }
 
