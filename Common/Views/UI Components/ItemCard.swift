@@ -41,14 +41,20 @@ struct ItemCard: View {
             }
         }
     }
+    
+    init(
+        name: String,
+        description: String,
+        imageData: Data,
+        price: Double
+    ) {
+        self.name = name
+        self.description = description
+        
+        let uiImage = UIImage(data: imageData)
+        
+        self.image = (uiImage != nil) ? Image(uiImage: uiImage!) : Icon.questionmarkDiamond.systemImage
+        self.price = price
+    }
 }
 
-#Preview {
-    ItemCard(
-        name: "Some Name",
-        description: UUID().uuidString, 
-        image: Image(systemName: Icon.house.rawValue),
-        price: 15
-    )
-    .padding()
-}
