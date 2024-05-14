@@ -8,67 +8,73 @@
 import SwiftUI
 
 struct LoginView: View {
-    #if CLIENT
-    @Environment(\.dismiss) private var dismiss
-    #endif
+    @Environment(\.scenePhase) var scenePhase
+    @EnvironmentObject private var pageController: PageController
+    @EnvironmentObject private var cacheStorage: CacheStorageService
     
-    @EnvironmentObject var pageController: PageController
-    
-    @State private var viewModel = ViewModel()
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    LabeledContent("Email:") {
-                        TextField("Insert your email here...", text: $viewModel.login.email)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    
-                    LabeledContent("Passowrd:") {
-                        SecureField("Insert your password here...", text: $viewModel.login.password)
-                            .multilineTextAlignment(.trailing)
-                            .keyboardType(.emailAddress)
-                    }
-                    
-                    ActionButton(
-                        viewState: $viewModel.viewState,
-                        label: "Sign In",
-                        width: .infinity
-                    ) { 
-                        viewModel.login {
-                            pageController.setNewValue(true)
-                        }
-                    }
+        Form {
+            Section {
+                LabeledContent("Email:") {
+                    TextField("Insert your email here...", text: $viewModel.loginCredentials.email)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
                 }
-            }
-            .navigationTitle("Login")
-            #if CLIENT
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    HStack {
-                        Text("No Account?")
-                            .bold()
-                        
-                        NavigationLink {
-                            CreateAnAccount()
-                        } label: {
-                            Text("Create an Account")
-                                .foregroundStyle(.blue)
-                                .underline()
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                }
-            }
-            #endif
-            .alert(
-                viewModel.error?.title ?? "No title",
-                isPresented: $viewModel.showingError
-            ) {
                 
-            } message: {
-                Text(viewModel.error?.description ?? "No description")
+                LabeledContent("Passowrd:") {
+                    SecureField("Insert your password here...", text: $viewModel.loginCredentials.password)
+                        .multilineTextAlignment(.trailing)
+                        .textInputAutocapitalization(.never)
+                }
+                
+                ActionButton(
+                    viewState: $viewModel.viewState,
+                    label: "Sign In",
+                    width: .infinity
+                ) {
+                    viewModel.login {
+                        pageController.setNewValue(true)
+                    } cacheUser: { newUser in
+                        try cacheStorage.addNewUser(newUser)
+                    }
+                }
+            }
+        }
+        .navigationTitle("Login")
+        #if CLIENT
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                HStack {
+                    Text("No Account?")
+                        .bold()
+                    
+                    NavigationLink {
+                        CreateAnAccount()
+                    } label: {
+                        Text("Create an Account")
+                            .foregroundStyle(.blue)
+                            .underline()
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+        #endif
+        .alert(
+            viewModel.error?.title ?? "No title",
+            isPresented: $viewModel.showingError
+        ) {
+            
+        } message: {
+            Text(viewModel.error?.description ?? "No description")
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            if (newValue == .inactive) {
+                viewModel.task?.cancel()
+                viewModel.task = nil
             }
         }
     }
