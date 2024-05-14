@@ -21,6 +21,7 @@ enum Icon: String {
     case questionmarkDiamond = "questionmark.diamond"
     case plusCircle = "plus.circle"
     case squareSlash = "square.slash"
+    case truck = "truck.box"
     
     var systemImage: Image {
         Image(systemName: self.rawValue)
