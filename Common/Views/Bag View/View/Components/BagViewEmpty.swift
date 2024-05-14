@@ -9,12 +9,14 @@ import SwiftUI
 
 extension BagView {
     @ViewBuilder
-    func BagViewEmpty() -> some View {
-        ContentUnavailableView(
-            BagViewTexts.contentUnavaiableTitle.rawValue,
-            systemImage: Icon.bag.rawValue,
-            description: Text(BagViewTexts.contentUnavaiableDescription.rawValue)
-        )
+    func BagViewEmpty(with description: BagViewTexts = .contentUnavaiableDescription) -> some View {
+        VStack {
+            ContentUnavailableView(
+                BagViewTexts.contentUnavaiableTitle.rawValue,
+                systemImage: Icon.bag.rawValue,
+                description: Text(description.rawValue)
+            )
+        }
     }
 }
 
