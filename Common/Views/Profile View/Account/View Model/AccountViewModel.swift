@@ -9,13 +9,12 @@ import Foundation
 
 extension AccountView {
     final class ViewModel: ObservableObject {
-        var user: User?
+        var user: User.Get?
         
         @Published var buttonViewState: ViewState = .load
         @Published var signOutViewState: ViewState = .load
         @Published var viewState: ViewState = .loading
-        
-        let persistenceStore: SwiftDataService<User>
+        @Published var task: Task<Void, Never>? = nil
         
         var showingError = false
         var error: AppAlert?
@@ -36,18 +35,26 @@ extension AccountView {
             user?.paymentMethod.displayedName ?? "Payment method not identified."
         }
         
-        private func getUser() throws -> User {
-            let usersLoad = try persistenceStore.get()
-            
-            guard let user = usersLoad.first else {
-                throw SwiftDataError.notFound
+        func setUser(user: User.Get?) {
+            do {
+                if let user {
+                    self.user = user
+                    viewState = .load
+                } else {
+                    throw PersistenceDataError.noData
+                }
+            } catch {
+                self.error = AppAlert(title: "Falied To Set User", description: error.localizedDescription)
+                signOutViewState = .load
+                showingError = true
             }
-            
-            return user
         }
         
-        func logout(_ completation: @escaping () -> Void) {
-            Task {
+        func logout(
+            _ completation: @escaping () -> Void,
+            deleteUserCached: @escaping (User.Get) throws -> Void
+        ) {
+            task = Task(priority: .background) {
                 do {
                     await MainActor.run {
                         signOutViewState = .loading
@@ -71,9 +78,9 @@ extension AccountView {
                     }
                     
                     if let user {
-                        try persistenceStore.delete(user)
+                        try deleteUserCached(user)
                     } else {
-                        throw SwiftDataError.noData
+                        throw PersistenceDataError.noData
                     }
                     
                     _ = try KeychainService.delete()
@@ -89,17 +96,6 @@ extension AccountView {
                         showingError = true
                     }
                 }
-            }
-        }
-        
-        init(inMemoryOnly: Bool = false) {
-            persistenceStore = SwiftDataService<User>(inMemoryOnly: inMemoryOnly)
-            do {
-                self.user = try getUser()
-                viewState = .load
-            } catch let error {
-                self.error = AppAlert(title: "Falied to Load an User", description: error.localizedDescription)
-                showingError = true
             }
         }
     }
