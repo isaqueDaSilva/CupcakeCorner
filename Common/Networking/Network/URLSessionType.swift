@@ -8,10 +8,16 @@
 import Foundation
 
 extension NetworkService {
+    /// A representation of what do you expect receive when some request finish.
     enum URLSessionType {
+        /// Use this case when do you wants get only data for the request.
         case getData
+        
+        /// Use this case when do you want send data for the request.
         case uploadData(Data)
         
+        /// A method that get a URLRequest and return a Data and URLResponse tuple value base on the case selected.
+        /// - Returns: Returns a Data and URLResponse tuple value base on the case selected.
         func urlSession(for request: URLRequest) async throws -> (Data, URLResponse) {
             switch self {
             case .getData:
