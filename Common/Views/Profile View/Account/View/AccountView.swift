@@ -8,42 +8,51 @@
 import SwiftUI
 
 struct AccountView: View {
-    @EnvironmentObject var pageController: PageController
-    
+    @Environment(\.scenePhase) var scenePhase
     @Environment(\.dismiss) private var dismiss
-    @StateObject var viewModel: ViewModel
+    
+    @EnvironmentObject var pageController: PageController
+    @EnvironmentObject var cacheStorage: CacheStorageService
+    
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
-        NavigationStack {
-            Group {
-                switch viewModel.viewState {
-                case .load:
-                    AccountViewLoad()
-                case .loading:
-                    ProgressView()
-                case .faliedToLoad:
-                    AccountViewFaliedToLoad()
-                }
-            }
-            .navigationTitle("Account")
-            .alert(
-                viewModel.error?.title ?? "No Title",
-                isPresented: $viewModel.showingError
-            ) {
-            } message: {
-                Text(viewModel.error?.description ?? "No description.")
+        Group {
+            switch viewModel.viewState {
+            case .load:
+                AccountViewLoad()
+            case .loading:
+                ProgressView()
+            case .faliedToLoad:
+                AccountViewFaliedToLoad()
             }
         }
-    }
-    
-    init(inMemoryOnly: Bool = false) {
-        _viewModel = StateObject(wrappedValue: ViewModel(inMemoryOnly: inMemoryOnly))
+        .navigationTitle("Account")
+        .onAppear {
+            let user = cacheStorage.storage[0].user
+            
+            viewModel.setUser(user: user)
+        }
+        .alert(
+            viewModel.error?.title ?? "No Title",
+            isPresented: $viewModel.showingError
+        ) {
+        } message: {
+            Text(viewModel.error?.description ?? "No description.")
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            if (newValue == .inactive) {
+                viewModel.task?.cancel()
+                viewModel.task = nil
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        AccountView(inMemoryOnly: true).AccountViewLoad()
+        AccountView().AccountViewLoad()
             .environmentObject(PageController())
+            .environmentObject(CacheStorageService(inMemoryOnly: true))
     }
 }
