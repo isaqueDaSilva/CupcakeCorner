@@ -8,67 +8,21 @@
 import SwiftUI
 
 struct CupcakeView: View {
-    let colums: [GridItem] = [.init(.adaptive(minimum: 150))]
+    @Environment(\.scenePhase) var scenePhase
+    @EnvironmentObject var cacheStorage: CacheStorageService
+    @StateObject var viewModel = ViewModel()
     
-    @StateObject private var viewModel: ViewModel
+    let colums: [GridItem] = [.init(.adaptive(minimum: 150))]
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack {
-                    #if CLIENT
-                    FreeShipping()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Divider()
-                    
-                    if let newestCupcake = viewModel.newestCupcake {
-                        Text("New")
-                            .headerSessionText()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        NewCupcakeHighlights(
-                            name: newestCupcake.flavor,
-                            description: newestCupcake.ingredients,
-                            cover: newestCupcake.coverImage,
-                            price: newestCupcake.price
-                        ) {
-                            #if CLIENT
-                            OrderView(cupcake: newestCupcake)
-                            #elseif ADMIN
-                            CupcakeDetailView(cupcake: newestCupcake)
-                            #endif
-                        }
-                        .padding(.bottom)
-                    }
-                    #endif
-                             
-                    #if CLIENT
-                    Text("Cupcakes")
-                        .headerSessionText()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    #endif
-                    
-                    LazyVGrid(columns: colums) {
-                        ForEach(viewModel.cupcakes) { cupcake in
-                            NavigationLink {
-                                #if CLIENT
-                                OrderView(cupcake: cupcake)
-                                #elseif ADMIN
-                                CupcakeDetailView(cupcake: cupcake)
-                                #endif
-                            } label: {
-                                CupcakeCard(
-                                    name: cupcake.flavor,
-                                    imageData: cupcake.coverImage
-                                )
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                    }
+            Group {
+                switch viewModel.viewState {
+                case .load, .faliedToLoad:
+                    CupcakeViewLoad()
+                case .loading:
+                    ProgressView()
                 }
-                .padding(.horizontal)
-                .padding([.top, .bottom], 5)
             }
             #if CLIENT
             .navigationTitle("Buy")
@@ -85,14 +39,48 @@ struct CupcakeView: View {
                 CreateCupcakeView()
             }
             #endif
+            .refreshable {
+                getCupcakes()
+            }
+            .alert(
+                viewModel.error?.title ?? "No Title",
+                isPresented: $viewModel.showingError
+            ) {
+            } message: {
+                Text(viewModel.error?.description ?? "No Description")
+            }
+            .onAppear {
+                getCupcakes()
+            }
+            .onChange(of: scenePhase) { oldValue , newValue in
+                if newValue == .inactive {
+                    viewModel.task?.cancel()
+                    viewModel.task = nil
+                }
+            }
+            .navigationDestination(for: Cupcake.Get.self) { cupcake in
+                #if CLIENT
+                OrderView(cupcake: cupcake)
+                #elseif ADMIN
+                CupcakeDetailView(cupcake: cupcake)
+                #endif
+            }
+            .environmentObject(cacheStorage)
         }
     }
-    
-    init(inMemoryOnly: Bool = false) {
-        _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
+}
+
+extension CupcakeView {
+    func getCupcakes() {
+        viewModel.getCupcakes { cupcakes in
+            try cacheStorage.addNewCupcakes(cupcakes)
+        } loadCupcakes: {
+            cacheStorage.storage[0].cupcakes
+        }
     }
 }
 
 #Preview {
-    CupcakeView(inMemoryOnly: true)
+    CupcakeView()
+        .environmentObject(CacheStorageService(inMemoryOnly: true))
 }
