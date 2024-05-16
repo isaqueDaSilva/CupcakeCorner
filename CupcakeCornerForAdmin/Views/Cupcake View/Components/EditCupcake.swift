@@ -84,9 +84,15 @@ struct EditCupcake: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    BackButton {
+                    Button {
                         dismiss()
+                    } label: {
+                        HStack {
+                            Icon.chevronLeft.systemImage
+                            Text("Back")
+                        }
                     }
+
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
