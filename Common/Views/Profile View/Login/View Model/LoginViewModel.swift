@@ -16,7 +16,10 @@ extension LoginView {
         
         @Published var task: Task<Void, Never>? = nil
         
-        func login(_ completation: @escaping () -> Void, cacheUser: @escaping (User.Get) throws -> Void) {
+        func login(
+            _ completation: @escaping () -> Void,
+            cacheUser: @escaping (User.Get) throws -> Void
+        ) {
             task = Task {
                 do {
                     await MainActor.run {
