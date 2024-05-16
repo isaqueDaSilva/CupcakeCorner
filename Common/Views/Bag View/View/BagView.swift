@@ -11,6 +11,9 @@ struct BagView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     @EnvironmentObject private var cacheStorage: CacheStorageService
+    
+    @State private var accessPageCount = 0
+    
     @StateObject var viewModel = ViewModel()
     
     var body: some View {
@@ -38,16 +41,19 @@ struct BagView: View {
                 viewModel.setClientID(
                     clientID: cacheStorage.storage[0].user?.id
                 )
-            }
-            .onChange(of: scenePhase) { oldValue, newValue in
-                if (oldValue == .inactive || oldValue == .background) && newValue == .active {
+                
+                accessPageCount += 1
+                
+                if accessPageCount == 1 {
                     if cacheStorage.storage[0].user != nil {
                         viewModel.connect()
                     }
                 }
-                
+            }
+            .onChange(of: scenePhase) { _, newValue in
                 if (newValue == .background) {
                     viewModel.disconnect()
+                    accessPageCount = 0
                 }
             }
             #if CLIENT
@@ -60,6 +66,13 @@ struct BagView: View {
                 }
             }
             #endif
+            .alert(
+                viewModel.alert?.title ?? "No Title",
+                isPresented: $viewModel.showingAlert
+            ) {
+            } message: {
+                Text(viewModel.alert?.description ?? "No Description")
+            }
         }
     }
 }
