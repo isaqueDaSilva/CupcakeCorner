@@ -10,8 +10,6 @@ import SwiftUI
 @main
 struct CupcakeCornerForAdminApp: App {
     var body: some Scene {
-        WindowGroup {
-            ProfileView()
-        }
+        MainEntrypoint()
     }
 }
