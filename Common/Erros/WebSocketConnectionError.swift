@@ -11,4 +11,6 @@ enum WebSocketConnectionError: Error {
     case encodingError
     case decodingError
     case unknownError(Error)
+    case noConnection
+    case wrongData
 }

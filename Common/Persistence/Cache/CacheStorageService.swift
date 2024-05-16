@@ -13,8 +13,15 @@ final class CacheStorageService: ObservableObject {
     
     private let context: ModelContext
     
+    #if CLIENT
+    var newestCupcake: Cupcake.Get? {
+        storage[0].cupcakes.min { $0.createdAt > $1.createdAt }
+    }
+    #endif
+    
     func save() throws {
         try context.save()
+        storage = try get()
     }
     
     private func create(new storage: CacheStorage) throws {
@@ -51,10 +58,24 @@ final class CacheStorageService: ObservableObject {
             return saveStorages
         }
         
+        for cupcakes in storage[0].cupcakes {
+            print(cupcakes.createdAt)
+        }
+        
         return storage
     }
     
-    func updateOrAddSingleNewCupcake(_ cupcake: Cupcake.Get) throws {
+    func addNewCupcake(_ cupcake: Cupcake.Get) throws {
+        guard storage[0].cupcakes.first(where: { $0.flavor == cupcake.flavor }) == nil else {
+            throw PersistenceDataError.duplicateItem
+        }
+        
+        storage[0].cupcakes.append(cupcake)
+        
+        try save()
+    }
+    
+    func updateCupcake(_ cupcake: Cupcake.Get) throws {
         guard storage[0].cupcakes.isEmpty else {
             guard let index = storage[0].cupcakes.firstIndex(of: cupcake) else {
                 throw PersistenceDataError.notFound
