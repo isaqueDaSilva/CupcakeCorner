@@ -39,16 +39,6 @@ struct CupcakeView: View {
                 CreateCupcakeView()
             }
             #endif
-            .refreshable {
-                getCupcakes()
-            }
-            .alert(
-                viewModel.error?.title ?? "No Title",
-                isPresented: $viewModel.showingError
-            ) {
-            } message: {
-                Text(viewModel.error?.description ?? "No Description")
-            }
             .onChange(of: scenePhase) { oldValue , newValue in
                 if (oldValue == .inactive) && (newValue == .active) {
                     getCupcakes()
@@ -58,6 +48,16 @@ struct CupcakeView: View {
                     viewModel.task?.cancel()
                     viewModel.task = nil
                 }
+            }
+            .refreshable {
+                getCupcakes()
+            }
+            .alert(
+                viewModel.error?.title ?? "No Title",
+                isPresented: $viewModel.showingError
+            ) {
+            } message: {
+                Text(viewModel.error?.description ?? "No Description")
             }
             .navigationDestination(for: Cupcake.Get.self) { cupcake in
                 #if CLIENT
