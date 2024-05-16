@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 extension BagView {
     final class ViewModel: ObservableObject {
@@ -34,6 +35,7 @@ extension BagView {
             error: Error
         ) {
             alert = AppAlert(title: title, description: error.localizedDescription)
+            viewState = .faliedToLoad
             showingAlert = true
         }
         
@@ -41,18 +43,22 @@ extension BagView {
             self.clientID = clientID
         }
         
+        private func getOrders() throws {
+            guard let clientID else {
+                orders = []
+                viewState = .load
+                return
+            }
+            
+            let message = WebSocketMessage<Send>(clientID: clientID, data: .get)
+            try orderService.send(message)
+        }
+        
         func connect() {
             do {
-                guard let clientID else { 
-                    orders = []
-                    viewState = .load
-                    return
-                }
-                
                 try orderService.connect()
                 
-                let message = WebSocketMessage<Send>(clientID: clientID, data: .get)
-                try orderService.send(message)
+                try getOrders()
                 receiveValues()
                 
             } catch let error {
@@ -80,7 +86,7 @@ extension BagView {
             )
         }
         
-        func receiveValues()  {
+        private func receiveValues()  {
             orderService.orderReceivedSubject
                 .subscribe(on: DispatchQueue.global(qos: .background))
                 .receive(on: DispatchQueue.main)
@@ -92,8 +98,8 @@ extension BagView {
                         print("Finished with success")
                         break
                     case .failure(let error):
-                        showingAlert(
-                            title: "Falied to Get Data",
+                        self.showingAlert(
+                            title: "Falied to Get Orders",
                             error: error
                         )
                         break
@@ -102,6 +108,8 @@ extension BagView {
                     guard let self else { return }
                     
                     switch message {
+                    case .newOrder(let newOrder):
+                        self.orders.append(newOrder)
                     case .orders(let orders):
                         self.orders = orders
                         self.viewState = .load
@@ -123,6 +131,7 @@ extension BagView {
         
         func disconnect() { orderService.disconnect() }
         
+        #if ADMIN
         func updateOrder(with id: UUID, status: Status) {
             do {
                 let updatedOrder = Order.Update(id: id, status: status)
@@ -139,6 +148,7 @@ extension BagView {
                 )
             }
         }
+        #endif
         
         func displayName(_ order: Order.Get) -> String {
             #if CLIENT
