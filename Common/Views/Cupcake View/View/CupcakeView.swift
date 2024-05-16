@@ -50,7 +50,7 @@ struct CupcakeView: View {
                 Text(viewModel.error?.description ?? "No Description")
             }
             .onChange(of: scenePhase) { oldValue , newValue in
-                if oldValue == .inactive && newValue == .active {
+                if (oldValue == .inactive) && (newValue == .active) {
                     getCupcakes()
                 }
                 
@@ -75,8 +75,6 @@ extension CupcakeView {
     func getCupcakes() {
         viewModel.getCupcakes { cupcakes in
             try cacheStorage.addNewCupcakes(cupcakes)
-        } loadCupcakes: {
-            cacheStorage.storage[0].cupcakes
         }
     }
 }
