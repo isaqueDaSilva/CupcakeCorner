@@ -26,12 +26,12 @@ struct UpdateCupcakeView: View {
             viewModel.update {
                 dismiss()
             } updateCupcake: { cupcake in
-                try cacheStorage.update(or: cupcake)
+                try cacheStorage.updateCupcake(cupcake)
             }
         }
     }
     
-    init(cupcake: Cupcake.Get, inMemoryOnly: Bool = false) {
+    init(cupcake: Cupcake.Get) {
         _viewModel = StateObject(
             wrappedValue: .init(
                 cupcake: cupcake
@@ -40,6 +40,6 @@ struct UpdateCupcakeView: View {
     }
 }
 
-//#Preview {
-//    UpdateCupcakeView(cupcake: Cupcake.sampleCupcake[0], inMemoryOnly: true)
-//}
+#Preview {
+    UpdateCupcakeView(cupcake: .sampleCupcakes[0])
+}
