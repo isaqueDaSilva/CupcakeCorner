@@ -25,7 +25,7 @@ struct CreateCupcakeView: View {
             viewModel.create {
                 dismiss()
             } createCupcake: { cupcake in
-                try cacheStorage.update(or: cupcake)
+                try cacheStorage.addNewCupcake(cupcake)
             }
         }
         .alert(

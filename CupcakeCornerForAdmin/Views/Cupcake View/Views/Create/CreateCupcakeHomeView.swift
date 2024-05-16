@@ -33,10 +33,9 @@ extension CreateCupcakeView {
             Task {
                 let (data, image) = try await GetPhoto.getImage(pickerItemSelected)
                 
-                if let data, let image {
-                    self.cupcake.coverImage = data
-                    
-                    await MainActor.run {
+                await MainActor.run {
+                    if let data, let image {
+                        self.cupcake.coverImage = data
                         coverImage = image
                     }
                 }
@@ -76,13 +75,14 @@ extension CreateCupcakeView {
                     }
                     
                     let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    
                     let newCupcake = try decoder.decode(Cupcake.Get.self, from: data)
                     
-                    try createCupcake(newCupcake)
-                    
-                    await MainActor.run {
-                        completationHandler()
+                    try await MainActor.run {
+                        try createCupcake(newCupcake)
                         viewState = .load
+                        completationHandler()
                     }
                 } catch let error {
                     await MainActor.run {
