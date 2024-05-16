@@ -48,8 +48,8 @@ extension AccountView {
                 Button(role: .destructive) {
                     viewModel.logout {
                         pageController.setNewValue(false)
-                    } deleteUserCached: { user in
-                        try cacheStorage.deleteUser(user)
+                    } deleteUserCached: {
+                        try cacheStorage.deleteUser()
                     }
                 } label: {
                     switch viewModel.signOutViewState {
