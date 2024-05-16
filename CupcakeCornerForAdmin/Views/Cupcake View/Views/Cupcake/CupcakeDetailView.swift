@@ -38,16 +38,23 @@ struct CupcakeDetailView: View {
             
             Section {
                 Button("Delete cupcake", role: .destructive) {
-                    viewModel.deleteCupcake {
-                        dismiss()
-                    } deleteCupcake: { cupcake in
-                        try cacheStorage.deleteCupcake(cupcake)
-                    }
+                    viewModel.showingConfirmation()
                 }
             }
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+        .alert(viewModel.alert?.title ?? "No Title", isPresented: $viewModel.showingAlert) {
+            Button("Cancel", role: .cancel) { }
+            
+            Button("Delete", role: .destructive) {
+                viewModel.deleteCupcake {
+                    dismiss()
+                } deleteCupcake: { cupcake in
+                    try cacheStorage.deleteCupcake(cupcake)
+                }
+            }
+        }
         .toolbar {
             Button("Edit") {
                 viewModel.showingEditView = true
@@ -73,6 +80,6 @@ struct CupcakeDetailView: View {
     }
 }
 
-//#Preview {
-//    CupcakeView(cupcake: <#Cupcake#>)
-//}
+#Preview {
+    CupcakeDetailView(cupcake: .sampleCupcakes[0])
+}
