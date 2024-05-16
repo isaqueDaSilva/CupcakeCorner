@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct OrderView: View {
+    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel: ViewModel
     
     var body: some View {
@@ -51,46 +52,53 @@ struct OrderView: View {
         .listStyle(.plain)
         .navigationTitle("Order")
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: scenePhase) { _, newValue in
+            if newValue == .inactive {
+                viewModel.task?.cancel()
+                viewModel.task = nil
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
                     ActionButton(
                         viewState: $viewModel.viewState,
-                        label: "Add to Bag"
+                        label: "Make Order"
                     ) {
-                        
+                        viewModel.makeOrder()
                     }
                 }
             }
             
             ToolbarItem(placement: .bottomBar) {
                 VStack {
-                    InformationLabel(viewModel.order.finalPrice)
+                    InformationLabel(viewModel.subtotal)
                 }
             }
         }
         .toolbarBackground(.visible, for: .automatic)
+        .alert(
+            viewModel.alert?.title ?? "No Title",
+            isPresented: $viewModel.showingAlert
+        ) {
+            if viewModel.isSuccessed {
+                Button("OK") {
+                    dismiss()
+                }
+            }
+        } message: {
+            Text(viewModel.alert?.description ?? "No Message")
+        }
+
     }
     
-    init(cupcake: Cupcake) {
+    init(cupcake: Cupcake.Get) {
         _viewModel = StateObject(wrappedValue: .init(cupcake: cupcake))
     }
 }
 
 #Preview {
-    do {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let modelContainer = try ModelContainer(for: Cupcake.self, configurations: config)
-        let modelContext = ModelContext(modelContainer)
-        
-        modelContext.insert(Cupcake.sampleCupcakes[0])
-        let decripitor = FetchDescriptor<Cupcake>()
-        let cupcakes = try modelContext.fetch(decripitor)
-        
-        return NavigationStack {
-            OrderView(cupcake: cupcakes[0])
-        }
-    } catch let error {
-        return EmptyView()
+    NavigationStack {
+        OrderView(cupcake: .sampleCupcakes[0])
     }
 }
