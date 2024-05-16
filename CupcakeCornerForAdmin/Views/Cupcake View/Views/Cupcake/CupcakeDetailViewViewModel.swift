@@ -14,7 +14,7 @@ extension CupcakeDetailView {
         
         @Published var showingEditView = false
         @Published var viewState: ViewState = .load
-        @Published var showingError = false
+        @Published var showingAlert = false
         @Published var alert: AppAlert?
         @Published var task: Task<Void, Never>? = nil
         
@@ -30,7 +30,7 @@ extension CupcakeDetailView {
                 description: "Are you sure you want to delete this cupcake?"
             )
             
-            showingError = true
+            showingAlert = true
         }
         
         func deleteCupcake(
@@ -69,7 +69,7 @@ extension CupcakeDetailView {
                     await MainActor.run {
                         self.alert = AppAlert(title: "Falied to Delete Cupcake.", description: error.localizedDescription)
                         viewState = .load
-                        showingError = true
+                        showingAlert = true
                     }
                 }
             }
