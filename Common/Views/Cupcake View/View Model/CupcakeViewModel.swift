@@ -9,7 +9,6 @@ import Foundation
 
 extension CupcakeView {
     final class ViewModel: ObservableObject {
-        @Published var cupcakes = [Cupcake.Get]()
         @Published var viewState: ViewState = .loading
         @Published var showingError = false
         @Published var error: AppAlert?
@@ -19,13 +18,8 @@ extension CupcakeView {
         @Published var showingCreateNewCupcakeView = false
         #endif
         
-        #if CLIENT
-        var newestCupcake: Cupcake.Get? { cupcakes.min { $0.createdAt < $1.createdAt } }
-        #endif
-        
         func getCupcakes(
-            _ cacheCupcakes: @escaping ([Cupcake.Get]) throws -> Void,
-            loadCupcakes: @escaping () -> [Cupcake.Get]
+            _ cacheCupcakes: @escaping ([Cupcake.Get]) throws -> Void
         ) {
             task = Task(priority: .background) {
                 do {
@@ -55,8 +49,6 @@ extension CupcakeView {
                     
                     await MainActor.run { [weak self] in
                         guard let self else { return }
-                        
-                        self.cupcakes = loadCupcakes()
                         self.viewState = .load
                     }
                     
@@ -66,7 +58,6 @@ extension CupcakeView {
                         
                         self.error = AppAlert(title: "Falied to load Cupcakes", description: error.localizedDescription)
                         self.viewState = .load
-                        self.cupcakes = cupcakes
                         self.showingError = true
                     }
                 }
