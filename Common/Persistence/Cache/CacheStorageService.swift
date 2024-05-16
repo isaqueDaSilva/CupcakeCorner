@@ -39,7 +39,7 @@ final class CacheStorageService: ObservableObject {
             storage[0].cupcakes.removeAll()
         }
         
-        storage[0].cupcakes.append(contentsOf: newCupcakes)
+        storage[0].cupcakes = newCupcakes
         
         try save()
     }
@@ -57,11 +57,6 @@ final class CacheStorageService: ObservableObject {
             
             return saveStorages
         }
-        
-        for cupcakes in storage[0].cupcakes {
-            print(cupcakes.createdAt)
-        }
-        
         return storage
     }
     
@@ -92,7 +87,7 @@ final class CacheStorageService: ObservableObject {
         try save()
     }
     
-    func deleteUser(_ user: User.Get) throws {
+    func deleteUser() throws {
         storage[0].user = nil
         try save()
     }
