@@ -19,7 +19,7 @@ extension CupcakeView {
                 
                 Divider()
                 
-                if let newestCupcake = viewModel.newestCupcake {
+                if let newestCupcake = cacheStorage.newestCupcake {
                     Text("New")
                         .headerSessionText()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -47,7 +47,7 @@ extension CupcakeView {
                 #endif
                 
                 LazyVGrid(columns: colums) {
-                    ForEach(viewModel.cupcakes) { cupcake in
+                    ForEach(cacheStorage.storage[0].cupcakes) { cupcake in
                         NavigationLink(value: cupcake) {
                             CupcakeCard(
                                 name: cupcake.flavor,
