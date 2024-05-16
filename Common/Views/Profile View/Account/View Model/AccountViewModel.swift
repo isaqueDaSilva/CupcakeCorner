@@ -52,7 +52,7 @@ extension AccountView {
         
         func logout(
             _ completation: @escaping () -> Void,
-            deleteUserCached: @escaping (User.Get) throws -> Void
+            deleteUserCached: @escaping () throws -> Void
         ) {
             task = Task(priority: .background) {
                 do {
@@ -77,11 +77,7 @@ extension AccountView {
                         throw APIError.badResponse
                     }
                     
-                    if let user {
-                        try deleteUserCached(user)
-                    } else {
-                        throw PersistenceDataError.noData
-                    }
+                    try deleteUserCached()
                     
                     _ = try KeychainService.delete()
                     
