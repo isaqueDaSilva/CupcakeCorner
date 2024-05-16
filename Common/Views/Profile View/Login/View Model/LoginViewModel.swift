@@ -47,10 +47,9 @@ extension LoginView {
                     
                     let userGetted = try decoder.decode(User.Get.self, from: data)
                     
-                    try cacheUser(userGetted)
-                    
-                    await MainActor.run {
+                    try await MainActor.run {
                         self.viewState = .load
+                        try cacheUser(userGetted)
                         completation()
                     }
                 } catch let error {

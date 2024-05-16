@@ -4,9 +4,10 @@
 # Features
 
 - List of available Cupcakes;
-- Page to check Cupcake details;
+- Newest Cupcake Highlight;
+- Create, Update and Delete an Cupcake(Admin Version)
+- Real-Time information about Orders
 - Page to place a cupcake order
-- Shopping cart page;
 - Profile page;
 - Authentication;
 
@@ -15,3 +16,8 @@
 - SwiftUI for create an UI;
 - Keychain for stores sensitive user data;
 - SwiftData for store data as cache.
+- WebSockets for real-time order status
+
+# Requirements
+- iOS 17+
+- Xcode 15.3+

@@ -59,10 +59,9 @@ extension CupcakeDetailView {
                         throw APIError.badResponse
                     }
                     
-                    try deleteCupcake(cupcake)
-                    
-                    await MainActor.run {
+                    try await MainActor.run {
                         viewState = .load
+                        try deleteCupcake(cupcake)
                         completationHandler()
                     }
                 } catch let error {

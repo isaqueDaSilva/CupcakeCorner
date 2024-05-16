@@ -45,10 +45,9 @@ extension CupcakeView {
                     
                     let cupcakesResults = try decoder.decode([Cupcake.Get].self, from: data)
                     
-                    try cacheCupcakes(cupcakesResults)
-                    
-                    await MainActor.run { [weak self] in
+                    try await MainActor.run { [weak self] in
                         guard let self else { return }
+                        try cacheCupcakes(cupcakesResults)
                         self.viewState = .load
                     }
                     

@@ -77,12 +77,11 @@ extension AccountView {
                         throw APIError.badResponse
                     }
                     
-                    try deleteUserCached()
-                    
                     _ = try KeychainService.delete()
                     
-                    await MainActor.run {
+                    try await MainActor.run {
                         signOutViewState = .load
+                        try deleteUserCached()
                         completation()
                     }
                 } catch {
