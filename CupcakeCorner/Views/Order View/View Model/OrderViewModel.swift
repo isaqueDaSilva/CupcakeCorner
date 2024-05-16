@@ -11,11 +11,14 @@ import SwiftUI
 extension OrderView {
     final class ViewModel: ObservableObject {
         @Published var order: Order.Create
-        @Published var showingError = false
-        @Published var error: AppAlert?
+        @Published var showingAlert = false
+        @Published var alert: AppAlert?
         @Published var viewState: ViewState = .load
+        @Published var task: Task<Void, Never>? = nil
         
-        let cupcake: Cupcake
+        var isSuccessed = false
+        
+        let cupcake: Cupcake.Get
         
         var extraFrostingPrice: Double {
             Double(order.quantity)
@@ -25,29 +28,56 @@ extension OrderView {
             Double(order.quantity) / 2.0
         }
         
-        func makeOrder(_ completationHandler: @escaping () -> Void) {
-            Task {
+        var subtotal: Double {
+            var cupcakeCost: Double {
+                cupcake.price * Double(order.quantity)
+            }
+            
+            var extraFrostingTax: Double {
+                order.extraFrosting ? extraFrostingPrice : 0
+            }
+            
+            var addSprinklesTax: Double {
+                order.addSprinkles ? addSprinklesPrice : 0
+            }
+            
+            let finalPrice = cupcakeCost + extraFrostingTax + addSprinklesTax
+            
+            return finalPrice
+        }
+        
+        func showingAlert(
+            title: String,
+            description: String
+        ) {
+            self.alert = AppAlert(title: title, description: description)
+            self.viewState = .load
+            self.showingAlert = true
+        }
+        
+        func makeOrder() {
+            task = Task {
                 do {
                     await MainActor.run {
-                        viewState = .load
+                        viewState = .loading
+                        order.finalPrice = subtotal
                     }
                     
                     let encoder = JSONEncoder()
                     
-                    let encodedOrder = try encoder.encode(order)
+                    let orderData = try encoder.encode(order)
                     
                     let tokenValue = try KeychainService.retrive()
-                    
                     let bearerValue = AuthorizationHeader.bearer.rawValue
                     
                     let request = NetworkService(
                         endpoint: "http://127.0.0.1:8080/api/order/create",
                         values: [
-                            .init(value: "application/json", httpHeaderField: .contentType),
-                            .init(value: "\(bearerValue) \(tokenValue)", httpHeaderField: .authorization)
+                            .init(value: "\(bearerValue) \(tokenValue)", httpHeaderField: .authorization),
+                            .init(value: "application/json", httpHeaderField: .contentType)
                         ],
                         httpMethod: .post,
-                        type: .uploadData(encodedOrder)
+                        type: .uploadData(orderData)
                     )
                     
                     let (_, response) = try await request.run()
@@ -57,20 +87,18 @@ extension OrderView {
                     }
                     
                     await MainActor.run {
-                        viewState = .load
-                        completationHandler()
+                        isSuccessed = true
+                        showingAlert(title: "Order Send with Success", description: "")
                     }
                 } catch let error {
                     await MainActor.run {
-                        self.error = AppAlert(title: "Falied To make order", description: error.localizedDescription)
-                        viewState = .load
-                        showingError = true
+                        showingAlert(title: "Falied to send Order", description: error.localizedDescription)
                     }
                 }
             }
         }
         
-        init(cupcake: Cupcake) {
+        init(cupcake: Cupcake.Get) {
             _order = Published(
                 initialValue: .init(
                     cupcake: cupcake.id,
