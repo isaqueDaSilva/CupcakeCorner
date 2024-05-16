@@ -24,7 +24,10 @@ enum Send: Codable {
 }
 
 enum Receive: Codable {
-    /// Choose this case, if you want to receive the all orders given from the server.
+    /// Choose this case if you want to receive the new order the moment a user places it.
+    case newOrder(Order.Get)
+    
+    /// Choise this case, if you want to receive the all orders given from the server.
     case orders([Order.Get])
     
     /// Choice this case, if you want to receive an updated order coming from the server.
