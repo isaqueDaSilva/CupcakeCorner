@@ -11,7 +11,7 @@ import Foundation
 final class OrderWebSocketService: NSObject {
     private var webSocketTask: URLSessionWebSocketTask?
     
-    let orderReceivedSubject: PassthroughSubject<WebSocketMessage<Receive>, Error>
+    let orderReceivedSubject: PassthroughSubject<WebSocketMessage<Receive>, WebSocketConnectionError>
     
     func connect() throws {
         let endpoint = "ws://127.0.0.1:8080/api/order/channel"
@@ -43,6 +43,30 @@ final class OrderWebSocketService: NSObject {
         receiveData()
     }
     
+    private func sendPing() {
+        let taskIdentifier = webSocketTask?.taskIdentifier ?? -1
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + 5) { [weak self] in
+            guard let self else { return }
+            
+            guard let task = self.webSocketTask, task.taskIdentifier == taskIdentifier else { return }
+            
+            if task.state == .running {
+                task.sendPing {  error in
+                    if let error {
+                        print("Falied to receive pong with \(error)")
+                    } else {
+                        print("Connection is alive")
+                    }
+                    
+                    self.sendPing()
+                }
+            } else {
+                reconnect()
+            }
+        }
+    }
+    
     private func receiveData() {
         webSocketTask?.receive { [weak self] results in
             guard let self else { return }
@@ -55,19 +79,24 @@ final class OrderWebSocketService: NSObject {
                 case .string(let reason):
                     self.disconnect(
                         with: .unsupportedData,
-                        and: reason
+                        reason: reason
                     )
                 @unknown default:
                     self.disconnect(
                         with: .internalServerError,
-                        and: "Closing with an unexpected error occur."
+                        reason: "Closing with an unexpected error occur."
                     )
                 }
+                
+                self.receiveData()
             case .failure(let failure):
-                orderReceivedSubject.send(completion: .failure(WebSocketConnectionError.unknownError(failure)))
+                disconnect(
+                    with: .unsupportedData,
+                    reason: failure.localizedDescription,
+                    and: .unknownError(failure)
+                )
+                break
             }
-            
-            receiveData()
         }
     }
     
@@ -95,19 +124,27 @@ final class OrderWebSocketService: NSObject {
                     print("Success")
                 }
             }
-            
-            self.receiveData()
         }
     }
     
     func disconnect(
         with closeCode: URLSessionWebSocketTask.CloseCode = .normalClosure,
-        and reason: String = "Closing connection"
+        reason: String = "Closing connection",
+        and error: WebSocketConnectionError? = nil
     ) {
         let reason = reason.data(using: .utf8)
         webSocketTask?.cancel(with: closeCode, reason: reason)
         webSocketTask = nil
-        orderReceivedSubject.send(completion: .finished)
+        orderReceivedSubject.send(completion: (error != nil) ? .failure(error ?? .noConnection) : .finished)
+    }
+    
+    private func reconnect() {
+        do {
+            disconnect()
+            try connect()
+        } catch {
+            print("Falied to reconnect the server with \(error.localizedDescription)")
+        }
     }
     
     override init() {
@@ -125,6 +162,7 @@ final class OrderWebSocketService: NSObject {
 extension OrderWebSocketService: URLSessionWebSocketDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         receiveData()
+        sendPing()
         print("Web Socket did connect")
     }
     
