@@ -11,61 +11,42 @@ extension BagView {
     @ViewBuilder
     func BagViewPopulated() -> some View {
         List {
-            ForEach(0..<10) { integer in
+            ForEach(viewModel.orders) { order in
                 Section {
-//                    ItemCard(
-//                        name: "Some Item \(integer + 1)",
-//                        price: Double.random(in: 1...50)
-//                    )
+                    ItemCard(
+                        name: viewModel.displayName(order),
+                        description: viewModel.displayDescription(order),
+                        imageData: order.cupcake.coverImage,
+                        price: order.finalPrice
+                    )
                 }
                 .listRowSeparator(.hidden)
                 .listSectionSpacing(0)
-            }
-            
-            #if CLIENT
-            Section {
-                HStack(alignment: .top) {
-                    Text("Shipping Address:")
-                    
-                    VStack(alignment: .trailing) {
-                        Text("Name")
-                        Text("Street")
-                        Text("City")
-                        Text("ZIP Code")
+                #if ADMIN
+                .swipeActions {
+                    Button {
+                        var status: Status = .ordered
+                        
+                        if order.status == .ordered {
+                            status = .outForDelivery
+                        } else if order.status == .outForDelivery {
+                            status = .delivered
+                        }
+                        
+                        viewModel.updateOrder(with: order.id, status: status)
+                    } label: {
+                        if order.status == .ordered {
+                            Icon.truck.systemImage
+                        } else if order.status == .outForDelivery {
+                            Icon.shippingBox.systemImage
+                        }
                     }
-                    .foregroundStyle(.gray)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .tint(order.status == .ordered ? .yellow : .green)
+
                 }
-                
-                LabeledContent("Payment Method:", value: "Credit Card")
-                
-                VStack {
-                    InformationLabel(15)
-                    InformationLabel(0, title: "Shipping")
-                    InformationLabel(15, title: "Total")
-                }
-            } header: {
-                Text("Resume")
-                    .headerSessionText()
+                #endif
             }
-            .listRowSeparator(.visible, edges: .all)
-            #endif
         }
         .listStyle(.plain)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                EditButton()
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                //ActionButton(label: "Finish") { }
-            }
-        }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        BagView().BagViewPopulated()
     }
 }
