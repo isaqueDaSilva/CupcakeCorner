@@ -16,7 +16,7 @@ extension BagView {
                     ItemCard(
                         name: viewModel.displayName(order),
                         description: viewModel.displayDescription(order),
-                        imageData: order.cupcake.coverImage,
+                        image: viewModel.getImage(from: order.cupcake.coverImage),
                         price: order.finalPrice
                     )
                 }
