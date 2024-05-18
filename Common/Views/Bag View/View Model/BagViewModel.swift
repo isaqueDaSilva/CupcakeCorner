@@ -30,6 +30,16 @@ extension BagView {
             return total
         }
         
+        func getImage(from data: Data) -> Image {
+            let uiImage = UIImage(data: data)
+            
+            guard let uiImage else {
+                return Icon.questionmarkDiamond.systemImage
+            }
+            
+            return Image(uiImage: uiImage)
+        }
+        
         private func showingAlert(
             title: String,
             error: Error
@@ -75,15 +85,6 @@ extension BagView {
             _ message: PassthroughSubject<WebSocketMessage<Receive>, any Error>.Output
         ) -> Receive {
             message.data
-        }
-        
-        private func handleWithError(
-            _ error: PassthroughSubject<WebSocketMessage<Receive>, any Error>.Failure
-        ) {
-            showingAlert(
-                title: "Falied to Get Data",
-                error: error
-            )
         }
         
         private func receiveValues()  {
