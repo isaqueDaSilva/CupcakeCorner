@@ -5,7 +5,6 @@
 //  Created by Isaque da Silva on 23/04/24.
 //
 
-import Combine
 import Foundation
 import SwiftUI
 
@@ -14,9 +13,9 @@ extension BagView {
         @Published var orders = [Order.Get]()
         @Published var viewState: ViewState = .loading
         @Published var showingAlert = false
-        @Published var alert: AppAlert?
+        @Published var alert: AppErrorProtocol?
         
-        private var cancellables = Set<AnyCancellable>()
+        private var receiveMessageTask: Task<Void, Never>? = nil
         private let orderService = OrderWebSocketService()
         private var clientID: UUID?
         
@@ -41,10 +40,10 @@ extension BagView {
         }
         
         private func showingAlert(
-            title: String,
             error: Error
         ) {
-            alert = AppAlert(title: title, description: error.localizedDescription)
+            alert = error as? AppErrorProtocol
+            disconnect()
             viewState = .faliedToLoad
             showingAlert = true
         }
@@ -60,8 +59,14 @@ extension BagView {
                 return
             }
             
-            let message = WebSocketMessage<Send>(clientID: clientID, data: .get)
-            try orderService.send(message)
+            Task {
+                do {
+                    let message = WebSocketMessage<Send>(clientID: clientID, data: .get)
+                    try await orderService.send(message)
+                } catch let error {
+                    showingAlert(error: error)
+                }
+            }
         }
         
         func connect() {
@@ -74,79 +79,81 @@ extension BagView {
             } catch let error {
                 orders = []
                 viewState = .faliedToLoad
-                showingAlert(
-                    title: "Falied to connect.",
-                    error: error
-                )
+                showingAlert(error: error)
             }
         }
         
-        private func getReceive(
-            _ message: PassthroughSubject<WebSocketMessage<Receive>, any Error>.Output
-        ) -> Receive {
-            message.data
-        }
-        
         private func receiveValues()  {
-            orderService.orderReceivedSubject
-                .subscribe(on: DispatchQueue.global(qos: .background))
-                .receive(on: DispatchQueue.main)
-                .map(getReceive)
-                .sink { [weak self] completation in
-                    guard let self else { return }
-                    switch completation {
-                    case .finished:
-                        print("Finished with success")
-                        break
-                    case .failure(let error):
-                        self.showingAlert(
-                            title: "Falied to Get Orders",
-                            error: error
-                        )
-                        break
-                    }
-                } receiveValue: { [weak self] message in
-                    guard let self else { return }
-                    
-                    switch message {
-                    case .newOrder(let newOrder):
-                        self.orders.append(newOrder)
-                    case .orders(let orders):
-                        self.orders = orders
-                        self.viewState = .load
-                    case .update(let updatedOrder):
-                        for order in orders {
-                            if order.id == updatedOrder.id {
-                                guard let index = orders.firstIndex(of: order) else { return }
-                                
-                                self.orders.remove(at: index)
-                                if updatedOrder.status != .delivered {
-                                    self.orders.insert(updatedOrder, at: index)
-                                }
+            receiveMessageTask = Task {
+                do {
+                    for try await receivedMessage in orderService.orderReceivedSubject.values {
+                        switch receivedMessage.data {
+                        case .newOrder(let order):
+                            await MainActor.run {
+                                insertNew(order)
+                            }
+                        case .orders(let orders):
+                            await MainActor.run {
+                                load(orders)
+                            }
+                        case .update(let order):
+                            await MainActor.run {
+                                update(order)
                             }
                         }
                     }
+                } catch {
+                    await MainActor.run {
+                        showingAlert(error: error)
+                    }
                 }
-                .store(in: &cancellables)
+            }
         }
         
-        func disconnect() { orderService.disconnect() }
+        private func insertNew(_ newOrder: Order.Get) {
+            withAnimation(.easeIn) {
+                orders.append(newOrder)
+            }
+        }
+        
+        private func load(_ orders: [Order.Get]) {
+            self.orders = orders
+            viewState = .load
+        }
+        
+        private func update(_ updatedOrder: Order.Get) {
+            for order in orders {
+                if order.id == updatedOrder.id {
+                    guard let index = orders.firstIndex(of: order) else { return }
+                    
+                    self.orders.remove(at: index)
+                    if updatedOrder.status != .delivered {
+                        orders.insert(updatedOrder, at: index)
+                    }
+                }
+            }
+        }
+        
+        func disconnect() {
+            orderService.disconnect()
+            receiveMessageTask?.cancel()
+            receiveMessageTask = nil
+        }
         
         #if ADMIN
         func updateOrder(with id: UUID, status: Status) {
-            do {
-                let updatedOrder = Order.Update(id: id, status: status)
-                let sendMessage: Send = .update(updatedOrder)
-                
-                if let clientID {
-                    let message = WebSocketMessage<Send>(clientID: clientID, data: sendMessage)
-                    try orderService.send(message)
+            Task {
+                do {
+                    let updatedOrder = Order.Update(id: id, status: status)
+                    let sendMessage: Send = .update(updatedOrder)
+                    
+                    if let clientID {
+                        let message = WebSocketMessage<Send>(clientID: clientID, data: sendMessage)
+                        try await orderService.send(message)
+                    }
+                } catch let error {
+                    showingAlert(error: error)
                 }
-            } catch let error {
-                showingAlert(
-                    title: "Falied to send Update",
-                    error: error
-                )
             }
         }
         #endif
