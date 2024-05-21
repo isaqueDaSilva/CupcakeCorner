@@ -42,12 +42,13 @@ struct BagView: View {
                     clientID: cacheStorage.storage[0].user?.id
                 )
                 
-                accessPageCount += 1
-                
-                if accessPageCount == 1 {
-                    if cacheStorage.storage[0].user != nil {
+                if cacheStorage.storage[0].user != nil {
+                    accessPageCount += 1
+                    if accessPageCount == 1 {
                         viewModel.connect()
                     }
+                } else {
+                    viewModel.viewState = .load
                 }
             }
             .onChange(of: scenePhase) { _, newValue in
@@ -66,13 +67,7 @@ struct BagView: View {
                 }
             }
             #endif
-            .alert(
-                viewModel.alert?.title ?? "No Title",
-                isPresented: $viewModel.showingAlert
-            ) {
-            } message: {
-                Text(viewModel.alert?.description ?? "No Description")
-            }
+            .appErrorAlert($viewModel.showingAlert, error: viewModel.alert) { }
         }
     }
 }
