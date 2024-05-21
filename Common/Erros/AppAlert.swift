@@ -6,13 +6,36 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct AppAlert {
-    let title: String
-    let description: String
+struct AppAlert<A: View>: ViewModifier {
+    @Binding var isPresented: Bool
+    let error: AppErrorProtocol?
+    @ViewBuilder var action: () -> A
     
-    init(title: String, description: String) {
-        self.title = title
-        self.description = description
+    func body(content: Content) -> some View {
+        content
+            .alert(error?.title ?? "No Title", isPresented: $isPresented) {
+                action()
+            } message: {
+                Text(error?.description ?? "No Description")
+            }
+    }
+}
+
+extension View {
+    func appErrorAlert<A: View>(
+        _ isPresented: Binding<Bool>,
+        error: AppErrorProtocol?,
+        @ViewBuilder actions: @escaping () -> A
+    ) -> some View {
+        self
+            .modifier(
+                AppAlert<A>(
+                    isPresented: isPresented,
+                    error: error,
+                    action: actions
+                )
+            )
     }
 }
