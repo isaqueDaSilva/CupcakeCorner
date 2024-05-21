@@ -12,6 +12,7 @@ final class OrderWebSocketService: NSObject {
     private var webSocketTask: URLSessionWebSocketTask?
     
     let orderReceivedSubject: PassthroughSubject<WebSocketMessage<Receive>, WebSocketConnectionError>
+    private var receiveTask: Task<Void, Never>? = nil
     
     func connect() throws {
         let endpoint = "ws://127.0.0.1:8080/api/order/channel"
@@ -46,6 +47,7 @@ final class OrderWebSocketService: NSObject {
     private func sendPing() {
         let taskIdentifier = webSocketTask?.taskIdentifier ?? -1
         
+        
         DispatchQueue.global().asyncAfter(deadline: .now() + 5) { [weak self] in
             guard let self else { return }
             
@@ -68,12 +70,11 @@ final class OrderWebSocketService: NSObject {
     }
     
     private func receiveData() {
-        webSocketTask?.receive { [weak self] results in
-            guard let self else { return }
-            
-            switch results {
-            case .success(let success):
-                switch success {
+        receiveTask = Task {
+            do {
+                guard let messages = try await webSocketTask?.receive() else { return }
+                
+                switch messages {
                 case .data(let data):
                     self.onReceive(data)
                 case .string(let reason):
@@ -88,14 +89,13 @@ final class OrderWebSocketService: NSObject {
                     )
                 }
                 
-                self.receiveData()
-            case .failure(let failure):
+                receiveData()
+            } catch let error {
                 disconnect(
                     with: .unsupportedData,
-                    reason: failure.localizedDescription,
-                    and: .unknownError(failure)
+                    reason: error.localizedDescription,
+                    and: .unknownError(error)
                 )
-                break
             }
         }
     }
@@ -109,22 +109,12 @@ final class OrderWebSocketService: NSObject {
         orderReceivedSubject.send(receivedOrder)
     }
     
-    func send(_ message: WebSocketMessage<Send>) throws {
+    func send(_ message: WebSocketMessage<Send>) async throws {
         guard let messageData = try? message.encodeWebSocketMessage() else {
             throw WebSocketConnectionError.encodingError
         }
         
-        DispatchQueue.global().async { [weak self] in
-            guard let self else { return }
-            
-            self.webSocketTask?.send(.data(messageData)) { error in
-                if let error {
-                    print("Failed to send message with '\(error.localizedDescription)' error.")
-                } else {
-                    print("Success")
-                }
-            }
-        }
+        try await webSocketTask?.send(.data(messageData))
     }
     
     func disconnect(
@@ -133,6 +123,10 @@ final class OrderWebSocketService: NSObject {
         and error: WebSocketConnectionError? = nil
     ) {
         let reason = reason.data(using: .utf8)
+        
+        receiveTask?.cancel()
+        receiveTask = nil
+        
         webSocketTask?.cancel(with: closeCode, reason: reason)
         webSocketTask = nil
         orderReceivedSubject.send(completion: (error != nil) ? .failure(error ?? .noConnection) : .finished)
