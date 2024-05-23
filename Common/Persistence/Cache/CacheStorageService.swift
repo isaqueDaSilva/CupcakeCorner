@@ -115,7 +115,6 @@ final class CacheStorageService: ObservableObject {
             // and in case has, the count is equal to 1.
             guard !gettedStorage.isEmpty, gettedStorage.count == 1 else {
                 // Delete all storages saved
-                // in case the storages model count is greater than 1
                 for storage in gettedStorage {
                     context.delete(storage)
                 }
