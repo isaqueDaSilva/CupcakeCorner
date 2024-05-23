@@ -108,9 +108,33 @@ final class CacheStorageService: ObservableObject {
             let container = try ModelContainer(for: CacheStorage.self, configurations: config)
             self.context = ModelContext(container)
             
-            let storagesSaved = try get()
+            let descriptor = FetchDescriptor<CacheStorage>()
+            let gettedStorage = try context.fetch(descriptor)
             
-            _storage = Published(initialValue: storagesSaved)
+            // Checks if has some storage model saved
+            // and in case has, the count is equal to 1.
+            guard !gettedStorage.isEmpty, gettedStorage.count == 1 else {
+                // Delete all storages saved
+                // in case the storages model count is greater than 1
+                for storage in gettedStorage {
+                    context.delete(storage)
+                }
+                
+                // Save changes
+                try context.save()
+                
+                // Create a new storage
+                let storage = CacheStorage()
+                context.insert(storage)
+                try context.save()
+                
+                // Get the storage saved and initialize the storage property
+                let gettedNewStorage = try context.fetch(descriptor)
+                _storage = Published(initialValue: gettedNewStorage)
+                return
+            }
+            
+            _storage = Published(initialValue: gettedStorage)
             
         } catch {
             fatalError("Unable to initialize provider.")
