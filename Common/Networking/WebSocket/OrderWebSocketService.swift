@@ -9,10 +9,10 @@ import Combine
 import Foundation
 
 final class OrderWebSocketService: NSObject {
-    private var webSocketTask: URLSessionWebSocketTask?
     
+    private var webSocketTask: URLSessionWebSocketTask?
     let orderReceivedSubject: PassthroughSubject<WebSocketMessage<Receive>, WebSocketConnectionError>
-    private var receiveTask: Task<Void, Never>? = nil
+    private var receiveTask: Task<Void, Never>?
     
     func connect() throws {
         let endpoint = "ws://127.0.0.1:8080/api/order/channel"
@@ -144,6 +144,7 @@ final class OrderWebSocketService: NSObject {
     override init() {
         self.webSocketTask = nil
         self.orderReceivedSubject = .init()
+        self.receiveTask = nil
         
         super.init()
     }
