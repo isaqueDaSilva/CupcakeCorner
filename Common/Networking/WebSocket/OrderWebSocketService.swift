@@ -150,7 +150,7 @@ final class OrderWebSocketService: NSObject {
     }
     
     deinit {
-        orderReceivedSubject.send(completion: .finished)
+        disconnect()
     }
 }
 
