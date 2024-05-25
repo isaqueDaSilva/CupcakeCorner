@@ -7,13 +7,13 @@
 
 import SwiftUI
 
+/// The main scene's entry point for the app.
 struct MainEntrypoint: Scene {
-    @StateObject private var cacheStorage = CacheStorageService()
+    private let cacheStore = CacheStoreService()
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .environmentObject(cacheStorage)
+            HomeView(cacheStore)
         }
     }
 }
