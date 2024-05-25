@@ -8,10 +8,20 @@
 import Foundation
 
 extension KeychainService {
+    
+    /// An representation of the errors that may be occur on a operation of the Keychain .
     enum KeychainError: Error, LocalizedError {
+        
+        /// This error is for time when saving operation has failed.
         case saveError
+        
+        /// This error is for time when the searching operation don't find any item.
         case noToken
+        
+        /// This error is for time when the unexpected token data is find.
         case unexpectedTokenData
+        
+        /// This error is for time when the unknown error is find
         case unhandledError(status: OSStatus)
         
         var errorDescription: String? {

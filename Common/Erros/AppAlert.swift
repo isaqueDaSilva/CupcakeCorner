@@ -6,36 +6,17 @@
 //
 
 import Foundation
-import SwiftUI
 
-struct AppAlert<A: View>: ViewModifier {
-    @Binding var isPresented: Bool
-    let error: AppErrorProtocol?
-    @ViewBuilder var action: () -> A
+/// A representation of the error issued by the app, to be used to display an alert.
+struct AppAlert {
+    /// The title of the error that was occured.
+    let title: String
     
-    func body(content: Content) -> some View {
-        content
-            .alert(error?.title ?? "No Title", isPresented: $isPresented) {
-                action()
-            } message: {
-                Text(error?.description ?? "No Description")
-            }
-    }
-}
-
-extension View {
-    func appErrorAlert<A: View>(
-        _ isPresented: Binding<Bool>,
-        error: AppErrorProtocol?,
-        @ViewBuilder actions: @escaping () -> A
-    ) -> some View {
-        self
-            .modifier(
-                AppAlert<A>(
-                    isPresented: isPresented,
-                    error: error,
-                    action: actions
-                )
-            )
+    /// The description of the error that was occured.
+    let description: String
+    
+    init(title: String, description: String) {
+        self.title = title
+        self.description = description
     }
 }

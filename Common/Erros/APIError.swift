@@ -7,11 +7,22 @@
 
 import Foundation
 
+/// An representation of the errors that may be occur on a request for the API.
 enum APIError: Error {
+    
+    /// This error is for time when the URL is not valid.
     case badURL
+    
+    /// This error is for time when the encoding data is failied.
     case badEncoding
+    
+    /// This error is for time when the response is no valid.
     case badResponse
+    
+    /// This error is for time when some field required is empty for makes a request.
     case fieldsEmpty
+    
+    /// This error is for time when response status code is equal to 401 or access denied.
     case accessDenied
 }
 
