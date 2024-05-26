@@ -8,15 +8,29 @@
 import SwiftUI
 
 struct EmptyStateView: View {
+    let title: String
+    let description: String
+    let icon: Icon
+    
     var body: some View {
         ContentUnavailableView(
-            BagViewTexts.contentUnavaiableTitle.rawValue,
-            systemImage: Icon.bag.rawValue,
-            description: Text(description.rawValue)
+            title,
+            systemImage: icon.rawValue,
+            description: Text(description)
         )
+    }
+    
+    init(title: String, description: String, icon: Icon) {
+        self.title = title
+        self.description = description
+        self.icon = icon
     }
 }
 
 #Preview {
-    EmptyStateView()
+    EmptyStateView(
+        title: "Something",
+        description: "somthing",
+        icon: .bag
+    )
 }
