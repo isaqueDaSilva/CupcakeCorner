@@ -8,8 +8,6 @@
 import Foundation
 import SwiftUI
 
-struct Cupcake { }
-
 extension Cupcake {
     enum CodingKeys: String, CodingKey {
         case id = "id"

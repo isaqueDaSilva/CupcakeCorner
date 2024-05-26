@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// A representation Model for the authorization header
+/// used in the App for makes an authorization request.
 enum AuthorizationHeader: String {
     case bearer = "Bearer"
     case basic = "Basic"

@@ -57,7 +57,7 @@ extension Order {
 
 extension Order {
     struct Create: Encodable {
-        let cupcake: UUID
+        let cupcake: UUID?
         
         var quantity: Int
         
@@ -70,7 +70,7 @@ extension Order {
         let status: Status = .ordered
         
         init(
-            cupcake: UUID,
+            cupcake: UUID?,
             quantity: Int,
             extraFrosting: Bool,
             addSprinkles: Bool,

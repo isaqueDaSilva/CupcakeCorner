@@ -7,8 +7,6 @@
 
 import Foundation
 
-struct User { }
-
 extension User {
     enum CodingKeys: String, CodingKey {
         case id = "id"

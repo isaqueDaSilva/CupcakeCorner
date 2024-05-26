@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+/// A representation model of the all SF Symbols used in the App.
 enum Icon: String {
     case house = "house"
     case bag = "bag"
@@ -22,6 +23,7 @@ enum Icon: String {
     case plusCircle = "plus.circle"
     case squareSlash = "square.slash"
     case truck = "truck.box"
+    case magnifyingglass = "magnifyingglass"
     
     var systemImage: Image {
         Image(systemName: self.rawValue)

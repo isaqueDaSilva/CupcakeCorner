@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A representation Model for handle with some View state.
 enum ViewState {
     case load, loading, faliedToLoad
 }
