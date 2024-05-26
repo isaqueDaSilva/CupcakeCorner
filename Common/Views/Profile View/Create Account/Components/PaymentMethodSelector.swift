@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct PaymentMethodSelector: View {
+    let method: PaymentMethod
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if method != .isAdmin {
+            Text(method.displayedName)
+                .tag(method.id)
+        }
+    }
+    
+    init(_ method: PaymentMethod) {
+        self.method = method
     }
 }
 
 #Preview {
-    PaymentMethodSelector()
+    PaymentMethodSelector(.cash)
 }

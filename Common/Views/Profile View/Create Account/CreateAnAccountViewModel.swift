@@ -34,25 +34,23 @@ extension CreateAnAccount {
         }
         
         func createUser() {
-            task = Task {
+            task = Task(priority: .background) {
                 await MainActor.run {
-                    viewState = .loading
+                    self.viewState = .loading
                 }
                 
                 do {
                     #if CLIENT
                     await MainActor.run {
-                        newUser.fullAdress = self.fullAdress
-                        newUser.city = self.city
-                        newUser.zip = self.zip
+                        self.newUser.fullAdress = self.fullAdress
+                        self.newUser.city = self.city
+                        self.newUser.zip = self.zip
                     }
                     #endif
                     
                     let encoder = JSONEncoder()
                     
-                    guard let data = try? encoder.encode(newUser) else {
-                        throw APIError.badEncoding
-                    }
+                    let data = try encoder.encode(newUser)
                     
                     let request = NetworkService.init(
                         endpoint: "http://127.0.0.1:8080/api/user/create",

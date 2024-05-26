@@ -13,6 +13,7 @@ struct CreateAnAccount: View {
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
+        let _ = Self._printChanges()
         Form {
             Section("User Information") {
                 LabeledContent("Name:") {
@@ -39,11 +40,8 @@ struct CreateAnAccount: View {
                 #if CLIENT
                 LabeledContent("Payment Method") {
                     Picker("Payment Method", selection: $viewModel.newUser.paymentMethod) {
-                        ForEach(PaymentMethod.allCases, id: \.rawValue) { method in
-                            if method != .isAdmin {
-                                Text(method.displayedName)
-                                    .tag(method.id)
-                            }
+                        ForEach(PaymentMethod.allCases, id: \.id) { method in
+                            PaymentMethodSelector(method)
                         }
                     }
                     .labelsHidden()
@@ -84,16 +82,14 @@ struct CreateAnAccount: View {
         }
         .navigationTitle("Create Account")
         .alert(
-            viewModel.alert?.title ?? "No Title.",
+            "Account Created",
             isPresented: $viewModel.showingAlert
         ) {
             Button("OK") {
-                if viewModel.isSuccessed {
-                    dismiss()
-                }
+                dismiss()
             }
         } message: {
-            Text(viewModel.alert?.description ?? "No Description...")
+            Text("Your account was created with success, click in OK and log in the system for gets the full access in the App.")
         }
         .onChange(of: scenePhase) { _ , newValue in
             if (newValue == .inactive) {
