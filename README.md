@@ -1,13 +1,13 @@
-# Cupcake Corner Overview
- Cupcake Corner is an App, which helps users place their cupcake orders.
-
+# Cupcake Corner
+ An app that helps and simplify users to make their cupcake orders.
+ 
 # Features
 
 - List of available Cupcakes;
 - Newest Cupcake Highlight;
-- Create, Update and Delete an Cupcake(Admin Version)
-- Real-Time information about Orders
-- Page to place a cupcake order
+- Create, Update and Delete an Cupcake(Admin Version);
+- Real-Time information about Orders;
+- Page to make a cupcake order;
 - Profile page;
 - Authentication;
 
@@ -15,9 +15,12 @@
 - Swift as main language of the project;
 - SwiftUI for create an UI;
 - Keychain for stores sensitive user data;
-- SwiftData for store data as cache.
-- WebSockets for real-time order status
+- Core Data for store data as cache.
+- URLSessionWebSocket for real-time order status
 
-# Requirements
-- iOS 17+
+# Demonstration
+*Coming soon*
+
+# Minimum versions
 - Xcode 15.3+
+- iOS 17+
