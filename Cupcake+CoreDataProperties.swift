@@ -41,7 +41,10 @@ extension Cupcake {
             return []
         }
         
-        return ingredients.map { String($0) }
+        let ingredientsArray = ingredients.map { String($0) }
+        
+        print(ingredientsArray)
+        return ingredientsArray
     }
     
     public var wrappedCreationDate: Date {

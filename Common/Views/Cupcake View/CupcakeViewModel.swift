@@ -81,6 +81,9 @@ extension CupcakeView {
                     
                     // Creates a new cupcake in Core Data.
                     for newCupcake in newCupcakes {
+                        print(newCupcake.ingredients)
+                        print(newCupcake.ingredients.joined(separator: ", "))
+                        
                         let context = await cacheStore.getContext()
                         let cupcake = Cupcake(context: context)
                         cupcake.id = newCupcake.id
