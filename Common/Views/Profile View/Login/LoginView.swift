@@ -9,10 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     @Environment(\.scenePhase) var scenePhase
-    @EnvironmentObject private var pageController: PageController
-    @EnvironmentObject private var cacheStorage: CacheStorageService
     
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel: ViewModel
     
     var body: some View {
         Form {
@@ -35,11 +33,7 @@ struct LoginView: View {
                     label: "Sign In",
                     width: .infinity
                 ) {
-                    viewModel.login {
-                        pageController.setNewValue(true)
-                    } cacheUser: { newUser in
-                        try cacheStorage.addNewUser(newUser)
-                    }
+                    viewModel.login()
                 }
             }
         }
@@ -78,11 +72,15 @@ struct LoginView: View {
             }
         }
     }
-}
-
-#Preview {
-    NavigationStack {
-        LoginView()
-            .environmentObject(PageController())
+    
+    init(cacheStorage: CacheStoreService) {
+        _viewModel = StateObject(wrappedValue: .init(cacheStore: cacheStorage))
     }
 }
+
+//#Preview {
+//    NavigationStack {
+//        LoginView()
+//            .environmentObject(PageController())
+//    }
+//}
