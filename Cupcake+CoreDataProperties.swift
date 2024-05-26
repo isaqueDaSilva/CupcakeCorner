@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 
 extension Cupcake {
@@ -22,7 +23,30 @@ extension Cupcake {
     @NSManaged public var ingredients: String?
     @NSManaged public var price: Double
     @NSManaged public var createAt: Date?
-
+    
+    public var wrappedCoverImage: UIImage? {
+        guard let coverImage else {
+            return UIImage(systemName: Icon.questionmarkDiamond.rawValue)
+        }
+        
+        return UIImage(data: coverImage)
+    }
+    
+    public var wrappedFlavor: String {
+        flavor ?? "No flavor saved"
+    }
+    
+    public var wrappedIngredients: [String] {
+        guard let ingredients else {
+            return []
+        }
+        
+        return ingredients.map { String($0) }
+    }
+    
+    public var wrappedCreationDate: Date {
+        createAt ?? .now
+    }
 }
 
 extension Cupcake : Identifiable {

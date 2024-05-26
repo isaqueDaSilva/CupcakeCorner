@@ -24,7 +24,26 @@ extension User {
     @NSManaged public var fullAdress: String?
     @NSManaged public var city: String?
     @NSManaged public var zip: String?
-
+    
+    public var wrappedName: String {
+        name ?? "No name saved"
+    }
+    
+    public var wrappedEmail: String {
+        email ?? "No email saved."
+    }
+    
+    public var wrappedRole: String {
+        role ?? "No role saved"
+    }
+    
+    public var wrappedPaymentMethod: String {
+        paymentMethod ?? "No payment method."
+    }
+    
+    public var wrappedAdress: String {
+        "\(fullAdress ?? "No adress saved."), \(city ?? "No city saved"), \(zip ?? "No zip saved")."
+    }
 }
 
 extension User : Identifiable {
