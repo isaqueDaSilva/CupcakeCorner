@@ -46,11 +46,7 @@ extension AccountView {
             
             Section {
                 Button(role: .destructive) {
-                    viewModel.logout {
-                        pageController.setNewValue(false)
-                    } deleteUserCached: {
-                        try cacheStorage.deleteUser()
-                    }
+                    viewModel.logout()
                 } label: {
                     switch viewModel.signOutViewState {
                     case .load, .faliedToLoad:
@@ -65,9 +61,9 @@ extension AccountView {
     }
 }
 
-#Preview {
-    NavigationStack {
-        AccountView().AccountViewLoad()
-            .environmentObject(PageController())
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        AccountView().AccountViewLoad()
+//            .environmentObject(PageController())
+//    }
+//}
