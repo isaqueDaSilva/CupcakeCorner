@@ -10,28 +10,25 @@ import SwiftUI
 struct CupcakeDetailView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.scenePhase) var scenePhase
-    
-    @EnvironmentObject private var cacheStorage: CacheStorageService
-    
     @StateObject private var viewModel: ViewModel
     
     var body: some View {
         List {
             Section {
                 VStack {
-                    CoverImageView(coverImage: viewModel.coverImage)
+                    CoverImageView(coverImage: viewModel.cupcake.wrappedCoverImage)
                 }
                 .frame(maxWidth: .infinity)
             }
             
             Section("Informations:") {
-                Text(viewModel.cupcake.flavor)
+                Text(viewModel.cupcake.wrappedFlavor)
                 
                 Text(viewModel.cupcake.price.currency)
             }
             
             Section("Ingredients") {
-                ForEach(viewModel.cupcake.ingredients, id: \.self) {
+                ForEach(viewModel.cupcake.wrappedIngredients, id: \.self) {
                     Text($0)
                 }
             }
@@ -50,8 +47,6 @@ struct CupcakeDetailView: View {
             Button("Delete", role: .destructive) {
                 viewModel.deleteCupcake {
                     dismiss()
-                } deleteCupcake: { cupcake in
-                    try cacheStorage.deleteCupcake(cupcake)
                 }
             }
         }
@@ -61,7 +56,7 @@ struct CupcakeDetailView: View {
             }
         }
         .sheet(isPresented: $viewModel.showingEditView) {
-            UpdateCupcakeView(cupcake: viewModel.cupcake)
+            UpdateCupcakeView(cupcake: viewModel.cupcake, cacheStorage: viewModel.cacheStore)
         }
         .onChange(of: scenePhase) { _ , newValue in
             if newValue == .inactive {
@@ -71,15 +66,16 @@ struct CupcakeDetailView: View {
         }
     }
     
-    init(cupcake: Cupcake.Get) {
+    init(cupcake: Cupcake, cacheStore: CacheStoreService) {
         _viewModel = StateObject(
             wrappedValue: .init(
-                cupcake: cupcake
+                cupcake: cupcake,
+                cacheStorage: cacheStore
             )
         )
     }
 }
 
-#Preview {
-    CupcakeDetailView(cupcake: .sampleCupcakes[0])
-}
+//#Preview {
+//    CupcakeDetailView(cupcake: .sampleCupcakes[0])
+//}

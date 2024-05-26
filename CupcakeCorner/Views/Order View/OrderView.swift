@@ -16,8 +16,8 @@ struct OrderView: View {
         List {
             Section {
                 ProductHighlight(
-                    flavor: viewModel.cupcake.flavor,
-                    imageData: viewModel.cupcake.coverImage
+                    flavor: viewModel.cupcake.wrappedFlavor,
+                    image: viewModel.cupcake.wrappedCoverImage
                 )
             }
             .listRowSeparator(.hidden)
@@ -92,13 +92,13 @@ struct OrderView: View {
 
     }
     
-    init(cupcake: Cupcake.Get) {
+    init(cupcake: Cupcake) {
         _viewModel = StateObject(wrappedValue: .init(cupcake: cupcake))
     }
 }
 
-#Preview {
-    NavigationStack {
-        OrderView(cupcake: .sampleCupcakes[0])
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        OrderView(cupcake: .sampleCupcakes[0])
+//    }
+//}

@@ -14,11 +14,12 @@ extension OrderView {
         @Published var showingAlert = false
         @Published var alert: AppAlert?
         @Published var viewState: ViewState = .load
-        @Published var task: Task<Void, Never>? = nil
+        
+        var task: Task<Void, Never>? = nil
         
         var isSuccessed = false
         
-        let cupcake: Cupcake.Get
+        let cupcake: Cupcake
         
         var extraFrostingPrice: Double {
             Double(order.quantity)
@@ -56,11 +57,15 @@ extension OrderView {
         }
         
         func makeOrder() {
-            task = Task {
+            task = Task(priority: .background) {
                 do {
                     await MainActor.run {
                         viewState = .loading
                         order.finalPrice = subtotal
+                    }
+                    
+                    guard order.cupcake != nil else {
+                        throw APIError.fieldsEmpty
                     }
                     
                     let encoder = JSONEncoder()
@@ -98,7 +103,7 @@ extension OrderView {
             }
         }
         
-        init(cupcake: Cupcake.Get) {
+        init(cupcake: Cupcake) {
             _order = Published(
                 initialValue: .init(
                     cupcake: cupcake.id,

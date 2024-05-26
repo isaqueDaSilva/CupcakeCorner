@@ -9,8 +9,7 @@ import SwiftUI
 
 struct CreateCupcakeView: View {
     @Environment(\.scenePhase) var scenePhase
-    @EnvironmentObject private var cacheStorage: CacheStorageService
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel: ViewModel
     
     var body: some View {
         EditCupcake(
@@ -24,8 +23,6 @@ struct CreateCupcakeView: View {
         ) { dismiss in
             viewModel.create {
                 dismiss()
-            } createCupcake: { cupcake in
-                try cacheStorage.addNewCupcake(cupcake)
             }
         }
         .alert(
@@ -43,9 +40,13 @@ struct CreateCupcakeView: View {
             }
         }
     }
+    
+    init(cacheStorage: CacheStoreService) {
+        _viewModel = StateObject(wrappedValue: .init(cacheStorage: cacheStorage))
+    }
 }
 
-#Preview {
-    CreateCupcakeView()
-        .environmentObject(CacheStorageService(inMemoryOnly: true))
-}
+//#Preview {
+//    CreateCupcakeView()
+//        .environmentObject(CacheStorageService(inMemoryOnly: true))
+//}

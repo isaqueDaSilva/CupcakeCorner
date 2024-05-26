@@ -30,14 +30,12 @@ extension OrderView {
         
         init(
             flavor: String,
-            imageData: Data
+            image: UIImage?
         ) {
             self.flavor = flavor
             
-            let uiImage = UIImage(data: imageData)
-            
-            if let uiImage {
-                self.image = Image(uiImage: uiImage)
+            if let image {
+                self.image = Image(uiImage: image)
             } else {
                 self.image = Icon.questionmarkDiamond.systemImage
             }
