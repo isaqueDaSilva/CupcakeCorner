@@ -11,7 +11,7 @@ extension BagView {
     @ViewBuilder
     func BagViewPopulated() -> some View {
         List {
-            ForEach(viewModel.orders) { order in
+            ForEach(viewModel.orders, id: \.id) { order in
                 Section {
                     ItemCard(
                         name: viewModel.displayName(order),

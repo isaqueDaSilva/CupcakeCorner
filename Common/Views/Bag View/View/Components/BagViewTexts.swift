@@ -9,7 +9,6 @@ import Foundation
 
 extension BagView {
     enum BagViewTexts: String {
-        case contentUnavaiableTitle = "No orders in bag"
         case contentUnavaiableDescription = "Continue navigating in Cupcake Corner and add some item to your bag and buy."
         case error = "An error occurred while fetching orders, please try again."
     }

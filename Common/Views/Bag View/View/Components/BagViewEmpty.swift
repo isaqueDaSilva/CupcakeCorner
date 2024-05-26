@@ -10,16 +10,14 @@ import SwiftUI
 extension BagView {
     @ViewBuilder
     func BagViewEmpty(with description: BagViewTexts = .contentUnavaiableDescription) -> some View {
-        VStack {
-            ContentUnavailableView(
-                BagViewTexts.contentUnavaiableTitle.rawValue,
-                systemImage: Icon.bag.rawValue,
-                description: Text(description.rawValue)
-            )
-        }
+        EmptyStateView(
+            title: "No orders in bag",
+            description: description.rawValue,
+            icon: .bag
+        )
     }
 }
 
-#Preview {
-    BagView().BagViewEmpty()
-}
+//#Preview {
+//    BagView().BagViewEmpty()
+//}

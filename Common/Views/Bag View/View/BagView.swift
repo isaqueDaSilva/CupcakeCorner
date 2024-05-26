@@ -10,11 +10,10 @@ import SwiftUI
 struct BagView: View {
     @Environment(\.scenePhase) private var scenePhase
     
-    @EnvironmentObject private var cacheStorage: CacheStorageService
+    @StateObject var viewModel: ViewModel
     
-    @State private var accessPageCount = 0
-    
-    @StateObject var viewModel = ViewModel()
+    @Namespace private var transition
+    private var transitionKey = NamespaceKey.transition.rawValue
     
     var body: some View {
         NavigationStack {
@@ -23,13 +22,17 @@ struct BagView: View {
                 case .load:
                     if !viewModel.orders.isEmpty {
                         BagViewPopulated()
+                            .matchedGeometryEffect(id: transitionKey, in: transition)
                     } else {
                         BagViewEmpty()
+                            .matchedGeometryEffect(id: transitionKey, in: transition)
                     }
                 case .loading:
                     ProgressView()
+                        .matchedGeometryEffect(id: transitionKey, in: transition)
                 case .faliedToLoad:
                     BagViewEmpty(with: .error)
+                        .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
             #if CLIENT
@@ -37,24 +40,9 @@ struct BagView: View {
             #elseif ADMIN
             .navigationTitle("Client Orders")
             #endif
-            .onAppear {
-                viewModel.setClientID(
-                    clientID: cacheStorage.storage[0].user?.id
-                )
-                
-                if cacheStorage.storage[0].user != nil {
-                    accessPageCount += 1
-                    if accessPageCount == 1 {
-                        viewModel.connect()
-                    }
-                } else {
-                    viewModel.viewState = .load
-                }
-            }
             .onChange(of: scenePhase) { _, newValue in
                 if (newValue == .background) {
                     viewModel.disconnect()
-                    accessPageCount = 0
                 }
             }
             #if CLIENT
@@ -67,12 +55,22 @@ struct BagView: View {
                 }
             }
             #endif
-            .appErrorAlert($viewModel.showingAlert, error: viewModel.alert) { }
+            .alert(
+                viewModel.alert?.title ?? "No Title",
+                isPresented: $viewModel.showingAlert
+            ) {
+            } message: {
+                Text(viewModel.alert?.description ?? "No description")
+            }
         }
+    }
+    
+    init(_ cacheStore: CacheStoreService) {
+        _viewModel = StateObject(wrappedValue: .init(cacheStore: cacheStore))
     }
 }
 
-#Preview {
-    BagView()
-        .environmentObject(CacheStorageService(inMemoryOnly: true))
-}
+//#Preview {
+//    BagView()
+//        .environmentObject(CacheStorageService(inMemoryOnly: true))
+//}
