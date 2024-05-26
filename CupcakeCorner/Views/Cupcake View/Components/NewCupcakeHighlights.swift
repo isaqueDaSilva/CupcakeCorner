@@ -8,13 +8,13 @@
 import SwiftUI
 
 extension CupcakeView {
-    struct NewCupcakeHighlights<Destination: View>: View {
+    struct NewCupcakeHighlights<Value: Hashable>: View {
         let name: String
         let description: String
         let cover: Image
         let price: Double
         
-        var destination: () -> Destination
+        let value: Value
         
         var body: some View {
             GroupBox {
@@ -29,9 +29,7 @@ extension CupcakeView {
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    NavigationLink {
-                        destination()
-                    } label: {
+                    NavigationLink(value: value) {
                         Text("Buy")
                             .foregroundStyle(.blue)
                             .padding([.top, .bottom], 2)
@@ -54,22 +52,25 @@ extension CupcakeView {
         init(
             name: String,
             description: [String],
-            cover data: Data,
+            cover image: UIImage?,
             price: Double,
-            @ViewBuilder destination: @escaping () -> Destination
+            value: Value
         ) {
             self.name = name
             self.description = description.joined(separator: ", ")
             self.price = price
             
-            let uiImage = UIImage(data: data)
+            if let image {
+                self.cover = Image(uiImage: image)
+            } else {
+                self.cover = Icon.questionmarkDiamond.systemImage
+            }
             
-            self.cover = (uiImage != nil) ? Image(uiImage: uiImage!) : Icon.questionmarkDiamond.systemImage
-            
-            self.destination = destination
+            self.value = value
         }
     }
 }
+
 //#Preview {
 //    let image = UIImage(systemName: Icon.house.rawValue)
 //    let imageData = image?.pngData()
