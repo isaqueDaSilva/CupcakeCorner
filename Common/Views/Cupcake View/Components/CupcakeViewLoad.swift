@@ -19,23 +19,18 @@ extension CupcakeView {
                 
                 Divider()
                 
-                if let newestCupcake = cacheStorage.newestCupcake {
+                if let newestCupcake = viewModel.newestCupcake {
                     Text("New")
                         .headerSessionText()
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     NewCupcakeHighlights(
-                        name: newestCupcake.flavor,
-                        description: newestCupcake.ingredients,
-                        cover: newestCupcake.coverImage,
-                        price: newestCupcake.price
-                    ) {
-                        #if CLIENT
-                        OrderView(cupcake: newestCupcake)
-                        #elseif ADMIN
-                        CupcakeDetailView(cupcake: newestCupcake)
-                        #endif
-                    }
+                        name: newestCupcake.wrappedFlavor,
+                        description: newestCupcake.wrappedIngredients,
+                        cover: newestCupcake.wrappedCoverImage,
+                        price: newestCupcake.price,
+                        value: newestCupcake
+                    )
                     .padding(.bottom)
                 }
                 #endif
@@ -47,11 +42,11 @@ extension CupcakeView {
                 #endif
                 
                 LazyVGrid(columns: colums) {
-                    ForEach(cacheStorage.storage[0].cupcakes) { cupcake in
+                    ForEach(viewModel.cupcakes, id: \.id) { cupcake in
                         NavigationLink(value: cupcake) {
                             CupcakeCard(
-                                name: cupcake.flavor,
-                                imageData: cupcake.coverImage
+                                name: cupcake.wrappedFlavor,
+                                image: cupcake.wrappedCoverImage
                             )
                         }
                         .buttonStyle(PlainButtonStyle())

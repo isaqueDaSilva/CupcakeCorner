@@ -9,8 +9,10 @@ import SwiftUI
 
 struct CupcakeView: View {
     @Environment(\.scenePhase) var scenePhase
-    @EnvironmentObject var cacheStorage: CacheStorageService
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel: ViewModel
+    
+    @Namespace private var transition
+    private var transitionKey = NamespaceKey.transition.rawValue
     
     let colums: [GridItem] = [.init(.adaptive(minimum: 150))]
     
@@ -18,10 +20,19 @@ struct CupcakeView: View {
         NavigationStack {
             Group {
                 switch viewModel.viewState {
-                case .load, .faliedToLoad:
+                case .load:
                     CupcakeViewLoad()
+                        .matchedGeometryEffect(id: transitionKey, in: transition)
                 case .loading:
                     ProgressView()
+                        .matchedGeometryEffect(id: transitionKey, in: transition)
+                case .faliedToLoad:
+                    EmptyStateView(
+                        title: "No Cupcake Load",
+                        description: "It looks like there are no cupcakes on the menu to display, please refresh the page or come back later to check out more.",
+                        icon: .magnifyingglass
+                    )
+                    .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
             #if CLIENT
@@ -36,21 +47,17 @@ struct CupcakeView: View {
                 }
             }
             .sheet(isPresented: $viewModel.showingCreateNewCupcakeView) {
-                CreateCupcakeView()
+                CreateCupcakeView(cacheStorage: viewModel.cacheStore)
             }
             #endif
             .onChange(of: scenePhase) { oldValue , newValue in
-                if (oldValue == .inactive) && (newValue == .active) {
-                    getCupcakes()
-                }
-                
-                if newValue == .inactive {
+                if (newValue == .background) {
                     viewModel.task?.cancel()
                     viewModel.task = nil
                 }
             }
             .refreshable {
-                getCupcakes()
+                viewModel.getCupcakes()
             }
             .alert(
                 viewModel.error?.title ?? "No Title",
@@ -59,27 +66,21 @@ struct CupcakeView: View {
             } message: {
                 Text(viewModel.error?.description ?? "No Description")
             }
-            .navigationDestination(for: Cupcake.Get.self) { cupcake in
+            .navigationDestination(for: Cupcake.self) { cupcake in
                 #if CLIENT
                 OrderView(cupcake: cupcake)
                 #elseif ADMIN
-                CupcakeDetailView(cupcake: cupcake)
+                CupcakeDetailView(cupcake: cupcake, cacheStore: viewModel.cacheStore)
                 #endif
             }
-            .environmentObject(cacheStorage)
         }
     }
-}
-
-extension CupcakeView {
-    func getCupcakes() {
-        viewModel.getCupcakes { cupcakes in
-            try cacheStorage.addNewCupcakes(cupcakes)
-        }
+    
+    init(_ cacheStorage: CacheStoreService) {
+        _viewModel = StateObject(wrappedValue: .init(store: cacheStorage))
     }
 }
 
 #Preview {
-    CupcakeView()
-        .environmentObject(CacheStorageService(inMemoryOnly: true))
+    CupcakeView(.init(inMemoryOnly: true))
 }

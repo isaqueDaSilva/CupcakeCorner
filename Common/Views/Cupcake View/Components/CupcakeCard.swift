@@ -22,13 +22,15 @@ extension CupcakeView {
         
         init(
             name: String,
-            imageData: Data
+            image: UIImage?
         ) {
             self.name = name
             
-            let uiImage = UIImage(data: imageData)
-            
-            self.image = (uiImage != nil) ? Image(uiImage: uiImage!) : Icon.questionmarkDiamond.systemImage
+            if let image {
+                self.image = Image(uiImage: image)
+            } else {
+                self.image = Icon.questionmarkDiamond.systemImage
+            }
         }
     }
 }
