@@ -22,5 +22,5 @@
 *Coming soon*
 
 # Minimum versions
-- Xcode 15.3+
-- iOS 17+
+- Xcode 14.0+
+- iOS 17.0+
