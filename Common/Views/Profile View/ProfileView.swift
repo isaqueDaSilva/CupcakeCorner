@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Environment(\.scenePhase) var scenePhase
+    
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
     
-    private var pageController: PageController
+    @StateObject private var pageController: PageController
     
     var body: some View {
         NavigationStack {
             Group {
-                if let user = pageController.user {
-                    AccountView(cacheStore: pageController.cacheStore, user: user)
-                        .matchedGeometryEffect(id: transitionKey, in: transition)
-                } else {
-                    LoginView(cacheStorage: pageController.cacheStore)
+                if pageController.user == nil {
+                    LoginView()
                         .matchedGeometryEffect(id: transitionKey, in: transition)
                         .transition(
                             AnyTransition.asymmetric(
@@ -32,13 +31,18 @@ struct ProfileView: View {
                                 )
                             ).animation(.spring())
                         )
+                } else {
+                    if let user = pageController.user {
+                        AccountView(user: user)
+                            .matchedGeometryEffect(id: transitionKey, in: transition)
+                    }
                 }
             }
         }
     }
     
-    init(_ cacheStore: CacheStoreService) {
-        self.pageController = .init(cacheStore: cacheStore)
+    init(inMemoryOnly: Bool = false) {
+        _pageController = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
     }
 }
 

@@ -42,11 +42,11 @@ struct UpdateCupcakeView: View {
         }
     }
     
-    init(cupcake: Cupcake, cacheStorage: CacheStoreService) {
+    init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
         _viewModel = StateObject(
             wrappedValue: .init(
                 cupcake: cupcake,
-                cacheStorage: cacheStorage
+                inMemoryOnly: inMemoryOnly
             )
         )
     }

@@ -10,43 +10,32 @@ import SwiftUI
 extension BagView {
     @ViewBuilder
     func BagViewPopulated() -> some View {
-        List {
-            ForEach(viewModel.orders, id: \.id) { order in
-                Section {
+        ScrollView {
+            LazyVStack(spacing: 10) {
+                ForEach(viewModel.orders, id: \.id) { order in
                     ItemCard(
                         name: viewModel.displayName(order),
                         description: viewModel.displayDescription(order),
                         image: viewModel.getImage(from: order.cupcake.coverImage),
                         price: order.finalPrice
                     )
-                }
-                .listRowSeparator(.hidden)
-                .listSectionSpacing(0)
-                #if ADMIN
-                .swipeActions {
-                    Button {
-                        var status: Status = .ordered
-                        
-                        if order.status == .ordered {
-                            status = .outForDelivery
-                        } else if order.status == .outForDelivery {
-                            status = .delivered
-                        }
-                        
-                        viewModel.updateOrder(with: order.id, status: status)
-                    } label: {
-                        if order.status == .ordered {
-                            Icon.truck.systemImage
-                        } else if order.status == .outForDelivery {
-                            Icon.shippingBox.systemImage
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    #if ADMIN
+                    .contextMenu {
+                        Button {
+                            viewModel.updateOrder(for: order.id, with: order.status)
+                        } label: {
+                            if order.status == .ordered {
+                                Label("Mark as Out For Delivery", systemImage: Icon.truck.rawValue)
+                            } else if order.status == .outForDelivery {
+                                Label("Mark as Delivered", systemImage: Icon.shippingBox.rawValue)
+                            }
                         }
                     }
-                    .tint(order.status == .ordered ? .yellow : .green)
-
+                    #endif
+                    .padding(.horizontal)
                 }
-                #endif
             }
         }
-        .listStyle(.plain)
     }
 }

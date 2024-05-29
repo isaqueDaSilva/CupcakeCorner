@@ -56,7 +56,7 @@ struct CupcakeDetailView: View {
             }
         }
         .sheet(isPresented: $viewModel.showingEditView) {
-            UpdateCupcakeView(cupcake: viewModel.cupcake, cacheStorage: viewModel.cacheStore)
+            UpdateCupcakeView(cupcake: viewModel.cupcake)
         }
         .onChange(of: scenePhase) { _ , newValue in
             if newValue == .inactive {
@@ -66,11 +66,11 @@ struct CupcakeDetailView: View {
         }
     }
     
-    init(cupcake: Cupcake, cacheStore: CacheStoreService) {
+    init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
         _viewModel = StateObject(
             wrappedValue: .init(
                 cupcake: cupcake,
-                cacheStorage: cacheStore
+                inMemoryOnly: inMemoryOnly
             )
         )
     }

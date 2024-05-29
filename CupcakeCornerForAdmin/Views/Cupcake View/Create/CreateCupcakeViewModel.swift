@@ -65,6 +65,10 @@ extension CreateCupcakeView {
         ) {
             task = Task(priority: .background) {
                 do {
+                    await MainActor.run {
+                        self.viewState = .loading
+                    }
+                    
                     // Encode new cupcake
                     let encoder = JSONEncoder()
                     let cupcakeData = try encoder.encode(cupcake)
@@ -103,11 +107,12 @@ extension CreateCupcakeView {
                     let context = await cacheStorage.getContext()
                     
                     // Creates new cupcake instance.
+                    let ingredientsData = try encoder.encode(cupcakeResult.ingredients)
                     let newCupcake = Cupcake(context: context)
                     newCupcake.id = cupcakeResult.id
                     newCupcake.coverImage = cupcakeResult.coverImage
                     newCupcake.flavor = cupcakeResult.flavor
-                    newCupcake.ingredients = cupcakeResult.ingredients.joined(separator: ", ")
+                    newCupcake.ingredients = ingredientsData
                     newCupcake.price = cupcakeResult.price
                     newCupcake.createAt = cupcakeResult.createdAt
                     
@@ -131,7 +136,7 @@ extension CreateCupcakeView {
         }
         
         init(
-            cacheStorage: CacheStoreService
+            inMemoryOnly: Bool = false
         ) {
             _cupcake = Published(
                 initialValue: .init(
@@ -142,7 +147,7 @@ extension CreateCupcakeView {
                 )
             )
             
-            self.cacheStorage = cacheStorage
+            self.cacheStorage = inMemoryOnly ? .sharedInMemoryOnly : .shared
         }
     }
 }

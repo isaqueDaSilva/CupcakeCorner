@@ -73,7 +73,7 @@
 		7E8E31A62BE4771100513538 /* CoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31A52BE4771100513538 /* CoverImageView.swift */; };
 		7E8E31AC2BE47EF900513538 /* EditCupcake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31AB2BE47EF900513538 /* EditCupcake.swift */; };
 		7E8E31AE2BE4863900513538 /* CreateCupcakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31AD2BE4863900513538 /* CreateCupcakeView.swift */; };
-		7E8E31B02BE4866400513538 /* CreateCupcakeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31AF2BE4866400513538 /* CreateCupcakeHomeView.swift */; };
+		7E8E31B02BE4866400513538 /* CreateCupcakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31AF2BE4866400513538 /* CreateCupcakeViewModel.swift */; };
 		7E8E31B32BE4926400513538 /* GetPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31B22BE4926400513538 /* GetPhoto.swift */; };
 		7E8E31B62BE49CDD00513538 /* UpdateCupcakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31B52BE49CDD00513538 /* UpdateCupcakeView.swift */; };
 		7E8E31B82BE49D2E00513538 /* UpdateCupcakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E31B72BE49D2E00513538 /* UpdateCupcakeViewModel.swift */; };
@@ -176,10 +176,10 @@
 		7E287F0C2BD8C1540052438E /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
 		7E287F0F2BD8C16A0052438E /* URLSessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionType.swift; sourceTree = "<group>"; };
 		7E48E2E72C01808800E11BEE /* CacheStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CacheStore.xcdatamodel; sourceTree = "<group>"; };
-		7E48E2EA2C01825200E11BEE /* Cupcake+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cupcake+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7E48E2EB2C01825200E11BEE /* Cupcake+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cupcake+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7E48E2EC2C01825200E11BEE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7E48E2ED2C01825200E11BEE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		7E48E2EA2C01825200E11BEE /* Cupcake+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Cupcake+CoreDataClass.swift"; path = "Common/Persistence/Cache/Cupcake+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		7E48E2EB2C01825200E11BEE /* Cupcake+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Cupcake+CoreDataProperties.swift"; path = "Common/Persistence/Cache/Cupcake+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		7E48E2EC2C01825200E11BEE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "Common/Persistence/Cache/User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		7E48E2ED2C01825200E11BEE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "Common/Persistence/Cache/User+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7E48E2F62C018C5E00E11BEE /* CacheStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStoreService.swift; sourceTree = "<group>"; };
 		7E68F3A42BE7612800941DBC /* WebSocketTypeCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketTypeCommunication.swift; sourceTree = "<group>"; };
 		7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeViewLoad.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 		7E8E31A52BE4771100513538 /* CoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImageView.swift; sourceTree = "<group>"; };
 		7E8E31AB2BE47EF900513538 /* EditCupcake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCupcake.swift; sourceTree = "<group>"; };
 		7E8E31AD2BE4863900513538 /* CreateCupcakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCupcakeView.swift; sourceTree = "<group>"; };
-		7E8E31AF2BE4866400513538 /* CreateCupcakeHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCupcakeHomeView.swift; sourceTree = "<group>"; };
+		7E8E31AF2BE4866400513538 /* CreateCupcakeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCupcakeViewModel.swift; sourceTree = "<group>"; };
 		7E8E31B22BE4926400513538 /* GetPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhoto.swift; sourceTree = "<group>"; };
 		7E8E31B52BE49CDD00513538 /* UpdateCupcakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCupcakeView.swift; sourceTree = "<group>"; };
 		7E8E31B72BE49D2E00513538 /* UpdateCupcakeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCupcakeViewModel.swift; sourceTree = "<group>"; };
@@ -384,8 +384,8 @@
 				7E9047762BC11FFD00DB7516 /* UI Components */,
 				7E9DDFAC2BBF952900C73D99 /* Home View */,
 				7E9DDFB52BBF9D3200C73D99 /* Cupcake View */,
-				7EFF52E82BC528930048A61B /* Profile View */,
 				7E90476B2BC10D1400DB7516 /* Bag View */,
+				7EFF52E82BC528930048A61B /* Profile View */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,7 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				7E8E31AD2BE4863900513538 /* CreateCupcakeView.swift */,
-				7E8E31AF2BE4866400513538 /* CreateCupcakeHomeView.swift */,
+				7E8E31AF2BE4866400513538 /* CreateCupcakeViewModel.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -873,7 +873,7 @@
 				7EA2045F2BD3938300C8A6DF /* Keys.swift in Sources */,
 				7E8E31C72BE5818F00513538 /* AccountViewLoad.swift in Sources */,
 				7E287F0B2BD8B06F0052438E /* NetworkService.swift in Sources */,
-				7E8E31B02BE4866400513538 /* CreateCupcakeHomeView.swift in Sources */,
+				7E8E31B02BE4866400513538 /* CreateCupcakeViewModel.swift in Sources */,
 				7E22632C2BD1E4D3001AD0B6 /* AppAlert.swift in Sources */,
 				7EDDEF2F2BF8981E00BED6DE /* EmptyStateView.swift in Sources */,
 				7E8E319B2BE43D0700513538 /* Order.swift in Sources */,

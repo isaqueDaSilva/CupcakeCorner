@@ -2,7 +2,7 @@
 //  Cupcake+CoreDataProperties.swift
 //  CupcakeCorner
 //
-//  Created by Isaque da Silva on 24/05/24.
+//  Created by Isaque da Silva on 28/05/24.
 //
 //
 
@@ -17,13 +17,13 @@ extension Cupcake {
         return NSFetchRequest<Cupcake>(entityName: "Cupcake")
     }
 
-    @NSManaged public var id: UUID?
     @NSManaged public var coverImage: Data?
-    @NSManaged public var flavor: String?
-    @NSManaged public var ingredients: String?
-    @NSManaged public var price: Double
     @NSManaged public var createAt: Date?
-    
+    @NSManaged public var flavor: String?
+    @NSManaged public var id: UUID?
+    @NSManaged public var ingredients: Data?
+    @NSManaged public var price: Double
+
     public var wrappedCoverImage: UIImage? {
         guard let coverImage else {
             return UIImage(systemName: Icon.questionmarkDiamond.rawValue)
@@ -41,7 +41,11 @@ extension Cupcake {
             return []
         }
         
-        let ingredientsArray = ingredients.map { String($0) }
+        let decoder = JSONDecoder()
+        
+        guard let ingredientsArray = try? decoder.decode([String].self, from: ingredients) else {
+            return []
+        }
         
         print(ingredientsArray)
         return ingredientsArray

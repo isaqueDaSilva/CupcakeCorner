@@ -9,11 +9,7 @@ import SwiftUI
 
 struct AccountView: View {
     @Environment(\.scenePhase) var scenePhase
-    @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: ViewModel
-    
-    @Namespace private var transition
-    private var transitionKey = NamespaceKey.transition.rawValue
     
     var body: some View {
         AccountViewLoad()
@@ -33,8 +29,8 @@ struct AccountView: View {
             }
     }
     
-    init(cacheStore: CacheStoreService, user: User) {
-        _viewModel = StateObject(wrappedValue: .init(user: user, cacheStore: cacheStore))
+    init(inMemoryOnly: Bool = false, user: User) {
+        _viewModel = StateObject(wrappedValue: .init(user: user, inMemoryOnly: inMemoryOnly))
     }
 }
 

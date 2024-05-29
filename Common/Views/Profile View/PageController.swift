@@ -9,9 +9,10 @@ import CoreData
 import Foundation
 
 /// An object that controls which page is displayed on ProfileView.
-final class PageController: NSObject {
+final class PageController: NSObject, ObservableObject {
+    
     /// Stores an instance of the user logged.
-    var user: User?
+    @Published var user: User?
     
     /// Stores an instance of the CacheStoreService
     let cacheStore: CacheStoreService
@@ -22,7 +23,7 @@ final class PageController: NSObject {
     
     
     /// Gets an instance of the User.
-    private func getUser() {
+    func getUser() {
         Task {
             do {
                 // Fetch the all user saved in the cache.
@@ -31,17 +32,15 @@ final class PageController: NSObject {
                 // Defines an user in the
                 // "user" property if
                 // the fetch user is no empty.
-                if fetchedUser.isEmpty {
-                    user = nil
-                } else {
-                    user = fetchedUser[0]
+                await MainActor.run {
+                    user = fetchedUser.isEmpty ? nil : fetchedUser[0]
                 }
             }
         }
     }
     
-    init(cacheStore: CacheStoreService) {
-        self.cacheStore = cacheStore
+    init(inMemoryOnly: Bool = false) {
+        self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
         
         let request = User.fetchRequest()
         request.sortDescriptors = []
@@ -60,10 +59,8 @@ extension PageController: NSFetchedResultsControllerDelegate {
         Task {
             let usersFetched = await cacheStore.fetchChanges(controller, by: User.self)
             
-            if usersFetched.isEmpty {
-                user = nil
-            } else {
-                user = usersFetched[0]
+            await MainActor.run {
+                user = usersFetched.isEmpty ? nil : usersFetched[0]
             }
         }
     }

@@ -38,7 +38,17 @@ extension User {
     }
     
     public var wrappedPaymentMethod: String {
-        paymentMethod ?? "No payment method."
+        guard let paymentMethod else {
+            return PaymentMethod.cash.displayedName
+        }
+        
+        let method = PaymentMethod(rawValue: paymentMethod)
+        
+        guard let method else {
+            return PaymentMethod.cash.displayedName
+        }
+        
+        return method.displayedName
     }
     
     public var wrappedAdress: String {

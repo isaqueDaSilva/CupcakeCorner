@@ -30,8 +30,7 @@ extension CupcakeView {
         @Published var showingCreateNewCupcakeView = false
         #endif
         
-        /// The instance of the NSFetchedResultsController
-        /// used for perform a fetch cupcakes.
+        /// The instance of the NSFetchedResultsController used for perform a fetch cupcakes.
         private var fetchedResultController: NSFetchedResultsController<Cupcake>
         
         /// Stores an instance of the CacheStoreService
@@ -48,85 +47,124 @@ extension CupcakeView {
         }
         #endif
         
-        /// Perform a fetch request for gets new cupcakes from the backend.
-        func getCupcakes() {
+        /// Perform a fetch request for gets new cupcakes from the backend service.
+        private func getCupcakes() async throws -> [Cupcake.Get] {
+            
+            // Creates a new instance of the Network Service
+            let request = NetworkService(
+                endpoint: "http://127.0.0.1:8080/api/cupcake/all",
+                httpMethod: .get,
+                type: .getData
+            )
+            
+            // Performing a fetch for new cupcakes.
+            let (data, response) = try await request.run()
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw APIError.badResponse
+            }
+            
+            // Decoding the cupcakes.
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            
+            guard let newCupcakes = try? decoder.decode([Cupcake.Get].self, from: data) else {
+                throw APIError.badDecoding
+            }
+            
+            return newCupcakes
+        }
+        
+        /// Caching new cupcakes that coming from the request.
+        /// - Parameter cupcakes: All cupcakes that coming from the request.
+        private func cachingCupcakes(_ cupcakes: [Cupcake.Get]) async throws {
+            
+            // Creates a new cupcake in Core Data.
+            for newCupcake in cupcakes {
+                let encoder = JSONEncoder()
+                let ingredientsData = try encoder.encode(newCupcake.ingredients)
+                
+                let context = await cacheStore.getContext()
+                let cupcake = Cupcake(context: context)
+                cupcake.id = newCupcake.id
+                cupcake.coverImage = newCupcake.coverImage
+                cupcake.flavor = newCupcake.flavor
+                cupcake.ingredients = ingredientsData
+                cupcake.price = newCupcake.price
+                cupcake.createAt = newCupcake.createdAt
+                try await cacheStore.save()
+            }
+        }
+        
+        /// Peforming fetch action in the Cache Store for find intances saved of the cupcakes.
+        /// - Returns: Retuns the all cupcakes instances saved in Cache Store.
+        private func fetchCupcakes() async -> [Cupcake] {
+            // Fetch the new cupcakes inserted
+            guard let newCupcakes = try? await cacheStore.fetch(fetchedResultController) else {
+                return []
+            }
+            
+            return newCupcakes
+        }
+        
+        /// Load the cupcakes for displays all for users.
+        func loadCupcakes() {
             task = Task(priority: .background) {
+                // Load the current cupcakes saved in cache.
+                let currentCupcakesSaved = await fetchCupcakes()
+                
                 do {
-                    // Creates a new instance of the Network Service
-                    let request = NetworkService(
-                        endpoint: "http://127.0.0.1:8080/api/cupcake/all",
-                        httpMethod: .get,
-                        type: .getData
-                    )
+                    // Fetch new cupcakes.
+                    let newCupcakes = try await getCupcakes()
                     
-                    // Performing a fetch for new cupcakes.
-                    let (data, response) = try await request.run()
-                    
-                    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                    // Checks if the cache store is empty.
+                    if currentCupcakesSaved.isEmpty {
+                        // If no empty, will peformed the delete action
+                        // in all instances.
+                        for cupcake in currentCupcakesSaved {
+                            try await cacheStore.delete(cupcake)
+                        }
                     }
                     
-                    // Decoding the cupcakes.
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
-                    let newCupcakes = try decoder.decode([Cupcake.Get].self, from: data)
+                    try await cachingCupcakes(newCupcakes)
                     
-                    // Fetching the cupcakes saved in Core Data
-                    let cupcakesSaved = try await cacheStore.fetch(fetchedResultController)
-                    
-                    // Deleting the cupcakes saved
-                    for cupcake in cupcakesSaved {
-                        try await cacheStore.delete(cupcake)
-                    }
-                    
-                    // Creates a new cupcake in Core Data.
-                    for newCupcake in newCupcakes {
-                        print(newCupcake.ingredients)
-                        print(newCupcake.ingredients.joined(separator: ", "))
-                        
-                        let context = await cacheStore.getContext()
-                        let cupcake = Cupcake(context: context)
-                        cupcake.id = newCupcake.id
-                        cupcake.coverImage = newCupcake.coverImage
-                        cupcake.flavor = newCupcake.flavor
-                        cupcake.ingredients = newCupcake.ingredients.joined(separator: ", ")
-                        cupcake.price = newCupcake.price
-                        cupcake.createAt = newCupcake.createdAt
-                        try await cacheStore.save()
-                    }
-                    
-                    // Fetch the new cupcakes inserted
-                    let newCupcakesSaved = try await cacheStore.fetch(fetchedResultController)
+                    // Fetch new instances saved.
+                    let cupcakesCached = await fetchCupcakes()
                     
                     // Load the new cupcakes in the "cupcakes" property
                     // and load the page for display them.
                     await MainActor.run {
-                        self.cupcakes = newCupcakesSaved
+                        self.cupcakes = cupcakesCached
                         self.viewState = .load
                     }
-                    
-                } catch let error {
-                    // If some error occur, an alert will be displayed.
+                } catch {
                     await MainActor.run {
-                        self.error = AppAlert(title: "Falied to load Cupcakes", description: error.localizedDescription)
+                        self.error = AppAlert(
+                            title: "Falied to load Cupcakes",
+                            description: error.localizedDescription
+                        )
+                        self.cupcakes = currentCupcakesSaved
                         self.viewState = .load
                         self.showingError = true
+                        
+                        print(error.localizedDescription)
                     }
                 }
             }
         }
         
-        init(store: CacheStoreService) {
-            self.cacheStore = store
+        init(inMemoryOnly: Bool = false) {
+            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            
             let request = Cupcake.fetchRequest()
             request.sortDescriptors = []
             
-            fetchedResultController = store.fetchedResultController(request)
+            fetchedResultController = cacheStore.fetchedResultController(request)
             
             super.init()
             
             fetchedResultController.delegate = self
-            getCupcakes()
+            loadCupcakes()
         }
     }
 }

@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    private let cacheStore: CacheStoreService
-    
     var body: some View {
         TabView {
-            CupcakeView(cacheStore)
+            CupcakeView()
                 .tabItem {
                     Label(
                         title: {
@@ -28,7 +26,7 @@ struct HomeView: View {
                 }
                 .tag("Cupcakes")
             
-            BagView(cacheStore)
+            BagView()
                 .tabItem {
                     Label(
                         title: {
@@ -44,7 +42,7 @@ struct HomeView: View {
                 }
                 .tag("Orders")
             
-            ProfileView(cacheStore)
+            ProfileView()
                 .tabItem {
                     Label(
                         title: {
@@ -57,12 +55,8 @@ struct HomeView: View {
                 .tag("Profile")
         }
     }
-    
-    init(_ cacheStore: CacheStoreService) {
-        self.cacheStore = cacheStore
-    }
 }
 
 #Preview {
-    HomeView(.init(inMemoryOnly: true))
+    HomeView()
 }

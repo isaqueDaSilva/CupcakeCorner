@@ -10,6 +10,9 @@ import Foundation
 
 /// An object for manager the Cache store services.
 actor CacheStoreService {
+    static let shared = CacheStoreService()
+    static let sharedInMemoryOnly = CacheStoreService(inMemoryOnly: true)
+    
     /// Stores the current context used.
     private let container: NSPersistentContainer
     
@@ -84,7 +87,7 @@ actor CacheStoreService {
         try self.save()
     }
     
-    init(inMemoryOnly: Bool = false) {
+    private init(inMemoryOnly: Bool = false) {
         self.container = NSPersistentContainer(name: "CacheStore")
         self.context = container.viewContext
         

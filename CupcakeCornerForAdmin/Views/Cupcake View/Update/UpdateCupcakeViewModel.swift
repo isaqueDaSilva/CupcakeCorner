@@ -52,6 +52,10 @@ extension UpdateCupcakeView {
         ) {
             task = Task {
                 do {
+                    await MainActor.run {
+                        self.viewState = .loading
+                    }
+                    
                     // Transform an image into data type.
                     let imageData = coverImage?.pngData()
                     
@@ -103,9 +107,10 @@ extension UpdateCupcakeView {
                     let cupcakeResult = try decoder.decode(Cupcake.Get.self, from: data)
                     
                     // Update the existing Cupcake
+                    let ingredientsData = try encoder.encode(cupcakeResult.ingredients)
                     cupcake.coverImage = cupcakeResult.coverImage
                     cupcake.flavor = cupcakeResult.flavor
-                    cupcake.ingredients = cupcakeResult.ingredients.joined(separator: ", ")
+                    cupcake.ingredients = ingredientsData
                     cupcake.price = cupcakeResult.price
                     
                     // Save changes on Core Data.
@@ -127,13 +132,14 @@ extension UpdateCupcakeView {
             }
         }
         
-        init(cupcake: Cupcake, cacheStorage: CacheStoreService) {
+        init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
             _coverImage = Published(initialValue: cupcake.wrappedCoverImage)
             _flavor = Published(initialValue: cupcake.wrappedFlavor)
             _price = Published(initialValue: cupcake.price)
             _ingredients = Published(initialValue: cupcake.wrappedIngredients)
             self.cupcake = cupcake
-            self.cacheStorage = cacheStorage
+            
+            self.cacheStorage = inMemoryOnly ? .sharedInMemoryOnly : .shared
         }
     }
 }

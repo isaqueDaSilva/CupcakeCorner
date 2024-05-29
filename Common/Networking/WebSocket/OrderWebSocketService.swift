@@ -63,16 +63,11 @@ final class OrderWebSocketService: NSObject {
     
     /// Scheduling the send ping for the WebSocket channel.
     private func sendPing() {
-        
-        // Gets a identifier for the current task
-        let taskIdentifier = webSocketTask?.taskIdentifier ?? -1
-        
-        // Scheduling the sending ping
         DispatchQueue.global().asyncAfter(deadline: .now() + 5) { [weak self] in
             guard let self else { return }
             
-            // Checking if the current task identifier is equal to the task.
-            guard let task = self.webSocketTask, task.taskIdentifier == taskIdentifier else { return }
+            // Checking if the webSocketTask is not equal to nil.
+            guard let task = self.webSocketTask else { return }
             
             // Checking if the task is running
             if task.state == .running {

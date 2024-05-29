@@ -47,7 +47,7 @@ struct CupcakeView: View {
                 }
             }
             .sheet(isPresented: $viewModel.showingCreateNewCupcakeView) {
-                CreateCupcakeView(cacheStorage: viewModel.cacheStore)
+                CreateCupcakeView()
             }
             #endif
             .onChange(of: scenePhase) { oldValue , newValue in
@@ -57,7 +57,7 @@ struct CupcakeView: View {
                 }
             }
             .refreshable {
-                viewModel.getCupcakes()
+                viewModel.loadCupcakes()
             }
             .alert(
                 viewModel.error?.title ?? "No Title",
@@ -70,17 +70,17 @@ struct CupcakeView: View {
                 #if CLIENT
                 OrderView(cupcake: cupcake)
                 #elseif ADMIN
-                CupcakeDetailView(cupcake: cupcake, cacheStore: viewModel.cacheStore)
+                CupcakeDetailView(cupcake: cupcake)
                 #endif
             }
         }
     }
     
-    init(_ cacheStorage: CacheStoreService) {
-        _viewModel = StateObject(wrappedValue: .init(store: cacheStorage))
+    init(inMemoryOnly: Bool = false) {
+        _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
     }
 }
 
 #Preview {
-    CupcakeView(.init(inMemoryOnly: true))
+    CupcakeView(inMemoryOnly: true)
 }

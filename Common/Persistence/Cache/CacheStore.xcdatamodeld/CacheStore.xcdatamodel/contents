@@ -5,7 +5,7 @@
         <attribute name="createAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="flavor" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="ingredients" optional="YES" attributeType="String"/>
+        <attribute name="ingredients" optional="YES" attributeType="Binary"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

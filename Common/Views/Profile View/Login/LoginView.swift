@@ -73,8 +73,8 @@ struct LoginView: View {
         }
     }
     
-    init(cacheStorage: CacheStoreService) {
-        _viewModel = StateObject(wrappedValue: .init(cacheStore: cacheStorage))
+    init(inMemoryOnly: Bool = false) {
+        _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
     }
 }
 

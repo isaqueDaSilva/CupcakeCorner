@@ -16,6 +16,9 @@ enum APIError: Error {
     /// This error is for time when the encoding data is failied.
     case badEncoding
     
+    /// This error is for time when the encoding data is failied.
+    case badDecoding
+    
     /// This error is for time when the response is no valid.
     case badResponse
     
@@ -39,6 +42,8 @@ extension APIError: LocalizedError {
             NSLocalizedString("You do not have permission to access this route.", comment: "")
         case .fieldsEmpty:
             NSLocalizedString("There are empty fields in the form, please fill them in before proceeding.", comment: "")
+        case .badDecoding:
+            NSLocalizedString("Unable to decoding data, please try again or contact us.", comment: "")
         }
     }
 }

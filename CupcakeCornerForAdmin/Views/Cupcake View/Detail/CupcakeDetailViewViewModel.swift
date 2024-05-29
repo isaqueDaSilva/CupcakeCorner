@@ -98,9 +98,10 @@ extension CupcakeDetailView {
             }
         }
         
-        init(cupcake: Cupcake, cacheStorage: CacheStoreService) {
+        init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
             self.cupcake = cupcake
-            self.cacheStore = cacheStorage
+            
+            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
         }
     }
 }

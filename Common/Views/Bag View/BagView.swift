@@ -65,8 +65,8 @@ struct BagView: View {
         }
     }
     
-    init(_ cacheStore: CacheStoreService) {
-        _viewModel = StateObject(wrappedValue: .init(cacheStore: cacheStore))
+    init(_ inMemoryOnly: Bool = false) {
+        _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
     }
 }
 

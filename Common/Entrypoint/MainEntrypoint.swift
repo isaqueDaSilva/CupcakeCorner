@@ -9,11 +9,9 @@ import SwiftUI
 
 /// The main scene's entry point for the app.
 struct MainEntrypoint: Scene {
-    private let cacheStore = CacheStoreService()
-    
     var body: some Scene {
         WindowGroup {
-            HomeView(cacheStore)
+            HomeView()
         }
     }
 }

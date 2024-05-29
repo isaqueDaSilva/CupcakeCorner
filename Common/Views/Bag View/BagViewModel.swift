@@ -233,11 +233,19 @@ extension BagView {
         /// - Parameters:
         ///   - id: The id of the order.
         ///   - status: The updated status that will be updating into database.
-        func updateOrder(with id: UUID, status: Status) {
+        func updateOrder(for orderID: UUID, with currentStatus: Status) {
             Task {
                 do {
+                    var newStatus = currentStatus
+                    
+                    if currentStatus == .ordered {
+                        newStatus = .outForDelivery
+                    } else if currentStatus == .outForDelivery {
+                        newStatus = .delivered
+                    }
+                    
                     // Creates a Update order
-                    let updatedOrder = Order.Update(id: id, status: status)
+                    let updatedOrder = Order.Update(id: orderID, status: newStatus)
                     
                     // Creates a new Send instance, with the "update" case
                     let sendMessage: Send = .update(updatedOrder)
@@ -291,8 +299,8 @@ extension BagView {
             #endif
         }
         
-        init(cacheStore: CacheStoreService) {
-            self.cacheStore = cacheStore
+        init(inMemoryOnly: Bool = false) {
+            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
             
             getClientID()
             

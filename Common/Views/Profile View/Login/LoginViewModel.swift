@@ -121,9 +121,9 @@ extension LoginView {
             }
         }
         
-        init(cacheStore: CacheStoreService) {
+        init(inMemoryOnly: Bool = false) {
             _loginCredentials = Published(initialValue: .init(email: "", password: ""))
-            self.cacheStore = cacheStore
+            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
         }
     }
 }
