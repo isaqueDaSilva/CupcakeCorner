@@ -60,6 +60,8 @@
 		7E48E2F52C01825200E11BEE /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48E2ED2C01825200E11BEE /* User+CoreDataProperties.swift */; };
 		7E48E2F72C018C5E00E11BEE /* CacheStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48E2F62C018C5E00E11BEE /* CacheStoreService.swift */; };
 		7E48E2F82C018C5E00E11BEE /* CacheStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48E2F62C018C5E00E11BEE /* CacheStoreService.swift */; };
+		7E638E3B2C0802D400AC6D47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CAD72BBE7F4E0033A2F9 /* Assets.xcassets */; };
+		7E638E3D2C08032500AC6D47 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CADA2BBE7F4E0033A2F9 /* Preview Assets.xcassets */; };
 		7E68F3A52BE7612800941DBC /* WebSocketTypeCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E68F3A42BE7612800941DBC /* WebSocketTypeCommunication.swift */; };
 		7E68F3A62BE7612800941DBC /* WebSocketTypeCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E68F3A42BE7612800941DBC /* WebSocketTypeCommunication.swift */; };
 		7E8917932BF0668D00B16B46 /* CupcakeViewLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */; };
@@ -138,8 +140,6 @@
 		7EDDEF2D2BF8975F00BED6DE /* PaymentMethodSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDEF242BF87CEA00BED6DE /* PaymentMethodSelector.swift */; };
 		7EDDEF2F2BF8981E00BED6DE /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDEF262BF87E5500BED6DE /* EmptyStateView.swift */; };
 		7EEAAD352BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */; };
-		7EEAAD392BD0EBD7002963F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EEAAD382BD0EBD6002963F3 /* Assets.xcassets */; };
-		7EEAAD3C2BD0EBD7002963F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EEAAD3B2BD0EBD7002963F3 /* Preview Assets.xcassets */; };
 		7EEAAD4A2BD0F1B6002963F3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD492BD0F1B6002963F3 /* LoginView.swift */; };
 		7EEAAD4B2BD0F1B6002963F3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD492BD0F1B6002963F3 /* LoginView.swift */; };
 		7EEAAD4C2BD0F5F3002963F3 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9047792BC1207B00DB7516 /* ActionButton.swift */; };
@@ -229,8 +229,6 @@
 		7EDDEF262BF87E5500BED6DE /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		7EEAAD322BD0EBD4002963F3 /* CupcakeCornerForAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CupcakeCornerForAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeCornerForAdminApp.swift; sourceTree = "<group>"; };
-		7EEAAD382BD0EBD6002963F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7EEAAD3B2BD0EBD7002963F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7EEAAD492BD0F1B6002963F3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7EEAAD512BD0FD73002963F3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7EEAAD542BD0FDED002963F3 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
@@ -282,8 +280,6 @@
 			isa = PBXGroup;
 			children = (
 				7E00CAD32BBE7F4C0033A2F9 /* CupcakeCornerApp.swift */,
-				7E00CAD72BBE7F4E0033A2F9 /* Assets.xcassets */,
-				7E00CAD92BBE7F4E0033A2F9 /* Preview Content */,
 				7E00CAE62BBE876D0033A2F9 /* Views */,
 			);
 			path = CupcakeCorner;
@@ -376,6 +372,15 @@
 				7EDAA8372BDA45C2006E7770 /* Network */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		7E638E3C2C0802EC00AC6D47 /* Assets Content */ = {
+			isa = PBXGroup;
+			children = (
+				7E00CAD72BBE7F4E0033A2F9 /* Assets.xcassets */,
+				7E00CAD92BBE7F4E0033A2F9 /* Preview Content */,
+			);
+			path = "Assets Content";
 			sourceTree = "<group>";
 		};
 		7E73D9512BE6B51500DC02FB /* Views */ = {
@@ -616,24 +621,15 @@
 			isa = PBXGroup;
 			children = (
 				7EEAAD342BD0EBD4002963F3 /* CupcakeCornerForAdminApp.swift */,
-				7EEAAD382BD0EBD6002963F3 /* Assets.xcassets */,
-				7EEAAD3A2BD0EBD7002963F3 /* Preview Content */,
 				7E73D9522BE6B57100DC02FB /* Views */,
 			);
 			path = CupcakeCornerForAdmin;
 			sourceTree = "<group>";
 		};
-		7EEAAD3A2BD0EBD7002963F3 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				7EEAAD3B2BD0EBD7002963F3 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
 		7EEAAD402BD0ED6B002963F3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7E638E3C2C0802EC00AC6D47 /* Assets Content */,
 				7E8ADE5C2BEAF41400A16692 /* Entrypoint */,
 				7E287F082BD8B0550052438E /* Networking */,
 				7EA204552BD390B100C8A6DF /* Erros */,
@@ -766,8 +762,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EEAAD3C2BD0EBD7002963F3 /* Preview Assets.xcassets in Resources */,
-				7EEAAD392BD0EBD7002963F3 /* Assets.xcassets in Resources */,
+				7E638E3D2C08032500AC6D47 /* Preview Assets.xcassets in Resources */,
+				7E638E3B2C0802D400AC6D47 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,7 +1049,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Common/Assets Content/Preview Content\"";
 				DEVELOPMENT_TEAM = 9798UJJCY4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1089,7 +1085,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Common/Assets Content/Preview Content\"";
 				DEVELOPMENT_TEAM = 9798UJJCY4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1125,7 +1121,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCornerForAdmin/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Common/Assets Content/Preview Content\"";
 				DEVELOPMENT_TEAM = 9798UJJCY4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1156,7 +1152,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCornerForAdmin/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Common/Assets Content/Preview Content\"";
 				DEVELOPMENT_TEAM = 9798UJJCY4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
