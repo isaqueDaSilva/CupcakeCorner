@@ -9,9 +9,23 @@ import SwiftUI
 
 /// The main scene's entry point for the app.
 struct MainEntrypoint: Scene {
+    @State private var isSplashViewPresented = true
+    
+    @Namespace private var transition
+    private var transitionKey = NamespaceKey.transition.rawValue
+    
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            Group {
+                if isSplashViewPresented {
+                    CupcakeCornerSplashView(isSplashViewShowing: $isSplashViewPresented)
+//                        .matchedGeometryEffect(id: transitionKey, in: transition)
+//                        .transition(.move(edge: .trailing))
+                } else {
+                    HomeView()
+                        .matchedGeometryEffect(id: transitionKey, in: transition)
+                }
+            }
         }
     }
 }

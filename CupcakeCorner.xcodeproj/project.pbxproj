@@ -62,6 +62,8 @@
 		7E48E2F82C018C5E00E11BEE /* CacheStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48E2F62C018C5E00E11BEE /* CacheStoreService.swift */; };
 		7E638E3B2C0802D400AC6D47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CAD72BBE7F4E0033A2F9 /* Assets.xcassets */; };
 		7E638E3D2C08032500AC6D47 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E00CADA2BBE7F4E0033A2F9 /* Preview Assets.xcassets */; };
+		7E638E432C083B3D00AC6D47 /* CupcakeCornerSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E638E422C083B3D00AC6D47 /* CupcakeCornerSplashView.swift */; };
+		7E638E442C083B3D00AC6D47 /* CupcakeCornerSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E638E422C083B3D00AC6D47 /* CupcakeCornerSplashView.swift */; };
 		7E68F3A52BE7612800941DBC /* WebSocketTypeCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E68F3A42BE7612800941DBC /* WebSocketTypeCommunication.swift */; };
 		7E68F3A62BE7612800941DBC /* WebSocketTypeCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E68F3A42BE7612800941DBC /* WebSocketTypeCommunication.swift */; };
 		7E8917932BF0668D00B16B46 /* CupcakeViewLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */; };
@@ -181,6 +183,7 @@
 		7E48E2EC2C01825200E11BEE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "Common/Persistence/Cache/User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7E48E2ED2C01825200E11BEE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "Common/Persistence/Cache/User+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7E48E2F62C018C5E00E11BEE /* CacheStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStoreService.swift; sourceTree = "<group>"; };
+		7E638E422C083B3D00AC6D47 /* CupcakeCornerSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeCornerSplashView.swift; sourceTree = "<group>"; };
 		7E68F3A42BE7612800941DBC /* WebSocketTypeCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketTypeCommunication.swift; sourceTree = "<group>"; };
 		7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeViewLoad.swift; sourceTree = "<group>"; };
 		7E8ADE5D2BEAF59900A16692 /* MainEntrypoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEntrypoint.swift; sourceTree = "<group>"; };
@@ -383,6 +386,14 @@
 			path = "Assets Content";
 			sourceTree = "<group>";
 		};
+		7E638E3E2C08378400AC6D47 /* Launch Screen */ = {
+			isa = PBXGroup;
+			children = (
+				7E638E422C083B3D00AC6D47 /* CupcakeCornerSplashView.swift */,
+			);
+			path = "Launch Screen";
+			sourceTree = "<group>";
+		};
 		7E73D9512BE6B51500DC02FB /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +417,7 @@
 		7E8ADE5C2BEAF41400A16692 /* Entrypoint */ = {
 			isa = PBXGroup;
 			children = (
+				7E638E3E2C08378400AC6D47 /* Launch Screen */,
 				7E8ADE5D2BEAF59900A16692 /* MainEntrypoint.swift */,
 			);
 			path = Entrypoint;
@@ -817,6 +829,7 @@
 				7EBE01BE2BEC6E2D001B22C3 /* OrderWebSocketService.swift in Sources */,
 				7E22632E2BD1F32A001AD0B6 /* ViewState.swift in Sources */,
 				7E287EFE2BD89A620052438E /* BagViewModel.swift in Sources */,
+				7E638E432C083B3D00AC6D47 /* CupcakeCornerSplashView.swift in Sources */,
 				7E90476F2BC10D5100DB7516 /* BagViewTexts.swift in Sources */,
 				7E9DDFB82BBF9D6B00C73D99 /* BuyText.swift in Sources */,
 				7E9DDFA92BBF937B00C73D99 /* OrderView.swift in Sources */,
@@ -899,6 +912,7 @@
 				7E48E2F32C01825200E11BEE /* Cupcake+CoreDataProperties.swift in Sources */,
 				7E48E2F42C01825200E11BEE /* User+CoreDataClass.swift in Sources */,
 				7E48E2F52C01825200E11BEE /* User+CoreDataProperties.swift in Sources */,
+				7E638E442C083B3D00AC6D47 /* CupcakeCornerSplashView.swift in Sources */,
 				7EBE01BF2BEC6E2D001B22C3 /* OrderWebSocketService.swift in Sources */,
 				7E8E31A62BE4771100513538 /* CoverImageView.swift in Sources */,
 				7EA204582BD390CD00C8A6DF /* APIError.swift in Sources */,
@@ -1057,6 +1071,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = CupcakeCornerLaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -1093,6 +1108,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = CupcakeCornerLaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -1129,6 +1145,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1160,6 +1177,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
