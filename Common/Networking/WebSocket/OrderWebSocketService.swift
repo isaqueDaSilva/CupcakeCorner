@@ -125,10 +125,6 @@ final class OrderWebSocketService: NSObject {
                         reason: "Closing with an unexpected error occur."
                     )
                 }
-                
-                // Calls again the method for makes a loop
-                // until the task is cancelled.
-                receiveData()
             } catch let error {
                 // Calls the disconnect method
                 // if some error occur..
