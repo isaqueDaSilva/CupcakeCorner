@@ -139,7 +139,7 @@ extension UpdateCupcakeView {
             _ingredients = Published(initialValue: cupcake.wrappedIngredients)
             self.cupcake = cupcake
             
-            self.cacheStorage = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            self.cacheStorage = inMemoryOnly ? .preview : .shared
         }
     }
 }

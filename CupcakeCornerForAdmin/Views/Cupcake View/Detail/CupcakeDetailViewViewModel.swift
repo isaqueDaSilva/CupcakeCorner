@@ -101,7 +101,7 @@ extension CupcakeDetailView {
         init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
             self.cupcake = cupcake
             
-            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            self.cacheStore = inMemoryOnly ? .preview : .shared
         }
     }
 }
