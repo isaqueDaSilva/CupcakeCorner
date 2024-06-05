@@ -39,7 +39,7 @@ extension Data {
     /// - Parameter model: A representation of the type of the data model.
     /// - Returns: Returns a message based on data taht came from the server.
     func decodeWebSocketMessage<T: Decodable>(_ model: T.Type) throws -> WebSocketMessage<T> {
-        let message = try JSONDecoder().decode(WebSocketMessage<T>.self, from: self)
+        let message = try decode(WebSocketMessage<T>.self)
         
         return message
     }

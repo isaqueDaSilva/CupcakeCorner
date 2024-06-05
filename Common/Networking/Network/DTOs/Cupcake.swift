@@ -71,15 +71,3 @@ extension Cupcake {
         }
     }
 }
-
-extension Cupcake.Get {
-    static var sampleCupcakes: [Cupcake.Get] {
-        let image = UIImage(systemName: Icon.bag.rawValue)
-        let imageData = image?.pngData()
-        
-        return [
-            .init(id: UUID(), coverImage: imageData!, flavor: "Chocolate", ingredients: ["Chocolate", "Mental"], price: 3.0),
-            .init(id: UUID(), coverImage: imageData!, flavor: "Vanila", ingredients: ["Vanila", "Milk"], price: 3.5)
-        ]
-    }
-}

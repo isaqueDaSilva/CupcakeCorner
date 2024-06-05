@@ -34,10 +34,6 @@ struct AccountView: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        AccountView().AccountViewLoad()
-//            .environmentObject(PageController())
-//            .environmentObject(CacheStorageService(inMemoryOnly: true))
-//    }
-//}
+#Preview {
+    ProfileView(inMemoryOnly: true)
+}

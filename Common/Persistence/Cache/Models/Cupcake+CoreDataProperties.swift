@@ -56,6 +56,4 @@ extension Cupcake {
     }
 }
 
-extension Cupcake : Identifiable {
-
-}
+extension Cupcake : Identifiable { }

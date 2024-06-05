@@ -23,7 +23,7 @@ extension BagView {
         @Published var alert: AppAlert?
         
         /// Stores the cache store instance.
-        private var cacheStore: CacheStoreService
+        private let cacheStore: CacheStoreService
         
         /// Stores an Task instance to be indicates
         /// if the "receiveMessage" method is able to execute your task.
@@ -300,7 +300,7 @@ extension BagView {
         }
         
         init(inMemoryOnly: Bool = false) {
-            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            self.cacheStore = inMemoryOnly ? .preview : .shared
             
             getClientID()
             

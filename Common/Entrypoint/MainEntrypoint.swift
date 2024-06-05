@@ -19,8 +19,6 @@ struct MainEntrypoint: Scene {
             Group {
                 if isSplashViewPresented {
                     CupcakeCornerSplashView(isSplashViewShowing: $isSplashViewPresented)
-//                        .matchedGeometryEffect(id: transitionKey, in: transition)
-//                        .transition(.move(edge: .trailing))
                 } else {
                     HomeView()
                         .matchedGeometryEffect(id: transitionKey, in: transition)

@@ -46,7 +46,6 @@ struct ProfileView: View {
     }
 }
 
-//#Preview {
-//    ProfileView()
-//        .environmentObject(CacheStorageService(inMemoryOnly: true))
-//}
+#Preview {
+    ProfileView(inMemoryOnly: true)
+}

@@ -12,7 +12,7 @@ import Foundation
 final class OrderWebSocketService: NSObject {
     
     /// The current value for the current URLSessionWebSocketTask
-    private var webSocketTask: URLSessionWebSocketTask?
+    private weak var webSocketTask: URLSessionWebSocketTask?
     
     /// The subject for handle with the current values received from the web socket task.
     let orderReceivedSubject: PassthroughSubject<WebSocketMessage<Receive>, WebSocketConnectionError>
@@ -22,27 +22,21 @@ final class OrderWebSocketService: NSObject {
     
     /// Conects on WebSocket channel on backend service.
     func connect() throws {
-        
-        // Gets the endpoint string and checks
-        // if it's valid, if no valid, a "bad url" error
-        // will be launched.
-        let endpoint = "ws://127.0.0.1:8080/api/order/channel"
-        guard let url = URL(string: endpoint) else {
-            throw APIError.badURL
-        }
-        
         // Gets the token value and the bearer value
         // for passing in the HTTP header field.
         let tokenValue = try KeychainService.retrive()
         let bearerValue = AuthorizationHeader.bearer.rawValue
         
-        // Creates a new URLRequest instance
-        // and set with the token and bearer values.
-        var request = URLRequest(url: url)
-        request.setValue(
-            "\(bearerValue) \(tokenValue)",
-            forHTTPHeaderField: HTTPHeaderField.authorization.rawValue
+        // Sets the new instance of Network Service
+        let service = NetworkService(
+            endpoint: "ws://127.0.0.1:8080/api/order/channel",
+            values: [.init(value: "\(bearerValue) \(tokenValue)", httpHeaderField: .authorization)],
+            httpMethod: .get,
+            type: .getData
         )
+        
+        // Creates a new URLRequest
+        let request = try service.makeRequest()
         
         // Configures URLSession instance with default configuration,
         // and references this class as the your delegate.
@@ -58,36 +52,30 @@ final class OrderWebSocketService: NSObject {
         // the data received from the channel
         webSocketTask = session.webSocketTask(with: request)
         webSocketTask?.resume()
-        receiveData()
     }
     
     /// Scheduling the send ping for the WebSocket channel.
     private func sendPing() {
         DispatchQueue.global().asyncAfter(deadline: .now() + 5) { [weak self] in
             guard let self else { return }
-            
+        
             // Checking if the webSocketTask is not equal to nil.
             guard let task = self.webSocketTask else { return }
             
-            // Checking if the task is running
-            if task.state == .running {
-                // If the task is running,
-                // a ping is sending.
-                task.sendPing {  error in
-                    if let error {
-                        print("Falied to receive pong with \(error)")
-                    } else {
-                        print("Connection is alive")
-                    }
-                    
-                    // Calls again the method for makes a loop
-                    // until the task is cancelled.
+            task.sendPing {  error in
+                if let error {
+                    self.disconnect(
+                        with: .noStatusReceived,
+                        reason: error.localizedDescription,
+                        and: .unknownError(error)
+                    )
+                    print("Falied to receive pong with \(error)")
+                    self.reconnect()
+                    print("Reconnecting...")
+                } else {
                     self.sendPing()
+                    print("Connection is alive")
                 }
-            } else {
-                // If the task is not runnig
-                // will calling the reconnect method.
-                reconnect()
             }
         }
     }
@@ -125,6 +113,7 @@ final class OrderWebSocketService: NSObject {
                         reason: "Closing with an unexpected error occur."
                     )
                 }
+                receiveData()
             } catch let error {
                 // Calls the disconnect method
                 // if some error occur..
@@ -206,8 +195,6 @@ final class OrderWebSocketService: NSObject {
         self.receiveTask = nil
         
         super.init()
-        
-        print("Initialized with success.")
     }
     
     deinit {

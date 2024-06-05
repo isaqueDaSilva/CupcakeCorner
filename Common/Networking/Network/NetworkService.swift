@@ -38,7 +38,7 @@ struct NetworkService {
     
     /// Configures a URLRequest for the endpoint based on the Values and HTTP methods submited when this object is instantiate.
     /// - Returns: Returns a URLRequest configurated for uses with a URLSession,
-    private func makeRequest() throws -> URLRequest {
+    func makeRequest() throws -> URLRequest {
         let url = try getURL()
         
         var request = URLRequest(url: url)

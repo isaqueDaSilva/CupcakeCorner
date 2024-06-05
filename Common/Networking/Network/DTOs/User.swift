@@ -87,32 +87,3 @@ extension User {
         }
     }
 }
-
-// Sample User Data.
-extension User.Get {
-    static var sampleUserAdmin: User.Get {
-        .init(
-            id: .init(),
-            name: "Tim Cook",
-            email: "timcook@apple.com",
-            role: .admin,
-            paymentMethod: .isAdmin,
-            fullAdress: nil,
-            city: nil,
-            zip: nil
-        )
-    }
-    
-    static var sampleUserClient: User.Get {
-        .init(
-            id: .init(),
-            name: "John Ternus",
-            email: "johnternus@apple.com",
-            role: .client,
-            paymentMethod: .creditCard,
-            fullAdress: "One Apple Park Way",
-            city: "Cupertino",
-            zip: "CA 95014"
-        )
-    }
-}

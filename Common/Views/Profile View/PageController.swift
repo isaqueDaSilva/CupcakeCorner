@@ -40,7 +40,7 @@ final class PageController: NSObject, ObservableObject {
     }
     
     init(inMemoryOnly: Bool = false) {
-        self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+        self.cacheStore = inMemoryOnly ? .preview : .shared
         
         let request = User.fetchRequest()
         request.sortDescriptors = []

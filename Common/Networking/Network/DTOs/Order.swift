@@ -91,36 +91,3 @@ extension Order {
         var status: Status
     }
 }
-
-extension Order.Get {
-    static var sampleOrders: [Order.Get] {
-        [
-            .init(
-                id: .init(),
-                userName: "Tim Cook",
-                cupcake: .sampleCupcakes[0],
-                quantity: 2,
-                extraFrosting: true,
-                addSprinkles: true,
-                finalPrice: 9.0,
-                status: .ordered,
-                orderTime: .now,
-                outForDelivery: nil,
-                deliveredTime: nil
-            ),
-            .init(
-                id: .init(),
-                userName: "Jonh Ternus",
-                cupcake: .sampleCupcakes[1],
-                quantity: 5,
-                extraFrosting: false,
-                addSprinkles: true,
-                finalPrice: 20.0,
-                status: .outForDelivery,
-                orderTime: .now,
-                outForDelivery: .now,
-                deliveredTime: nil
-            )
-        ]
-    }
-}

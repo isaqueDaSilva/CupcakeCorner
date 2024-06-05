@@ -31,7 +31,7 @@ extension CupcakeView {
         #endif
         
         /// The instance of the NSFetchedResultsController used for perform a fetch cupcakes.
-        private var fetchedResultController: NSFetchedResultsController<Cupcake>
+        private let fetchedResultController: NSFetchedResultsController<Cupcake>
         
         /// Stores an instance of the CacheStoreService
         let cacheStore: CacheStoreService
@@ -40,9 +40,11 @@ extension CupcakeView {
         /// that an asynchronous task can be run.
         var task: Task<Void, Never>? = nil
         
+        private let encoder = JSONEncoder()
+        
         #if CLIENT
         /// Returns a most recent cupcake created.
-        var newestCupcake: Cupcake? {
+        func newestCupcake() -> Cupcake? {
             cupcakes.min(by: { $0.wrappedCreationDate > $1.wrappedCreationDate })
         }
         #endif
@@ -110,21 +112,9 @@ extension CupcakeView {
         /// Load the cupcakes for displays all for users.
         func loadCupcakes() {
             task = Task(priority: .background) {
-                // Load the current cupcakes saved in cache.
-                let currentCupcakesSaved = await fetchCupcakes()
-                
                 do {
                     // Fetch new cupcakes.
                     let newCupcakes = try await getCupcakes()
-                    
-                    // Checks if the cache store is empty.
-                    if currentCupcakesSaved.isEmpty {
-                        // If no empty, will peformed the delete action
-                        // in all instances.
-                        for cupcake in currentCupcakesSaved {
-                            try await cacheStore.delete(cupcake)
-                        }
-                    }
                     
                     try await cachingCupcakes(newCupcakes)
                     
@@ -138,23 +128,24 @@ extension CupcakeView {
                         self.viewState = .load
                     }
                 } catch {
+                    let cupcakesSaved = await fetchCupcakes()
+                    
                     await MainActor.run {
                         self.error = AppAlert(
                             title: "Falied to load Cupcakes",
                             description: error.localizedDescription
                         )
-                        self.cupcakes = currentCupcakesSaved
+                        
+                        self.cupcakes = cupcakesSaved
                         self.viewState = .load
                         self.showingError = true
-                        
-                        print(error.localizedDescription)
                     }
                 }
             }
         }
         
         init(inMemoryOnly: Bool = false) {
-            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            self.cacheStore = inMemoryOnly ? .preview : .shared
             
             let request = Cupcake.fetchRequest()
             request.sortDescriptors = []

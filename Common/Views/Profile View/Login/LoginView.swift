@@ -78,9 +78,8 @@ struct LoginView: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        LoginView()
-//            .environmentObject(PageController())
-//    }
-//}
+#Preview {
+    NavigationStack {
+        LoginView()
+    }
+}

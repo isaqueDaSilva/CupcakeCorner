@@ -13,10 +13,12 @@ extension CupcakeView {
         let image: Image
         
         var body: some View {
-            GroupBox(name) {
-                image
-                    .resizable()
-                    .scaledToFit()
+            VStack {
+                GroupBox(name) {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                }
             }
         }
         

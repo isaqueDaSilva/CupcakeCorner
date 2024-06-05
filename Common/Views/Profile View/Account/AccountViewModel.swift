@@ -107,7 +107,7 @@ extension AccountView {
         }
         
         init(user: User, inMemoryOnly: Bool = false) {
-            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            self.cacheStore = inMemoryOnly ? .preview : .shared
             self.user = user
         }
     }

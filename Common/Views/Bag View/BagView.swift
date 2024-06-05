@@ -70,7 +70,6 @@ struct BagView: View {
     }
 }
 
-//#Preview {
-//    BagView()
-//        .environmentObject(CacheStorageService(inMemoryOnly: true))
-//}
+#Preview {
+    BagView(true)
+}

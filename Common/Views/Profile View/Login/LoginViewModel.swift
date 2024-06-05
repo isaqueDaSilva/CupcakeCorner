@@ -123,7 +123,7 @@ extension LoginView {
         
         init(inMemoryOnly: Bool = false) {
             _loginCredentials = Published(initialValue: .init(email: "", password: ""))
-            self.cacheStore = inMemoryOnly ? .sharedInMemoryOnly : .shared
+            self.cacheStore = inMemoryOnly ? .preview : .shared
         }
     }
 }

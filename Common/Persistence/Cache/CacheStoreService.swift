@@ -7,11 +7,11 @@
 
 import CoreData
 import Foundation
+import SwiftUI
 
 /// An object for manager the Cache store services.
 actor CacheStoreService {
     static let shared = CacheStoreService()
-    static let sharedInMemoryOnly = CacheStoreService(inMemoryOnly: true)
     
     /// Stores the current context used.
     private let container: NSPersistentContainer
@@ -89,10 +89,15 @@ actor CacheStoreService {
     
     private init(inMemoryOnly: Bool = false) {
         self.container = NSPersistentContainer(name: "CacheStore")
+        
+        guard let description = container.persistentStoreDescriptions.first else {
+            fatalError("Failed to retrieve a persistent store description.")
+        }
+        
         self.context = container.viewContext
         
         if inMemoryOnly {
-            container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
+            description.url = URL(filePath: "/dev/null")
         }
         
         container.loadPersistentStores { _, error in
@@ -101,6 +106,59 @@ actor CacheStoreService {
             }
         }
         
-        context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        context.name = "main"
+        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
     }
+}
+
+extension CacheStoreService {
+    static let preview: CacheStoreService = {
+        let cacheStore = CacheStoreService(inMemoryOnly: true)
+        
+        for index in 0..<10 {
+            Task {
+                let context = await cacheStore.getContext()
+                let cupcake = Cupcake(context: context)
+                let image = UIImage(named: Icon.bag.rawValue)
+                let imageData = image?.pngData()
+                let ingredients = [
+                    Int.random(in: 1000...10000),
+                    Int.random(in: 1000...10000),
+                    Int.random(in: 1000...10000),
+                    Int.random(in: 1000...10000),
+                    Int.random(in: 1000...10000)
+                ]
+                let ingredientsData = try? JSONEncoder().encode(ingredients)
+                
+                guard let imageData else { return }
+                guard let ingredientsData else { return }
+                
+                cupcake.id = UUID()
+                cupcake.flavor = "Cupcake \(index + 1)"
+                cupcake.coverImage = imageData
+                cupcake.ingredients = ingredientsData
+                cupcake.price = Double.random(in: 0.1..<15.0)
+                cupcake.createAt = .now
+                
+                try? await cacheStore.save()
+            }
+        }
+        
+        Task {
+            let context = await cacheStore.getContext()
+            let user = User(context: context)
+            user.id = UUID()
+            user.name = "Tim Cook"
+            user.city = "Cupertino"
+            user.email = "timcook@apple.com"
+            user.fullAdress = "One Apple Park Way, Cupertino"
+            user.zip = "CA 95014"
+            user.paymentMethod = "Cash"
+            user.role = "client"
+            
+            try? await cacheStore.save()
+        }
+        
+        return cacheStore
+    }()
 }

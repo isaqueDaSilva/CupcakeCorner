@@ -19,11 +19,7 @@ extension CupcakeView {
                 
                 Divider()
                 
-                if let newestCupcake = viewModel.newestCupcake {
-                    Text("New")
-                        .headerSessionText()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
+                if let newestCupcake = viewModel.newestCupcake() {
                     NewCupcakeHighlights(
                         name: newestCupcake.wrappedFlavor,
                         description: newestCupcake.wrappedIngredients,
