@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The app's top level navigation tab view.
 struct HomeView: View {
     var body: some View {
         TabView {
