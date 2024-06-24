@@ -27,9 +27,7 @@ enum APIError: Error {
     
     /// This error is for time when response status code is equal to 401 or access denied.
     case accessDenied
-}
-
-extension APIError: LocalizedError {
+    
     var errorDescription: String? {
         switch self {
         case .badURL:
