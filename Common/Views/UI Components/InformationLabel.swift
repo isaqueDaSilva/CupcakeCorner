@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Displays the subtotal information.
 struct InformationLabel: View {
     let title: String
     let subtotal: Double

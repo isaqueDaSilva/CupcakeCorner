@@ -45,12 +45,18 @@ struct ItemCard: View {
     init(
         name: String,
         description: String,
-        image: Image,
+        image: UIImage?,
         price: Double
     ) {
         self.name = name
         self.description = description
-        self.image = image
+        
+        if let image {
+            self.image = Image(uiImage: image)
+        } else {
+            self.image = Icon.questionmarkDiamond.systemImage
+        }
+        
         self.price = price
     }
 }

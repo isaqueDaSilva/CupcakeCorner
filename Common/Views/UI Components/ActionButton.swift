@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A default app button style.
 struct ActionButton: View {
     @Binding var viewState: ViewState
     
