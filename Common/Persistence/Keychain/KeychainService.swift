@@ -9,9 +9,9 @@ import Foundation
 import Security
 
 /// An object for manage the operation of the Keychain.
-struct KeychainService {
+enum KeychainService {
     /// Stores the key for identifier a new Token in the Keychain.
-    private static let key = Keys.userToken.rawValue
+    private static let key = "user_token"
     
     /// Stores a new token in the Keychain
     /// - Parameter token: An instance value of the token.
