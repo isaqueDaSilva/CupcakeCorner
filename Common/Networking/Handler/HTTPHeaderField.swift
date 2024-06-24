@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A representation Model for the all HTTP header field used in the App.
+/// Stores the all HTTP header field used in the App.
 enum HTTPHeaderField: String {
     case authorization = "Authorization"
     case contentType = "Content-Type"
