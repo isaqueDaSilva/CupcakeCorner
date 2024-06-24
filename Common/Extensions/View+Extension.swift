@@ -20,7 +20,7 @@ struct HeaderSessionText: ViewModifier {
 }
 
 extension View {
-    /// Gets the preview of the current text and uses it to look like highlighted header text.
+    /// Makes the current text highlighted as header text.
     func headerSessionText() -> some View {
         self.modifier(HeaderSessionText())
     }
