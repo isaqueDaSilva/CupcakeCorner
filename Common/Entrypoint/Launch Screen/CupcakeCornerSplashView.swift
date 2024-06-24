@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The animation that is showing when the app is open.
 struct CupcakeCornerSplashView: View {
     @Binding var isSplashViewShowing: Bool
     
@@ -53,16 +54,19 @@ struct CupcakeCornerSplashView: View {
                     timerCount = 0
                 } else {
                     timer.upstream.connect().cancel()
-                    withAnimation(.easeInOut(duration: 0.5)) {
+                    withAnimation(.easeInOut) {
                         scale = .init(width: 50, height: 50)
                         viewOpacity = 0
-                        isSplashViewShowing = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            isSplashViewShowing = false
+                        }
                     }
                 }
             }
         }
     }
 }
+
 
 
 #Preview {
