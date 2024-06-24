@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// The main scene's entry point for the app.
+/// The main scene's entry point for the both targets .
 struct MainEntrypoint: Scene {
     @State private var isSplashViewPresented = true
     
@@ -19,6 +19,7 @@ struct MainEntrypoint: Scene {
             Group {
                 if isSplashViewPresented {
                     CupcakeCornerSplashView(isSplashViewShowing: $isSplashViewPresented)
+                        .matchedGeometryEffect(id: transitionKey, in: transition)
                 } else {
                     HomeView()
                         .matchedGeometryEffect(id: transitionKey, in: transition)
