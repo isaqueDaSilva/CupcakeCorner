@@ -15,7 +15,7 @@
 - Swift as main language of the project;
 - SwiftUI for create an UI;
 - Keychain for stores sensitive user data;
-- Core Data for store data as cache.
+- SwiftData for store data as cache.
 - URLSessionWebSocket for real-time order status
 
 # Demonstration
