@@ -5,50 +5,63 @@
 //  Created by Isaque da Silva on 03/05/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct CupcakeDetailView: View {
+    @Binding var cupcake: Cupcake
     @Environment(\.dismiss) var dismiss
-    @Environment(\.scenePhase) var scenePhase
-    @StateObject private var viewModel: ViewModel
+    @Environment(\.modelContext) var modelContext
+    @StateObject private var viewModel = ViewModel()
+    
+    var action: (UUID) -> Void
     
     var body: some View {
         List {
             Section {
                 VStack {
-                    CoverImageView(coverImage: viewModel.cupcake.wrappedCoverImage)
+                    CoverImageView(coverImage: cupcake.image)
                 }
                 .frame(maxWidth: .infinity)
             }
             
             Section("Informations:") {
-                Text(viewModel.cupcake.wrappedFlavor)
+                Text(cupcake.flavor)
                 
-                Text(viewModel.cupcake.price.currency)
+                Text(cupcake.price.currency)
             }
             
             Section("Ingredients") {
-                ForEach(viewModel.cupcake.wrappedIngredients, id: \.self) {
+                ForEach(cupcake.ingredients, id: \.self) {
                     Text($0)
                 }
             }
             
             Section {
-                Button("Delete cupcake", role: .destructive) {
+                Button(role: .destructive) {
                     viewModel.showingConfirmation()
+                } label: {
+                    if viewModel.viewState == .loading {
+                        ProgressView()
+                    } else {
+                        Text("Delete cupcake")
+                    }
                 }
             }
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
-        .alert(viewModel.alert?.title ?? "No Title", isPresented: $viewModel.showingAlert) {
+        .alert(viewModel.alertTitle, isPresented: $viewModel.showingAlert) {
             Button("Cancel", role: .cancel) { }
             
             Button("Delete", role: .destructive) {
-                viewModel.deleteCupcake {
+                viewModel.deleteCupcake(with: cupcake, and: modelContext) { cupcakeID in
+                    action(cupcakeID)
                     dismiss()
                 }
             }
+        } message: {
+            Text(viewModel.alertMessage)
         }
         .toolbar {
             Button("Edit") {
@@ -56,26 +69,41 @@ struct CupcakeDetailView: View {
             }
         }
         .sheet(isPresented: $viewModel.showingEditView) {
-            UpdateCupcakeView(cupcake: viewModel.cupcake)
-        }
-        .onChange(of: scenePhase) { _ , newValue in
-            if newValue == .inactive {
-                viewModel.task?.cancel()
-                viewModel.task = nil
-            }
+            UpdateCupcakeView(cupcake: $cupcake)
         }
     }
     
-    init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
-        _viewModel = StateObject(
-            wrappedValue: .init(
-                cupcake: cupcake,
-                inMemoryOnly: inMemoryOnly
-            )
-        )
+    init(cupcake: Binding<Cupcake>, inMemoryOnly: Bool = false, action: @escaping (UUID) -> Void) {
+        _cupcake = cupcake
+        self.action = action
     }
 }
 
-//#Preview {
-//    CupcakeDetailView(cupcake: .sampleCupcakes[0])
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    
+    let schema = Schema([
+        User.self,
+        Order.self,
+        Cupcake.self
+    ])
+    
+    let container = try! ModelContainer(for: schema, configurations: config)
+    
+    let context = ModelContext(container)
+    
+    for cupcake in Cupcake.sampleCupcakes {
+        context.insert(cupcake)
+    }
+    print("Created Cupcakes")
+    
+    try? context.save()
+    print("Saved")
+    
+    let descriptor = FetchDescriptor<Cupcake>()
+    let cupcakes = try! context.fetch(descriptor)
+    
+    return CupcakeDetailView(cupcake: .constant(cupcakes[0])) { _ in }
+        .environment(\.modelContext, context)
+
+}

@@ -9,13 +9,15 @@ import Foundation
 import SwiftUI
 
 extension OrderView {
+    @MainActor
     final class ViewModel: ObservableObject {
         @Published var order: Order.Create
         @Published var showingAlert = false
-        @Published var alert: AppAlert?
+        @Published var alertTitle = ""
+        @Published var alertMessage = ""
         @Published var viewState: ViewState = .load
         
-        var task: Task<Void, Never>? = nil
+        private var task: Task<Void, Never>? = nil
         
         var isSuccessed = false
         
@@ -51,7 +53,8 @@ extension OrderView {
             title: String,
             description: String
         ) {
-            self.alert = AppAlert(title: title, description: description)
+            self.alertTitle = title
+            self.alertMessage = description
             self.viewState = .load
             self.showingAlert = true
         }
@@ -72,13 +75,12 @@ extension OrderView {
                     
                     let orderData = try encoder.encode(order)
                     
-                    let tokenValue = try KeychainService.retrive()
-                    let bearerValue = AuthorizationHeader.bearer.rawValue
+                    let authenticationValue = try Authentication.value()
                     
                     let request = NetworkService(
                         endpoint: "http://127.0.0.1:8080/api/order/create",
                         values: [
-                            .init(value: "\(bearerValue) \(tokenValue)", httpHeaderField: .authorization),
+                            .init(value: authenticationValue, httpHeaderField: .authorization),
                             .init(value: "application/json", httpHeaderField: .contentType)
                         ],
                         httpMethod: .post,
@@ -93,14 +95,25 @@ extension OrderView {
                     
                     await MainActor.run {
                         isSuccessed = true
-                        showingAlert(title: "Order Send with Success", description: "")
+                        showingAlert(
+                            title: "Order Send with Success",
+                            description: "Go to the bag and track the progress of your order in real time."
+                        )
                     }
                 } catch let error {
                     await MainActor.run {
-                        showingAlert(title: "Falied to send Order", description: error.localizedDescription)
+                        showingAlert(
+                            title: "Falied to send Order",
+                            description: error.localizedDescription
+                        )
                     }
                 }
             }
+        }
+        
+        func disconnect() {
+            task?.cancel()
+            task = nil
         }
         
         init(cupcake: Cupcake) {

@@ -5,19 +5,22 @@
 //  Created by Isaque da Silva on 04/04/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct OrderView: View {
+    @EnvironmentObject private var userRepo: UserRepositoty
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.dismiss) var dismiss
+    
     @StateObject private var viewModel: ViewModel
     
     var body: some View {
         List {
             Section {
                 ProductHighlight(
-                    flavor: viewModel.cupcake.wrappedFlavor,
-                    image: viewModel.cupcake.wrappedCoverImage
+                    flavor: viewModel.cupcake.flavor,
+                    image: viewModel.cupcake.image
                 )
             }
             .listRowSeparator(.hidden)
@@ -54,8 +57,7 @@ struct OrderView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: scenePhase) { _, newValue in
             if newValue == .inactive {
-                viewModel.task?.cancel()
-                viewModel.task = nil
+                viewModel.disconnect()
             }
         }
         .toolbar {
@@ -63,7 +65,8 @@ struct OrderView: View {
                 HStack {
                     ActionButton(
                         viewState: $viewModel.viewState,
-                        label: "Make Order"
+                        label: "Make Order",
+                        isDisabled: (userRepo.user == nil)
                     ) {
                         viewModel.makeOrder()
                     }
@@ -78,7 +81,7 @@ struct OrderView: View {
         }
         .toolbarBackground(.visible, for: .automatic)
         .alert(
-            viewModel.alert?.title ?? "No Title",
+            viewModel.alertTitle,
             isPresented: $viewModel.showingAlert
         ) {
             if viewModel.isSuccessed {
@@ -87,7 +90,7 @@ struct OrderView: View {
                 }
             }
         } message: {
-            Text(viewModel.alert?.description ?? "No Message")
+            Text(viewModel.alertMessage)
         }
 
     }
@@ -97,8 +100,31 @@ struct OrderView: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        OrderView(cupcake: .sampleCupcakes[0])
-//    }
-//}
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    
+    let schema = Schema([
+        Cupcake.self
+    ])
+    
+    let container = try! ModelContainer(for: schema, configurations: config)
+    
+    let context = ModelContext(container)
+    
+    for cupcake in Cupcake.sampleCupcakes {
+        context.insert(cupcake)
+    }
+    print("Created Cupcakes")
+    
+    try? context.save()
+    print("Saved")
+    
+    let descriptor = FetchDescriptor<Cupcake>()
+    let cupcakes = try! context.fetch(descriptor)
+    
+    return NavigationStack {
+        OrderView(cupcake: cupcakes[0])
+            .environment(\.modelContext, context)
+            .environmentObject(UserRepositoty())
+    }
+}

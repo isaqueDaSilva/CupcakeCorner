@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import SwiftData
 import SwiftUI
 import PhotosUI
 
 extension UpdateCupcakeView {
+    @MainActor
     final class ViewModel: ObservableObject {
-        let cupcake: Cupcake
-        
         @Published var coverImage: UIImage?
         @Published var price: Double
         @Published var flavor: String
@@ -21,7 +21,8 @@ extension UpdateCupcakeView {
         @Published var ingredientName = ""
         @Published var viewState: ViewState = .load
         @Published var showingError = false
-        @Published var error: AppAlert?
+        @Published var errorTitle = ""
+        @Published var errorMessage = ""
         
         @Published var pickerItemSelected: PhotosPickerItem? = nil {
             didSet {
@@ -31,100 +32,62 @@ extension UpdateCupcakeView {
             }
         }
         
-        @Published var task: Task<Void, Never>? = nil
-        
-        let cacheStorage: CacheStoreService
-        
-        func getImage(_ pickerItemSelected: PhotosPickerItem) {
-            Task {
-                let (_, image) = try await GetPhoto.getImage(pickerItemSelected)
+        private func getImage(_ pickerItemSelected: PhotosPickerItem) {
+            GetPhoto.get(with: pickerItemSelected) { [weak self] data in
+                guard let self else { return }
                 
-                await MainActor.run {
-                    if let image {
-                        coverImage = image
-                    }
+                if let data {
+                    self.coverImage = data.loadImage()
                 }
             }
         }
         
         func update(
-            _ completationHandler: @escaping () -> Void
+            _ cupcake: Cupcake,
+            with modelContext: ModelContext,
+            _ completationHandler: @escaping (Cupcake) -> Void
         ) {
-            task = Task {
+            Task(priority: .background) {
                 do {
                     await MainActor.run {
                         self.viewState = .loading
                     }
                     
-                    // Transform an image into data type.
-                    let imageData = coverImage?.pngData()
-                    
-                    // Creates a new updated cupcake
-                    let updatedCupcake = Cupcake.Update(
-                        coverImage: imageData,
-                        flavor: flavor,
-                        ingredients: ingredients,
-                        price: price
+                    let updatedCupcake = CupcakeUpdater.update(
+                        with: coverImage,
+                        flavor,
+                        ingredients,
+                        and: price
                     )
                     
-                    // Encode the updated cupcake
-                    let encoder = JSONEncoder()
-                    let updatedCupcakeData = try encoder.encode(updatedCupcake)
+                    let cupcakeResult = try await CupcakeUpdateSender.send(updatedCupcake, for: cupcake.id)
                     
-                    // Gets the values for pass on HTTP header field request
-                    // for gets an authorization into backend for continues the task.
-                    let tokenValue = try KeychainService.retrive()
-                    let bearerValue = AuthorizationHeader.bearer.rawValue
-                    
-                    // Checks if has the id for the cupcake.
-                    guard let cupcakeID = cupcake.id else {
-                        throw APIError.fieldsEmpty
+                    if cupcakeResult.coverImage != cupcake.coverImage {
+                        cupcake.coverImage = cupcakeResult.coverImage
                     }
                     
-                    // Creates the Network Service for makes Request.
-                    let request = NetworkService(
-                        endpoint: "http://127.0.0.1:8080/api/cupcake/update/\(cupcakeID)",
-                        values: [
-                            .init(value: "\(bearerValue) \(tokenValue)", httpHeaderField: .authorization),
-                            .init(value: "application/json", httpHeaderField: .contentType)
-                        ],
-                        httpMethod: .patch,
-                        type: .uploadData(updatedCupcakeData)
-                    )
-                    
-                    // Makes the request on backend service and gets the data and response
-                    let (data, response) = try await request.run()
-                    
-                    // Checks if the status code on HTTPURLResponse is equal to 200 or success code.
-                    // If no equal to 200, thow an error as bad response
-                    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                    if cupcakeResult.flavor != cupcake.flavor {
+                        cupcake.flavor = cupcakeResult.flavor
                     }
                     
-                    // Creates a decoder and decode the data received from the request
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
-                    let cupcakeResult = try decoder.decode(Cupcake.Get.self, from: data)
+                    if cupcakeResult.ingredients != cupcake.ingredients {
+                        cupcake.ingredients = cupcakeResult.ingredients
+                    }
                     
-                    // Update the existing Cupcake
-                    let ingredientsData = try encoder.encode(cupcakeResult.ingredients)
-                    cupcake.coverImage = cupcakeResult.coverImage
-                    cupcake.flavor = cupcakeResult.flavor
-                    cupcake.ingredients = ingredientsData
-                    cupcake.price = cupcakeResult.price
+                    if cupcakeResult.price != cupcake.price {
+                        cupcake.price = cupcakeResult.price
+                    }
                     
-                    // Save changes on Core Data.
-                    try await cacheStorage.save()
+                    try modelContext.save()
                     
-                    // Finish the work making the view state as load and calls the dismiss action.
                     await MainActor.run {
                         self.viewState = .load
-                        completationHandler()
+                        completationHandler(cupcake)
                     }
                 } catch let error {
-                    // If the request failed the catch block is call and the error is lauched.
                     await MainActor.run {
-                        self.error = AppAlert(title: "Falied to Update the Cupcake", description: error.localizedDescription)
+                        self.errorTitle = "Falied to Update the Cupcake"
+                        self.errorMessage = error.localizedDescription
                         viewState = .load
                         showingError = true
                     }
@@ -132,14 +95,11 @@ extension UpdateCupcakeView {
             }
         }
         
-        init(cupcake: Cupcake, inMemoryOnly: Bool = false) {
-            _coverImage = Published(initialValue: cupcake.wrappedCoverImage)
-            _flavor = Published(initialValue: cupcake.wrappedFlavor)
+        init(cupcake: Cupcake) {
+            _coverImage = Published(initialValue: cupcake.image)
+            _flavor = Published(initialValue: cupcake.flavor)
             _price = Published(initialValue: cupcake.price)
-            _ingredients = Published(initialValue: cupcake.wrappedIngredients)
-            self.cupcake = cupcake
-            
-            self.cacheStorage = inMemoryOnly ? .preview : .shared
+            _ingredients = Published(initialValue: cupcake.ingredients)
         }
     }
 }

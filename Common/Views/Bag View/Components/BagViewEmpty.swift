@@ -18,6 +18,6 @@ extension BagView {
     }
 }
 
-//#Preview {
-//    BagView().BagViewEmpty()
-//}
+#Preview {
+    BagView().BagViewEmpty()
+}

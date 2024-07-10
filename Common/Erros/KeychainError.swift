@@ -26,8 +26,10 @@ extension KeychainService {
         
         var errorDescription: String? {
             switch self {
-            case .saveError, .unexpectedTokenData:
-                NSLocalizedString("An internal error has occurred, please try again or contact us.", comment: "")
+            case .saveError:
+                NSLocalizedString("Failed to save your token in the Keychain. Please try again", comment: "")
+            case .unexpectedTokenData:
+                NSLocalizedString("A unknown data type was decoded. Please try again", comment: "")
             case .noToken:
                 NSLocalizedString("No item saved, you need to make login before to continue.", comment: "")
             case .unhandledError(let status):

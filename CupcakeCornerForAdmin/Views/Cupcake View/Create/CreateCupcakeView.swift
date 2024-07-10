@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct CreateCupcakeView: View {
-    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel: ViewModel
+    
+    var insert: ((Cupcake) -> Void)
     
     var body: some View {
         EditCupcake(
@@ -21,32 +23,27 @@ struct CreateCupcakeView: View {
             ingredients: $viewModel.cupcake.ingredients,
             viewState: $viewModel.viewState
         ) { dismiss in
-            viewModel.create {
+            viewModel.create(with: modelContext) { cupcake in
+                insert(cupcake)
                 dismiss()
             }
         }
         .alert(
-            viewModel.error?.title ?? "No Title",
+            viewModel.errorTitle,
             isPresented: $viewModel.showingError
         ) {
             
         } message: {
-            Text(viewModel.error?.description ?? "No Description")
-        }
-        .onChange(of: scenePhase) { _, newValue in
-            if newValue == .inactive {
-                viewModel.task?.cancel()
-                viewModel.task = nil
-            }
+            Text(viewModel.errorMessage)
         }
     }
     
-    init(inMemoryOnly: Bool = false) {
+    init(inMemoryOnly: Bool = false, insert: @escaping (Cupcake) -> Void) {
         _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
+        self.insert = insert
     }
 }
 
-//#Preview {
-//    CreateCupcakeView()
-//        .environmentObject(CacheStorageService(inMemoryOnly: true))
-//}
+#Preview {
+    CreateCupcakeView(inMemoryOnly: true) { _ in }
+}

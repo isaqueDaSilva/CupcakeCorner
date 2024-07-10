@@ -5,74 +5,100 @@
 //  Created by Isaque da Silva on 04/04/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct CupcakeView: View {
-    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var userRepo: UserRepositoty
     @StateObject var viewModel: ViewModel
     
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
-    
     let colums: [GridItem] = [.init(.adaptive(minimum: 150))]
     
     var body: some View {
         NavigationStack {
             Group {
                 switch viewModel.viewState {
-                case .load:
-                    CupcakeViewLoad()
+                case .load, .faliedToLoad:
+                    if viewModel.cupcakes.isEmpty {
+                        EmptyStateView(
+                            title: "No Cupcake Load",
+                            description: emptyStateDescription,
+                            icon: .magnifyingglass
+                        )
                         .matchedGeometryEffect(id: transitionKey, in: transition)
+                    } else {
+                        CupcakeViewLoad()
+                            .matchedGeometryEffect(id: transitionKey, in: transition)
+                    }
                 case .loading:
                     ProgressView()
                         .matchedGeometryEffect(id: transitionKey, in: transition)
-                case .faliedToLoad:
-                    EmptyStateView(
-                        title: "No Cupcake Load",
-                        description: "It looks like there are no cupcakes on the menu to display, please refresh the page or come back later to check out more.",
-                        icon: .magnifyingglass
-                    )
-                    .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
-            #if CLIENT
-            .navigationTitle("Buy")
-            #elseif ADMIN
-            .navigationTitle("Cupcakes")
-            .toolbar {
-                Button {
-                    viewModel.showingCreateNewCupcakeView = true
-                } label: {
-                    Icon.plusCircle.systemImage
+            .onAppear {
+                if viewModel.cupcakes.isEmpty {
+                    #if CLIENT
+                    viewModel.loadCupcakes(with: modelContext)
+
+                    #elseif ADMIN
+                    if !viewModel.inMemoryOnly {
+                        guard (userRepo.user != nil) && !viewModel.inMemoryOnly else {
+                            viewModel.viewState = .load
+                            return
+                        }
+                        
+                        viewModel.loadCupcakes(with: modelContext)
+                    } else {
+                        viewModel.loadCupcakes(with: modelContext)
+                    }
+                    #endif
                 }
-            }
-            .sheet(isPresented: $viewModel.showingCreateNewCupcakeView) {
-                CreateCupcakeView()
-            }
-            #endif
-            .onChange(of: scenePhase) { oldValue , newValue in
-                if (newValue == .background) {
-                    viewModel.task?.cancel()
-                    viewModel.task = nil
-                }
-            }
-            .refreshable {
-                viewModel.loadCupcakes()
             }
             .alert(
-                viewModel.error?.title ?? "No Title",
+                viewModel.errorTitle,
                 isPresented: $viewModel.showingError
             ) {
             } message: {
-                Text(viewModel.error?.description ?? "No Description")
+                Text(viewModel.errorDescription)
             }
-            .navigationDestination(for: Cupcake.self) { cupcake in
-                #if CLIENT
-                OrderView(cupcake: cupcake)
-                #elseif ADMIN
-                CupcakeDetailView(cupcake: cupcake)
+            .toolbar {
+                if viewModel.cupcakes.isEmpty {
+                    Button {
+                        #if ADMIN
+                        if userRepo.user != nil {
+                            viewModel.loadCupcakes(with: modelContext)
+                        } else {
+                            viewModel.displayError(title: "You are not connected")
+                        }
+                        #elseif CLIENT
+                        viewModel.loadCupcakes(with: modelContext)
+                        #endif
+                    } label: {
+                        Icon.arrowClockwise.systemImage
+                    }
+                    .disabled(viewModel.viewState == .loading)
+                }
+                
+                #if ADMIN
+                if userRepo.user != nil {
+                    Button {
+                        viewModel.showingCreateNewCupcakeView = true
+                    } label: {
+                        Icon.plusCircle.systemImage
+                    }
+                }
                 #endif
             }
+            #if ADMIN
+            .sheet(isPresented: $viewModel.showingCreateNewCupcakeView) {
+                CreateCupcakeView { cupcake in
+                    viewModel.insertNewCupcake(with: cupcake)
+                }
+            }
+            #endif
         }
     }
     
@@ -82,5 +108,21 @@ struct CupcakeView: View {
 }
 
 #Preview {
-    CupcakeView(inMemoryOnly: true)
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try? ModelContainer(for: Cupcake.self, configurations: config)
+    
+    guard let container else { return CupcakeView(inMemoryOnly: true) }
+    
+    let context = ModelContext(container)
+    
+    for cupcake in Cupcake.sampleCupcakes {
+        context.insert(cupcake)
+    }
+    
+    try? context.save()
+    print("Cupcakes Saved")
+    
+    return CupcakeView(inMemoryOnly: true)
+        .environment(\.modelContext, context)
+        .environmentObject(UserRepositoty())
 }

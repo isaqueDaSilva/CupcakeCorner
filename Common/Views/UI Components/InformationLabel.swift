@@ -18,7 +18,7 @@ struct InformationLabel: View {
     
     init(
         _ subtotal: Double,
-        title: String = "Subtotal"
+        title: String = "Subtotal:"
     ) {
         self.title = title
         self.subtotal = subtotal

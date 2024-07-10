@@ -15,11 +15,11 @@ extension CupcakeView {
                     .font(.largeTitle)
                 
                 VStack(alignment: .leading) {
-                    BuyText.freeShippingTitle.text
+                    Text("Free Shipping")
                         .font(.title3)
                         .bold()
                     
-                    BuyText.freeShippingDescription.text
+                    Text("From Friday to Sunday, in all locations in Cupertino.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

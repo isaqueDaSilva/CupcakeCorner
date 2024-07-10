@@ -36,3 +36,11 @@ extension CupcakeView {
         }
     }
 }
+
+#Preview {
+    CupcakeView.CupcakeCard(
+        name: "Chocolate",
+        image: UIImage(systemName: Icon.bag.rawValue)
+    )
+    .padding()
+}

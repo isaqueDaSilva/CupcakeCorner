@@ -9,20 +9,18 @@ import Foundation
 import SwiftUI
 import PhotosUI
 
-struct GetPhoto {
-    static func getImage(_ pickerItemSelected: PhotosPickerItem) async throws -> (Data?, UIImage?) {
-        let task = Task<(Data?, UIImage?), Error> {
-            if let data = try? await pickerItemSelected.loadTransferable(type: Data.self) {
-                if let image = UIImage(data: data) {
-                    return (data, image)
-                } else {
-                    return (nil, nil)
-                }
-            } else {
-                return (nil, nil)
+enum GetPhoto {
+    static func get(
+        with pickerItemSelected: PhotosPickerItem,
+        _ completation: @escaping (Data?) -> Void
+    ) {
+        pickerItemSelected.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                completation(data)
+            case .failure(_):
+                completation(nil)
             }
         }
-        
-        return try await task.value
     }
 }

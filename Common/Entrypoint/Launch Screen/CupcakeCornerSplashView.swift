@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-/// The animation that is showing when the app is open.
 struct CupcakeCornerSplashView: View {
     @Binding var isSplashViewShowing: Bool
     
@@ -66,7 +65,6 @@ struct CupcakeCornerSplashView: View {
         }
     }
 }
-
 
 
 #Preview {

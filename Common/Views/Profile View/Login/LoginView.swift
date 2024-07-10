@@ -9,23 +9,28 @@ import SwiftUI
 
 struct LoginView: View {
     @Environment(\.scenePhase) var scenePhase
+    @Environment(\.modelContext) var modelContext
+    @EnvironmentObject private var userRepo: UserRepositoty
     
     @StateObject private var viewModel: ViewModel
+    
+    var startAction: () -> Void
+    var endAction: () -> Void
     
     var body: some View {
         Form {
             Section {
                 LabeledContent("Email:") {
                     TextField("Insert your email here...", text: $viewModel.loginCredentials.email)
-                        .multilineTextAlignment(.trailing)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
+                        .multilineTextAlignment(.trailing)
                 }
                 
                 LabeledContent("Passowrd:") {
                     SecureField("Insert your password here...", text: $viewModel.loginCredentials.password)
-                        .multilineTextAlignment(.trailing)
                         .textInputAutocapitalization(.never)
+                        .multilineTextAlignment(.trailing)
                 }
                 
                 ActionButton(
@@ -33,7 +38,11 @@ struct LoginView: View {
                     label: "Sign In",
                     width: .infinity
                 ) {
-                    viewModel.login()
+                    startAction()
+                    viewModel.login(with: modelContext) {
+                        userRepo.getUser(with: modelContext)
+                        endAction()
+                    }
                 }
             }
         }
@@ -46,7 +55,7 @@ struct LoginView: View {
                         .bold()
                     
                     NavigationLink {
-                        CreateAnAccount()
+                        CreateAnAccountView()
                     } label: {
                         Text("Create an Account")
                             .foregroundStyle(.blue)
@@ -58,28 +67,27 @@ struct LoginView: View {
         }
         #endif
         .alert(
-            viewModel.error?.title ?? "No title",
+            viewModel.errorTitle,
             isPresented: $viewModel.showingError
-        ) {
-            
-        } message: {
-            Text(viewModel.error?.description ?? "No description")
-        }
-        .onChange(of: scenePhase) { _, newValue in
-            if (newValue == .inactive) {
-                viewModel.task?.cancel()
-                viewModel.task = nil
-            }
+        ) { } message: {
+            Text(viewModel.errorMessage)
         }
     }
     
-    init(inMemoryOnly: Bool = false) {
+    init(
+        inMemoryOnly: Bool = false,
+        _ startAction: @escaping () -> Void,
+        endAction: @escaping () -> Void
+    ) {
         _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
+        self.startAction = startAction
+        self.endAction = endAction
     }
 }
 
 #Preview {
     NavigationStack {
-        LoginView()
+        LoginView(inMemoryOnly: true) { } endAction: { }
+            .environmentObject(UserRepositoty())
     }
 }

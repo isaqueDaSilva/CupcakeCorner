@@ -7,18 +7,15 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 import PhotosUI
 
 extension CreateCupcakeView {
-    /// An object that discrible how the CreateCupcakeView handle with some actions.
+    @MainActor
     final class ViewModel: ObservableObject {
-        /// Stores an Cupcake.Create instance for creating a new cupcake.
         @Published var cupcake: Cupcake.Create
-        
-        /// Stores the view state of the Create button.
         @Published var viewState: ViewState = .load
         
-        /// Stores an PhotoPickerItem value with the image data.
         @Published var pickerItemSelected: PhotosPickerItem? = nil {
             didSet {
                 if let pickerItemSelected {
@@ -27,32 +24,22 @@ extension CreateCupcakeView {
             }
         }
         
-        /// Stores an Images gets from the PhotosPickerItem.
         @Published var coverImage: UIImage? = nil
-        
-        /// Stores a value that indicating if an alert is  displaying or not.
         @Published var showingError = false
-        @Published var error: AppAlert?
+        @Published var errorTitle = ""
+        @Published var errorMessage = ""
         
-        var task: Task<Void, Never>? = nil
+        private var inMemoryOnly: Bool
         
-        /// Stores the CacheStoreService instance.
-        private let cacheStorage: CacheStoreService
-        
-        /// Gets an Image from the PhotosPickerItem.
-        /// - Parameter pickerItemSelected: An instance of the PhotosPickerItem,
-        private func getImage(_ pickerItemSelected: PhotosPickerItem) {
-            Task {
-                // Loads the data and the image gets from the PhotosPickerItem
-                let (data, image) = try await GetPhoto.getImage(pickerItemSelected)
+        private func getImage(_ itemSelected: PhotosPickerItem) {
+            GetPhoto.get(with: itemSelected) { [weak self] imageData in
+                guard let self else { return }
                 
-                // Pass the data for coverImage property
-                // of the Cupcake.Create instance
-                // and the image for the coverImage instance.
-                await MainActor.run {
-                    if let data, let image {
-                        self.cupcake.coverImage = data
-                        coverImage = image
+                if let imageData {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        self.cupcake.coverImage = imageData
+                        self.coverImage = imageData.loadImage()
                     }
                 }
             }
@@ -61,73 +48,35 @@ extension CreateCupcakeView {
         /// Creating a new cupcake on database.
         /// - Parameter completationHandler: Pass an function that will be execute after the creation request is successed.
         func create(
-            _ completationHandler: @escaping () -> Void
+            with context: ModelContext,
+            _ completationHandler: @escaping (Cupcake) -> Void
         ) {
-            task = Task(priority: .background) {
+            Task(priority: .background) {
                 do {
                     await MainActor.run {
                         self.viewState = .loading
                     }
                     
-                    // Encode new cupcake
-                    let encoder = JSONEncoder()
-                    let cupcakeData = try encoder.encode(cupcake)
-                    
-                    // Gets the values for pass on HTTP header field request
-                    // for gets an authorization into backend for continues the task.
-                    let tokenValue = try KeychainService.retrive()
-                    let bearerValue = AuthorizationHeader.bearer.rawValue
-                    
-                    // Creates the Network Service for makes Request.
-                    let request = NetworkService(
-                        endpoint: "http://127.0.0.1:8080/api/cupcake/create",
-                        values: [
-                            .init(value: "\(bearerValue) \(tokenValue)", httpHeaderField: .authorization),
-                            .init(value: "application/json", httpHeaderField: .contentType)
-                        ],
-                        httpMethod: .post,
-                        type: .uploadData(cupcakeData)
-                    )
-                    
-                    // Makes the request on backend service and gets the data and response
-                    let (data, response) = try await request.run()
-                    
-                    // Checks if the status code on HTTPURLResponse is equal to 200 or success code.
-                    // If no equal to 200, thow an error as bad response.
-                    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                    if !inMemoryOnly {
+                        let cupcakeResult = try await CupcakeCreateSender.create(with: cupcake)
+                        
+                        let newCupcake = Cupcake(from: cupcakeResult)
+                        
+                        context.insert(newCupcake)
+                        try context.save()
+                        
+                        await MainActor.run {
+                            completationHandler(newCupcake)
+                        }
                     }
                     
-                    // Decode new Cupcake received from the network request
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
-                    let cupcakeResult = try decoder.decode(Cupcake.Get.self, from: data)
-                    
-                    // Gets the shared view context gets from the shared cache storage service.
-                    let context = await cacheStorage.getContext()
-                    
-                    // Creates new cupcake instance.
-                    let ingredientsData = try encoder.encode(cupcakeResult.ingredients)
-                    let newCupcake = Cupcake(context: context)
-                    newCupcake.id = cupcakeResult.id
-                    newCupcake.coverImage = cupcakeResult.coverImage
-                    newCupcake.flavor = cupcakeResult.flavor
-                    newCupcake.ingredients = ingredientsData
-                    newCupcake.price = cupcakeResult.price
-                    newCupcake.createAt = cupcakeResult.createdAt
-                    
-                    // Save the instance on Core Data
-                    try await cacheStorage.save()
-                    
-                    // Dismiss the current view.
                     await MainActor.run {
                         self.viewState = .load
-                        completationHandler()
                     }
                 } catch let error {
-                    // If the request failed the catch block is call and the error is lauched.
                     await MainActor.run {
-                        self.error = AppAlert(title: "Falied to Create Cupcake", description: error.localizedDescription)
+                        self.errorTitle = "Falied to Create Cupcake"
+                        self.errorMessage = error.localizedDescription
                         viewState = .load
                         showingError = true
                     }
@@ -138,6 +87,8 @@ extension CreateCupcakeView {
         init(
             inMemoryOnly: Bool = false
         ) {
+            self.inMemoryOnly = inMemoryOnly
+            
             _cupcake = Published(
                 initialValue: .init(
                     coverImage: .init(),
@@ -146,8 +97,6 @@ extension CreateCupcakeView {
                     price: 0
                 )
             )
-            
-            self.cacheStorage = inMemoryOnly ? .preview : .shared
         }
     }
 }

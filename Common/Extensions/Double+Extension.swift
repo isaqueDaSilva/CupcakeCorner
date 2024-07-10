@@ -12,7 +12,7 @@ extension Double {
     var currency: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale.current
+        formatter.currencySymbol = "$"
         
         return formatter.string(for: self) ?? "Unable to perform conversion."
     }

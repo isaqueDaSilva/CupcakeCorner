@@ -28,13 +28,13 @@ struct Login {
     
     private var appType: String {
         #if CLIENT
-        return ApplicationType.forClient.rawValue
+        return LoginType.forClient.rawValue
         #elseif ADMIN
-        return ApplicationType.forAdmin.rawValue
+        return LoginType.forAdmin.rawValue
         #endif
     }
     
-    func getTokenValue() async throws -> String {
+    func getTokenValue() async throws {
         let value = try self.value()
         
         let request = NetworkService(
@@ -61,8 +61,6 @@ struct Login {
         let token = try decoder.decode(Token.self, from: data)
         
         _ = try KeychainService.store(for: token)
-        
-        return token.value
     }
     
     init(email: String, password: String) {

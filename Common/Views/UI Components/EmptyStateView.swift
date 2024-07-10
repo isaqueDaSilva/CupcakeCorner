@@ -13,8 +13,6 @@ struct EmptyStateView: View {
     let description: String
     let icon: Icon
     
-    var action: () -> Void
-    
     var body: some View {
         VStack {
             ContentUnavailableView(
@@ -23,26 +21,16 @@ struct EmptyStateView: View {
                 description: Text(description)
             )
         }
-        .toolbar {
-            Button {
-                action()
-            } label: {
-                Icon.arrowClockwise.systemImage
-            }
-            
-        }
     }
     
     init(
         title: String,
         description: String,
-        icon: Icon,
-        action: @escaping () -> Void
+        icon: Icon
     ) {
         self.title = title
         self.description = description
         self.icon = icon
-        self.action = action
     }
 }
 
@@ -52,6 +40,6 @@ struct EmptyStateView: View {
             title: "Something",
             description: "somthing",
             icon: .bag
-        ) { }
+        )
     }
 }

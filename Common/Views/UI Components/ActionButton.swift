@@ -16,7 +16,12 @@ struct ActionButton: View {
     let width: CGFloat?
     let height: CGFloat?
     
+    let isDisabled: Bool
     var action: () -> Void
+    
+    private var disabledState: Bool {
+        (viewState == .loading || viewState == .faliedToLoad) || (isDisabled)
+    }
     
     var body: some View {
         Button {
@@ -34,7 +39,7 @@ struct ActionButton: View {
             .frame(maxWidth: width)
             .frame(height: height, alignment: .center)
         }
-        .disabled(viewState == .loading || viewState == .faliedToLoad)
+        .disabled(disabledState)
         .buttonStyle(.borderedProminent)
     }
     
@@ -43,6 +48,7 @@ struct ActionButton: View {
         label: String,
         width: CGFloat? = nil,
         height: CGFloat? = nil,
+        isDisabled: Bool = false,
         action: @escaping () -> Void
     ) {
         _viewState = viewState
@@ -50,6 +56,7 @@ struct ActionButton: View {
         self.action = action
         self.width = width
         self.height = height
+        self.isDisabled = isDisabled
     }
 }
 

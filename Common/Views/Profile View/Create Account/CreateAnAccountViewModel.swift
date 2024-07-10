@@ -7,47 +7,32 @@
 
 import Foundation
 
-extension CreateAnAccount {
+extension CreateAnAccountView {
+    @MainActor
     final class ViewModel: ObservableObject {
         @Published var newUser: User.Create
-        @Published var task: Task<Void, Never>? = nil
-        
-        #if CLIENT
-        @Published var fullAdress: String = ""
-        @Published var city: String = ""
-        @Published var zip: String = ""
-        #endif
         
         @Published var showingAlert = false
-        @Published var alert: AppAlert?
+        @Published var alertTitle = ""
+        @Published var alertMessage = ""
         
         @Published var viewState: ViewState = .load
         @Published var isSuccessed = false
         
         private func showingConfirmationAlert() {
-            alert = AppAlert(
-                title: "Account Created",
-                description: "Your account was created with success, click in OK and log in the system for gets the full access in the App."
-            )
+            alertTitle = "Account Created"
+            alertMessage = "Your account was created with success, click in OK and log in the system for gets the full access in the App."
             viewState = .load
             showingAlert = true
         }
         
         func createUser() {
-            task = Task(priority: .background) {
+            Task(priority: .background) {
                 await MainActor.run {
                     self.viewState = .loading
                 }
                 
                 do {
-                    #if CLIENT
-                    await MainActor.run {
-                        self.newUser.fullAdress = self.fullAdress
-                        self.newUser.city = self.city
-                        self.newUser.zip = self.zip
-                    }
-                    #endif
-                    
                     let encoder = JSONEncoder()
                     
                     let data = try encoder.encode(newUser)
@@ -72,7 +57,8 @@ extension CreateAnAccount {
                     }
                 } catch let error {
                     await MainActor.run {
-                        self.alert = AppAlert(title: "Falied to Create User", description: error.localizedDescription)
+                        alertTitle = "Falied to Create User"
+                        alertMessage = error.localizedDescription
                         viewState = .load
                         isSuccessed = false
                         showingAlert = true

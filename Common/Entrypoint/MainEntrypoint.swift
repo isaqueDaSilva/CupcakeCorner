@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
-/// The main scene's entry point for the both targets .
 struct MainEntrypoint: Scene {
+    private let container: ModelContainer
+    
     @State private var isSplashViewPresented = true
     
     @Namespace private var transition
@@ -25,6 +27,16 @@ struct MainEntrypoint: Scene {
                         .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
+        }
+        .modelContainer(container)
+        .modelContext(container.mainContext)
+    }
+    
+    init() {
+        do {
+            container = try ModelContainer(for: User.self, Order.self, Cupcake.self)
+        } catch {
+            fatalError("Failed to create ModelContainer for User, Order and Cupcake.")
         }
     }
 }

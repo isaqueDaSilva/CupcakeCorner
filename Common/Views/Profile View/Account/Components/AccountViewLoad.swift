@@ -13,30 +13,33 @@ extension AccountView {
     func AccountViewLoad() -> some View {
         List {
             Section {
-                VStack(alignment: .leading) {
-                    Text(viewModel.name)
-                        .font(.title3)
-                        .bold()
-                    
-                    Text(viewModel.email)
-                        .font(.subheadline)
+                NavigationLink {
+                    if let user = userRepo.user {
+                        UpdateAccountView(user: user)
+                            .environmentObject(userRepo)
+                    }
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text(userRepo.user?.name ?? "No User Saved")
+                            .font(.title3)
+                            .bold()
+                        
+                        Text(userRepo.user?.email ?? "No User Saved")
+                            .font(.subheadline)
+                    }
                 }
             }
             
             Section {
                 #if CLIENT
-                LabeledContent("Main Shipping:") {
-                    Text(viewModel.mainShipping)
-                        .multilineTextAlignment(.trailing)
-                }
                 LabeledContent("Main Payment:") {
-                    Text(viewModel.mainPayment)
+                    Text(userRepo.user?.paymentMethod.displayedName ?? "No User Saved")
                         .multilineTextAlignment(.trailing)
                 }
                 
                 #elseif ADMIN
                 NavigationLink {
-                    CreateAnAccount()
+                    CreateAnAccountView()
                 } label: {
                     Text("Create New User Admin")
                 }
@@ -46,7 +49,13 @@ extension AccountView {
             
             Section {
                 Button(role: .destructive) {
-                    viewModel.logout()
+                    if let user = userRepo.user {
+                        viewModel.logout(with: user, and: modelContext) {
+                            userRepo.getUser(with: modelContext)
+                        }
+                    } else {
+                        viewModel.displayError()
+                    }
                 } label: {
                     switch viewModel.signOutViewState {
                     case .load, .faliedToLoad:
@@ -63,7 +72,6 @@ extension AccountView {
 
 //#Preview {
 //    NavigationStack {
-//        AccountView().AccountViewLoad()
-//            .environmentObject(PageController())
+//        ProfileView(inMemoryOnly: true)
 //    }
 //}

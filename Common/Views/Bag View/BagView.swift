@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BagView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) var modelContex
+    @EnvironmentObject var userRepo: UserRepositoty
     
-    @StateObject var viewModel: ViewModel
+    @StateObject var viewModel = ViewModel()
+    @State private var userID: UUID?
+    private var inMemoryOnly: Bool
     
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
@@ -35,41 +40,96 @@ struct BagView: View {
                         .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
-            #if CLIENT
-            .navigationTitle("Bag")
-            #elseif ADMIN
-            .navigationTitle("Client Orders")
-            #endif
-            .onChange(of: scenePhase) { _, newValue in
-                if (newValue == .background) {
-                    viewModel.disconnect()
+            .onAppear {
+                guard !inMemoryOnly else {
+                    try? viewModel.fetchOrders(with: modelContex)
+                    return
+                }
+                
+                if (userRepo.user != nil) && (viewModel.webSocketService == nil) {
+                    viewModel.connect(with: userRepo.user?.id, and: modelContex)
+                    userID = userRepo.user?.id
+                } else {
+                    viewModel.viewState = .load
                 }
             }
-            #if CLIENT
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    InformationLabel(
-                        viewModel.totalOfTheBag,
-                        title: "Total of this bag"
+            .onChange(of: scenePhase) { _, newValue in
+                if newValue == .background {
+                    viewModel.disconnect(
+                        with: userRepo.user?.id,
+                        isInBackground: true
                     )
                 }
             }
-            #endif
+            .onChange(of: userRepo.user) { _, _ in
+                if userRepo.user == nil {
+                    viewModel.disconnect(
+                        with: userID
+                    )
+                    
+                    userID = nil
+                    
+                    viewModel.orders = []
+                }
+            }
+            .toolbar {
+                #if CLIENT
+                ToolbarItem(placement: .bottomBar) {
+                    InformationLabel(
+                        viewModel.totalOfBag,
+                        title: "Total of this bag:"
+                    )
+                }
+                #endif
+                
+                if viewModel.orders.isEmpty {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            viewModel.reconnect(
+                                with: userRepo.user?.id,
+                                and: modelContex
+                            )
+                        } label: {
+                            Icon.arrowClockwise.systemImage
+                        }
+                        .disabled(viewModel.viewState == .loading)
+                    }
+                }
+            }
             .alert(
-                viewModel.alert?.title ?? "No Title",
+                viewModel.alertTitle,
                 isPresented: $viewModel.showingAlert
             ) {
             } message: {
-                Text(viewModel.alert?.description ?? "No description")
+                Text(viewModel.alertMessage)
             }
         }
     }
     
     init(_ inMemoryOnly: Bool = false) {
-        _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
+        self.inMemoryOnly = inMemoryOnly
     }
 }
 
 #Preview {
-    BagView(true)
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try? ModelContainer(for: Order.self, configurations: config)
+    
+    guard let container else {
+        return BagView(true)
+            .environmentObject(UserRepositoty())
+    }
+    
+    let context = ModelContext(container)
+    
+    for order in Order.sampleOrders {
+        context.insert(order)
+    }
+    
+    try? context.save()
+    print("Orders Saved")
+    
+    return BagView(true)
+        .environment(\.modelContext, context)
+        .environmentObject(UserRepositoty())
 }

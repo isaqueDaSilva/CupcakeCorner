@@ -2,8 +2,7 @@
 //  User.swift
 //  CupcakeCorner
 //
-//  Created by Isaque da Silva on 24/05/24.
-//
+//  Created by Isaque da Silva on 08/07/24.
 //
 
 import Foundation
@@ -16,31 +15,23 @@ final class User {
     
     @Attribute(.unique)
     var name: String
+    
     let email: String
     let role: Role
-    let paymentMethod: PaymentMethod
-    var fullAdress: String?
-    var city: String?
-    var zip: String?
+    var paymentMethod: PaymentMethod
     
     private init(
         id: UUID,
         name: String,
         email: String,
         role: Role,
-        paymentMethod: PaymentMethod,
-        fullAdress: String?,
-        city: String?,
-        zip: String?
+        paymentMethod: PaymentMethod
     ) {
         self.id = id
         self.name = name
         self.email = email
         self.role = role
         self.paymentMethod = paymentMethod
-        self.fullAdress = fullAdress
-        self.city = city
-        self.zip = zip
     }
     
     convenience init(from result: Get) {
@@ -49,28 +40,21 @@ final class User {
             name: result.name,
             email: result.email,
             role: result.role,
-            paymentMethod: result.paymentMethod,
-            fullAdress: result.fullAdress,
-            city: result.city,
-            zip: result.zip
+            paymentMethod: result.paymentMethod
         )
     }
 }
 
 extension User {
-    @MainActor
-    static let sampleUser: User = {
-        let user = User(
+    static var sampleUser: User {
+        let newUser = User(
             id: .init(),
             name: "Tim Cook",
             email: "timcook@apple.com",
-            role: .admin,
-            paymentMethod: .creditCard,
-            fullAdress: "One Apple Park Way",
-            city: "Cupertino",
-            zip: "CA 95014"
+            role: .client,
+            paymentMethod: .debitCard
         )
         
-        return user
-    }()
+        return newUser
+    }
 }

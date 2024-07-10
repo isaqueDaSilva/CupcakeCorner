@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The main entry point of the Cupcake Corner for Admin app.
 @main
 struct CupcakeCornerForAdminApp: App {
     var body: some Scene {

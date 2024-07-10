@@ -8,13 +8,13 @@
 import SwiftUI
 
 extension CupcakeView {
-    struct NewCupcakeHighlights<Value: Hashable>: View {
+    struct NewCupcakeHighlights: View {
         let name: String
         let description: String
         let cover: Image
         let price: Double
         
-        let value: Value
+        let cupcake: Cupcake
         
         var body: some View {
             VStack {
@@ -34,7 +34,9 @@ extension CupcakeView {
                             .bold()
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        NavigationLink(value: value) {
+                        NavigationLink {
+                            OrderView(cupcake: cupcake)
+                        } label: {
                             Text("Buy")
                                 .foregroundStyle(.blue)
                                 .padding([.top, .bottom], 2)
@@ -60,7 +62,7 @@ extension CupcakeView {
             description: [String],
             cover image: UIImage?,
             price: Double,
-            value: Value
+            value: Cupcake
         ) {
             self.name = name
             self.description = description.joined(separator: ", ")
@@ -72,14 +74,18 @@ extension CupcakeView {
                 self.cover = Icon.questionmarkDiamond.systemImage
             }
             
-            self.value = value
+            self.cupcake = value
         }
     }
 }
 
 //#Preview {
-//    let image = UIImage(systemName: Icon.house.rawValue)
-//    let imageData = image?.pngData()
-//    
-//    return CupcakeView.NewCupcakeHighlights(name: "Name", description: ["Some", "Description"], cover: imageData!, price: 10) { }
+//    CupcakeView.NewCupcakeHighlights(
+//        name: "Chocolate",
+//        description: ["Chocolate"],
+//        cover: UIImage(systemName: Icon.bag.rawValue),
+//        price: 7.0,
+//        value: Cupcake.sampleCupcakes[0]
+//    )
+//    .padding()
 //}
