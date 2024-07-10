@@ -2,7 +2,7 @@
 1. [Description](#description)
 2. [Getting started](#getting-started)
 3. [Usage](#usage)
-4. [Arhitecture](#arhitecture)
+4. [Architecture](#architecture)
 5. [Structure](#structure)
 6. [Dependencies](#dependencies)
 7. [Workflow](#workflow)
