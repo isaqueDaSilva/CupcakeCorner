@@ -19,11 +19,26 @@ struct AccountView: View {
         AccountViewLoad()
             .navigationTitle("Account")
             .alert(
-                viewModel.errorTitle,
-                isPresented: $viewModel.showingError
+                viewModel.alertTitle,
+                isPresented: $viewModel.showingAlert
             ) {
+                if viewModel.isDeleteAccountAction {
+                    Button("Cancel", role: .cancel) { }
+                    
+                    Button("Delete", role: .destructive) {
+                        if let user = userRepo.user {
+                            viewModel.deleteAccount(with: user, and: modelContext) {
+                                userRepo.getUser(with: modelContext)
+                            }
+                        } else {
+                            viewModel.displayError()
+                        }
+                    }
+                }
+                
+                
             } message: {
-                Text(viewModel.errorMessage)
+                Text(viewModel.alertMessage)
             }
     }
 }

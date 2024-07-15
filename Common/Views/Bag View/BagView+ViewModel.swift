@@ -199,7 +199,7 @@ extension BagView {
                     try await webSocketService.send(message)
                 } catch let error {
                     await MainActor.run {
-                        showingError(with: "Failed to send update", error.localizedDescription)
+                        showingAlert(with: "Failed to send update", error.localizedDescription)
                     }
                 }
             }

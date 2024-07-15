@@ -11,6 +11,8 @@ import SwiftUI
 /// A representation of the all SF Symbols names that used in the App.
 enum Icon: String {
     case house = "house"
+    case trash = "trash"
+    case rectangleAndArrow = "rectangle.portrait.and.arrow.right"
     case bag = "bag"
     case shippingBox = "shippingbox"
     case person = "person"
