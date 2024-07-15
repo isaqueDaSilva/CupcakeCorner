@@ -19,7 +19,8 @@ extension BagView {
         @Published var alertTitle = ""
         @Published var alertMessage = ""
         
-        private var task: Task<Void, Never>?
+        private var orderTask: Task<Void, Never>?
+        private var pingTask: Task<Void, Never>?
         var webSocketService: OrderWebSocketService?
         
         #if CLIENT
@@ -45,13 +46,14 @@ extension BagView {
                     }
                 }
             }
-            
+
+            sendPing()
             receiveOrders(with: clientID, and: context)
             try await webSocketService.startConnection(with: clientID)
         }
         
         private func receiveOrders(with clientID: UUID, and context: ModelContext) {
-            task = Task {
+            orderTask = Task {
                 do {
                     guard let webSocketService else { throw WebSocketConnectionError.noConnection }
                     
@@ -65,8 +67,6 @@ extension BagView {
                             try await update(updatedOrder, with: context)
                         }
                     }
-                } catch WebSocketConnectionError.disconected {
-                    disconnect(with: clientID)
                 } catch {
                     await MainActor.run {
                         showingError(
@@ -258,6 +258,22 @@ extension BagView {
             }
         }
         
+        private func sendPing() {
+            guard let webSocketService else { return }
+            
+            pingTask = Task {
+                
+                do {
+                    try? await Task.sleep(for: .seconds(15))
+                    try await webSocketService.sendPing()
+                    sendPing()
+                } catch {
+                    pingTask?.cancel()
+                    pingTask = nil
+                }
+            }
+        }
+        
         func reconnect(with clientID: UUID?, and context: ModelContext) {
             if webSocketService != nil {
                 disconnect(with: clientID, isServerDisconnected: false)
@@ -272,7 +288,7 @@ extension BagView {
                     try await Task.sleep(for: .seconds(300))
                 }
                 
-                guard let webSocketService, let clientID else { 
+                guard let webSocketService, let clientID else {
                     showingError(with: "Failed to disconnect from the channel.")
                     return
                 }
@@ -283,13 +299,32 @@ extension BagView {
                         try await webSocketService.send(disconnectMessage)
                     }
                     try await webSocketService.disconnect()
+                    self.orderTask?.cancel()
+                    self.orderTask = nil
+                    self.pingTask?.cancel()
+                    self.pingTask = nil
                     self.webSocketService = nil
-                    
                 } catch {
                     await MainActor.run {
                         showingError(with: "Failed to disconnect from the channel.", error.localizedDescription)
                     }
                 }
+            }
+        }
+        
+        func deleteAllOrders(with context: ModelContext) {
+            do {
+                let descriptor = FetchDescriptor<Order>()
+                
+                let orders = try context.fetch(descriptor)
+                
+                for order in orders {
+                    context.delete(order)
+                }
+                
+                self.orders = []
+            } catch {
+                showingError(with: "Failed to delete orders", error.localizedDescription)
             }
         }
         

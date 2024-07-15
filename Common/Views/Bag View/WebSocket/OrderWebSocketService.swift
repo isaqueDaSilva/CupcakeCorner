@@ -13,36 +13,51 @@ extension BagView {
     final class OrderWebSocketService: @unchecked Sendable {
         private var webSocketService: WebSocketService<WebSocketMessage<Receive>>
         
-        private var task: Task<Void, Never>?
+        private var receiveValuetask: Task<Void, Never>?
+        private var isSendingPingValid: Bool
         let orderReceivedSubject: PassthroughSubject<Receive, WebSocketConnectionError>
         
+        
         func startConnection(with clientID: UUID) async throws {
-            let initialMessage = WebSocketMessage<Send>(for: clientID, with: .get)
-            try await webSocketService.start(with: initialMessage)
+            do {
+                let initialMessage = WebSocketMessage<Send>(for: clientID, with: .get)
+                try await webSocketService.start(with: initialMessage)
+            } catch {
+                orderReceivedSubject.send(completion: .failure(.noConnection))
+                throw error
+            }
         }
         
         private func receiveValuesObserver() {
-            task = Task {
+            receiveValuetask = Task {
                 do {
                     for try await orderReceived in webSocketService.messageReceivedSubject.values {
                         let message = orderReceived.data
                         orderReceivedSubject.send(message)
                     }
                 } catch {
+                    isSendingPingValid = false
                     orderReceivedSubject.send(completion: .failure(.receiveDataFailed))
-                    task = nil
+                    receiveValuetask?.cancel()
+                    receiveValuetask = nil
                 }
             }
         }
         
         func sendPing() async throws {
+            
+            guard isSendingPingValid else {
+                throw WebSocketConnectionError.noConnection
+            }
+            
             try await webSocketService.sendPing()
         }
         
         func disconnect() async throws {
             try await webSocketService.disconnect()
-            orderReceivedSubject.send(completion: .failure(.disconected))
-            task = nil
+            orderReceivedSubject.send(completion: .finished)
+            receiveValuetask?.cancel()
+            receiveValuetask = nil
         }
         
         func send(_ message: WebSocketMessage<Send>) async throws {
@@ -63,6 +78,7 @@ extension BagView {
             )
             
             orderReceivedSubject = .init()
+            isSendingPingValid = true
             receiveValuesObserver()
         }
     }

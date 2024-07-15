@@ -69,7 +69,7 @@ struct BagView: View {
                     
                     userID = nil
                     
-                    viewModel.orders = []
+                    viewModel.deleteAllOrders(with: modelContex)
                 }
             }
             .toolbar {

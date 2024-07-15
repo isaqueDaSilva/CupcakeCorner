@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/isaqueDaSilva/WebSocketHandler.git",
       "state" : {
-        "revision" : "8f33422c6de6db04917ae0e83ee4e10e5445edc6",
-        "version" : "1.0.14"
+        "revision" : "8b98347662b5d17a1a2c4cf03ebd63685b0ccdbb",
+        "version" : "1.0.25"
       }
     }
   ],
