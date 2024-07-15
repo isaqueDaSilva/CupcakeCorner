@@ -67,24 +67,7 @@ extension AccountView {
                         ProgressView()
                     }
                 }
-                .disabled(viewModel.signOutViewState == .loading || viewModel.deleteAccountViewState == .loading)
-            }
-            
-            Section {
-                Button(role: .destructive) {
-                    viewModel.showingDeleteAccountAlert()
-                } label: {
-                    switch viewModel.signOutViewState {
-                    case .load, .faliedToLoad:
-                        HStack {
-                            Icon.trash.systemImage
-                            Text("Delete Account")
-                        }
-                    case .loading:
-                        ProgressView()
-                    }
-                }
-                .disabled(viewModel.signOutViewState == .loading || viewModel.deleteAccountViewState == .loading)
+                .disabled(viewModel.signOutViewState == .loading)
             }
         }
     }

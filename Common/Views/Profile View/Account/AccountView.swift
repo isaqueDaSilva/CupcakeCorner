@@ -21,23 +21,7 @@ struct AccountView: View {
             .alert(
                 viewModel.alertTitle,
                 isPresented: $viewModel.showingAlert
-            ) {
-                if viewModel.isDeleteAccountAction {
-                    Button("Cancel", role: .cancel) { }
-                    
-                    Button("Delete", role: .destructive) {
-                        if let user = userRepo.user {
-                            viewModel.deleteAccount(with: user, and: modelContext) {
-                                userRepo.getUser(with: modelContext)
-                            }
-                        } else {
-                            viewModel.displayError()
-                        }
-                    }
-                }
-                
-                
-            } message: {
+            ) { } message: {
                 Text(viewModel.alertMessage)
             }
     }
