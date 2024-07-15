@@ -14,7 +14,7 @@ extension CupcakeView {
         ScrollView {
             VStack {
                 #if CLIENT
-                FreeShipping()
+                HomeViewMessage()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Divider()
