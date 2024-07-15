@@ -22,7 +22,7 @@ When you open the application for the first time you realize that its design is 
  # Getting started
 <p>
 1. Make sure you have the Xcode version 15.3 or above installed on your computer.<br>
-2. Downloads the Cupcake Corner and Cupcake Corner API projects files from their repositorys.<br>
+2. Downloads the Cupcake Corner and Cupcake Corner API projects files from their repositorys. *Link to the Repository coming soon.*<br>
 3. Follow the instructions from the Cupcake Corner API before to run the project.
 4. Open the project files in Xcode.<br>
 6. Review the code and make sure you understand what it does.<br>
