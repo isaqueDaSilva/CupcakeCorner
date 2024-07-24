@@ -13,22 +13,10 @@ extension CupcakeView {
         let image: Image
         
         var body: some View {
-            
-            VStack {
-                Text(name)
-                    .font(.headline)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding([.leading, .top])
-                
+            GroupBox(name) {
                 image
                     .resizable()
                     .scaledToFit()
-            }
-            .padding(2)
-            .background {
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.black.opacity(0.08))
             }
         }
         

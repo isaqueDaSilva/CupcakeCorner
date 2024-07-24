@@ -23,4 +23,8 @@ enum Status: String, Codable, CaseIterable, Identifiable, Sendable {
             "Delivered"
         }
     }
+    
+    static var allCases: [Status] {
+        [.ordered, .readyForDelivery]
+    }
 }

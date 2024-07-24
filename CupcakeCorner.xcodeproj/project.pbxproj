@@ -84,8 +84,8 @@
 		7E6AF5022C2D458500CF28CE /* CacheStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6AF5002C2D458500CF28CE /* CacheStoreError.swift */; };
 		7E6B637A2C1F84D0008936A6 /* CupcakeUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6B63792C1F84D0008936A6 /* CupcakeUpdater.swift */; };
 		7E6B637E2C1F8675008936A6 /* CupcakeUpdateSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6B637D2C1F8675008936A6 /* CupcakeUpdateSender.swift */; };
-		7E721C582C50A31C008EC60E /* WebSocketHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7E721C572C50A31C008EC60E /* WebSocketHandler */; };
-		7E721C5A2C50A321008EC60E /* WebSocketHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7E721C592C50A321008EC60E /* WebSocketHandler */; };
+		7E721C5D2C50A421008EC60E /* WebSocketHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7E721C5C2C50A421008EC60E /* WebSocketHandler */; };
+		7E721C5F2C50A425008EC60E /* WebSocketHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7E721C5E2C50A425008EC60E /* WebSocketHandler */; };
 		7E8917932BF0668D00B16B46 /* CupcakeViewLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */; };
 		7E8917942BF0668D00B16B46 /* CupcakeViewLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */; };
 		7E8ADE5E2BEAF59900A16692 /* MainEntrypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8ADE5D2BEAF59900A16692 /* MainEntrypoint.swift */; };
@@ -293,7 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E721C582C50A31C008EC60E /* WebSocketHandler in Frameworks */,
+				7E721C5D2C50A421008EC60E /* WebSocketHandler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E721C5A2C50A321008EC60E /* WebSocketHandler in Frameworks */,
+				7E721C5F2C50A425008EC60E /* WebSocketHandler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,7 +865,7 @@
 			);
 			name = CupcakeCorner;
 			packageProductDependencies = (
-				7E721C572C50A31C008EC60E /* WebSocketHandler */,
+				7E721C5C2C50A421008EC60E /* WebSocketHandler */,
 			);
 			productName = CupcakeCorner;
 			productReference = 7E00CAD02BBE7F4C0033A2F9 /* CupcakeCorner.app */;
@@ -885,7 +885,7 @@
 			);
 			name = CupcakeCornerForAdmin;
 			packageProductDependencies = (
-				7E721C592C50A321008EC60E /* WebSocketHandler */,
+				7E721C5E2C50A425008EC60E /* WebSocketHandler */,
 			);
 			productName = CupcakeCornerForAdmin;
 			productReference = 7EEAAD322BD0EBD4002963F3 /* CupcakeCornerForAdmin.app */;
@@ -919,7 +919,7 @@
 			);
 			mainGroup = 7E00CAC72BBE7F4C0033A2F9;
 			packageReferences = (
-				7E721C562C50A312008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */,
+				7E721C5B2C50A418008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */,
 			);
 			productRefGroup = 7E00CAD12BBE7F4C0033A2F9 /* Products */;
 			projectDirPath = "";
@@ -1446,7 +1446,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7E721C562C50A312008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */ = {
+		7E721C5B2C50A418008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/isaqueDaSilva/WebSocketHandler.git";
 			requirement = {
@@ -1457,14 +1457,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7E721C572C50A31C008EC60E /* WebSocketHandler */ = {
+		7E721C5C2C50A421008EC60E /* WebSocketHandler */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7E721C562C50A312008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */;
+			package = 7E721C5B2C50A418008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */;
 			productName = WebSocketHandler;
 		};
-		7E721C592C50A321008EC60E /* WebSocketHandler */ = {
+		7E721C5E2C50A425008EC60E /* WebSocketHandler */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7E721C562C50A312008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */;
+			package = 7E721C5B2C50A418008EC60E /* XCRemoteSwiftPackageReference "WebSocketHandler" */;
 			productName = WebSocketHandler;
 		};
 /* End XCSwiftPackageProductDependency section */

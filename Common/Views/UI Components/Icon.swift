@@ -21,6 +21,7 @@ enum Icon: String {
     case bookmarkFill = "bookmark.fill"
     case chevronLeft = "chevron.left"
     case chevronRight = "chevron.right"
+    case chevronDown = "chevron.down"
     case questionmarkDiamond = "questionmark.diamond"
     case plusCircle = "plus.circle"
     case squareSlash = "square.slash"

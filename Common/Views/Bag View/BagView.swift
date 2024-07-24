@@ -20,6 +20,12 @@ struct BagView: View {
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
     
+    @AppStorage("is_showing_ordered_order_section")
+    var isShowingOrderedOrderSection = false
+    
+    @AppStorage("is_showing_ready_for_delivery_section")
+    var isShowingReadyForDeliveryOrderSection = false
+    
     var body: some View {
         NavigationStack {
             Group {

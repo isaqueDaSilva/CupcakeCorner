@@ -19,6 +19,23 @@ extension BagView {
         @Published var alertTitle = ""
         @Published var alertMessage = ""
         
+        var orderedOrder: [Order] {
+            let ordereds = orders.filter { $0.status == .ordered }
+            
+            return ordereds.sorted(by: { $0.orderTime < $1.orderTime} )
+        }
+        
+        var readyForDeliveryOrder: [Order] {
+            let ordersReadyForDelivery = orders.filter { $0.status == .readyForDelivery}
+            return ordersReadyForDelivery.sorted { lhsOrder, rhsOrder in
+                guard let lhsTime = lhsOrder.readyForDeliveryTime,
+                      let rhsTime = rhsOrder.readyForDeliveryTime
+                else { return false }
+                
+                return lhsTime < rhsTime
+            }
+        }
+        
         private var orderTask: Task<Void, Never>?
         private var pingTask: Task<Void, Never>?
         var webSocketService: OrderWebSocketService?
