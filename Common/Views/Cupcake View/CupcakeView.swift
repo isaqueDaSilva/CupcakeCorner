@@ -109,7 +109,7 @@ struct CupcakeView: View {
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try? ModelContainer(for: Cupcake.self, configurations: config)
+    let container = try? ModelContainer(for: Cupcake.self, User.self, configurations: config)
     
     guard let container else { return CupcakeView(inMemoryOnly: true) }
     
@@ -119,10 +119,15 @@ struct CupcakeView: View {
         context.insert(cupcake)
     }
     
-    try? context.save()
     print("Cupcakes Saved")
+    
+    context.insert(User.sampleUser)
+    
+    try? context.save()
+    print("User Saved")
     
     return CupcakeView(inMemoryOnly: true)
         .environment(\.modelContext, context)
         .environmentObject(UserRepositoty())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

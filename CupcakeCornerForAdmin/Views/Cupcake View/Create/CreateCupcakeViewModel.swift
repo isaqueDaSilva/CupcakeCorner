@@ -24,7 +24,8 @@ extension CreateCupcakeView {
             }
         }
         
-        @Published var coverImage: UIImage? = nil
+        @Published var coverImage: Image? = nil
+        
         @Published var showingError = false
         @Published var errorTitle = ""
         @Published var errorMessage = ""
@@ -39,7 +40,7 @@ extension CreateCupcakeView {
                     DispatchQueue.main.async { [weak self] in
                         guard let self else { return }
                         self.cupcake.coverImage = imageData
-                        self.coverImage = imageData.loadImage()
+                        self.coverImage = Image(by: imageData)
                     }
                 }
             }

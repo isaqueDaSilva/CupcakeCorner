@@ -84,15 +84,7 @@ struct BagView: View {
                 
                 if viewModel.orders.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            viewModel.reconnect(
-                                with: userRepo.user?.id,
-                                and: modelContex
-                            )
-                        } label: {
-                            Icon.arrowClockwise.systemImage
-                        }
-                        .disabled(viewModel.viewState == .loading)
+                        ReconnectButton()
                     }
                 }
             }
@@ -108,6 +100,21 @@ struct BagView: View {
     
     init(_ inMemoryOnly: Bool = false) {
         self.inMemoryOnly = inMemoryOnly
+    }
+}
+
+extension BagView {
+    @ViewBuilder
+    func ReconnectButton() -> some View {
+        Button {
+            viewModel.reconnect(
+                with: userRepo.user?.id,
+                and: modelContex
+            )
+        } label: {
+            Icon.arrowClockwise.systemImage
+        }
+        .disabled(viewModel.viewState == .loading)
     }
 }
 

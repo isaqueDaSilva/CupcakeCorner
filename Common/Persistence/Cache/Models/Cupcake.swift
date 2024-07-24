@@ -27,7 +27,7 @@ final class Cupcake: Equatable {
     
     var orders: [Order] = []
     
-    var image: UIImage? { UIImage(data: coverImage) }
+    var image: Image { .init(by: coverImage) }
     
     private init(
         id: UUID,

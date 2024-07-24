@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CoverImageView: View {
-    var coverImage: UIImage?
+    var coverImage: Image?
     
     let width: CGFloat
     let height: CGFloat
@@ -16,7 +16,7 @@ struct CoverImageView: View {
     var body: some View {
         Group {
             if let coverImage {
-                Image(uiImage: coverImage)
+                coverImage
                     .resizable()
                     .scaledToFill()
             } else {
@@ -30,7 +30,7 @@ struct CoverImageView: View {
     }
     
     init(
-        coverImage: UIImage? = nil,
+        coverImage: Image? = nil,
         width: CGFloat = 150,
         height: CGFloat = 150
     ) {

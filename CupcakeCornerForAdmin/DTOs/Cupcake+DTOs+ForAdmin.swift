@@ -25,6 +25,13 @@ extension Cupcake {
         let ingredients: [String]?
         let price: Double?
         
+        init(coverImage: Data? = nil, flavor: String? = nil, ingredients: [String]? = nil, price: Double? = nil) {
+            self.coverImage = coverImage
+            self.flavor = flavor
+            self.ingredients = ingredients
+            self.price = price
+        }
+        
         func encode(to encoder: any Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encodeIfPresent(self.coverImage, forKey: CodingKeys.coverImage)

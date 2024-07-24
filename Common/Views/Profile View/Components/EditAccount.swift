@@ -57,7 +57,8 @@ struct EditAccount: View {
                 LabeledContent("Payment Method") {
                     Picker("Payment Method", selection: $paymentMethod) {
                         ForEach(PaymentMethod.allCases, id: \.id) { method in
-                            PaymentMethodSelector(method)
+                            Text(method.displayedName)
+                                .tag(method.id)
                         }
                     }
                     .labelsHidden()

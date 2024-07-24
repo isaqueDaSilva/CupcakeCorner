@@ -13,7 +13,7 @@ import PhotosUI
 extension UpdateCupcakeView {
     @MainActor
     final class ViewModel: ObservableObject {
-        @Published var coverImage: UIImage?
+        @Published var coverImage: Image?
         @Published var price: Double
         @Published var flavor: String
         @Published var ingredients: [String]
@@ -32,12 +32,15 @@ extension UpdateCupcakeView {
             }
         }
         
+        private var imageData: Data? = nil
+        
         private func getImage(_ pickerItemSelected: PhotosPickerItem) {
             GetPhoto.get(with: pickerItemSelected) { [weak self] data in
                 guard let self else { return }
                 
                 if let data {
-                    self.coverImage = data.loadImage()
+                    self.imageData = data
+                    self.coverImage = Image(by: data)
                 }
             }
         }
@@ -54,7 +57,8 @@ extension UpdateCupcakeView {
                     }
                     
                     let updatedCupcake = CupcakeUpdater.update(
-                        with: coverImage,
+                        cupcake,
+                        with: imageData,
                         flavor,
                         ingredients,
                         and: price

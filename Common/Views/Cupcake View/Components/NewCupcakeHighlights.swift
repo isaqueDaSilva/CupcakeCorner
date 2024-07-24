@@ -60,7 +60,7 @@ extension CupcakeView {
         init(
             name: String,
             description: [String],
-            cover image: UIImage?,
+            cover image: Image?,
             price: Double,
             value: Cupcake
         ) {
@@ -69,7 +69,7 @@ extension CupcakeView {
             self.price = price
             
             if let image {
-                self.cover = Image(uiImage: image)
+                self.cover = image
             } else {
                 self.cover = Icon.questionmarkDiamond.systemImage
             }

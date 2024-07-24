@@ -12,7 +12,7 @@ struct EditCupcake: View {
     @Environment(\.dismiss) private var dismiss
     
     let navigationTitle: String
-    let coverImage: UIImage?
+    let coverImage: Image?
     
     @Binding var pickerItemSelected: PhotosPickerItem?
     @Binding var flavorName: String
@@ -49,13 +49,13 @@ struct EditCupcake: View {
                         "Insert the price here...",
                         value: $price,
                         format: .currency(
-                            code: Locale.current.currency?.identifier ?? "USD"
+                            code: "USD"
                         )
                     )
                     .keyboardType(.decimalPad)
                 }
                 
-                Section("Ingredients") {
+                Section("Ingredients:") {
                     ForEach(ingredients, id: \.self) {
                         Text($0)
                     } 
@@ -114,8 +114,9 @@ struct EditCupcake: View {
 #Preview {
     EditCupcake(
         navigationTitle: "Create",
-        coverImage: nil, pickerItemSelected: .constant(nil), 
-        flavorName: .constant(""), 
+        coverImage: nil, 
+        pickerItemSelected: .constant(nil),
+        flavorName: .constant(""),
         price: .constant(0), 
         ingredients: .constant([]), 
         viewState: .constant(.load)

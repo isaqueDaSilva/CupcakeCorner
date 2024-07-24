@@ -18,9 +18,6 @@ extension Data {
         return model
     }
     
-    /// Loads an UIImage from `Data` type.
-    func loadImage() -> UIImage? { UIImage(data: self) }
-    
     /// Decodes a message type from data coming from the Web Socket server.
     /// - Parameter model: A representation of the type of the data model.
     /// - Returns: Returns a message based on data taht came from the server.

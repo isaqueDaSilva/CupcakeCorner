@@ -83,8 +83,6 @@ struct CupcakeDetailView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     
     let schema = Schema([
-        User.self,
-        Order.self,
         Cupcake.self
     ])
     
@@ -92,10 +90,8 @@ struct CupcakeDetailView: View {
     
     let context = ModelContext(container)
     
-    for cupcake in Cupcake.sampleCupcakes {
-        context.insert(cupcake)
-    }
-    print("Created Cupcakes")
+    context.insert(Cupcake.sampleCupcakes[0])
+    print("Created Cupcake")
     
     try? context.save()
     print("Saved")

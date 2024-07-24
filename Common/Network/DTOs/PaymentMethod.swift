@@ -25,4 +25,8 @@ enum PaymentMethod: String, Codable, CaseIterable, Identifiable, Sendable {
             ""
         }
     }
+    
+    static var allCases: [PaymentMethod] {
+        [.cash, .creditCard, .debitCard]
+    }
 }

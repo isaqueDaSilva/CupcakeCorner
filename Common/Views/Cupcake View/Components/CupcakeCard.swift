@@ -13,26 +13,32 @@ extension CupcakeView {
         let image: Image
         
         var body: some View {
+            
             VStack {
-                GroupBox(name) {
-                    image
-                        .resizable()
-                        .scaledToFit()
-                }
+                Text(name)
+                    .font(.headline)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .padding([.leading, .top])
+                
+                image
+                    .resizable()
+                    .scaledToFit()
+            }
+            .padding(2)
+            .background {
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundStyle(.black.opacity(0.08))
             }
         }
         
         init(
             name: String,
-            image: UIImage?
+            image: Image
         ) {
             self.name = name
             
-            if let image {
-                self.image = Image(uiImage: image)
-            } else {
-                self.image = Icon.questionmarkDiamond.systemImage
-            }
+            self.image = image
         }
     }
 }
@@ -40,7 +46,7 @@ extension CupcakeView {
 #Preview {
     CupcakeView.CupcakeCard(
         name: "Chocolate",
-        image: UIImage(systemName: Icon.bag.rawValue)
+        image: Icon.bag.systemImage
     )
     .padding()
 }
