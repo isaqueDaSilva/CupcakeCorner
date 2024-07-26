@@ -43,7 +43,7 @@ extension CupcakeView {
                                 .padding(.horizontal, 10)
                                 .background(
                                     Capsule()
-                                        .fill(.black.opacity(0.1))
+                                        .fill(.gray.opacity(0.25))
                                 )
                         }
                     }
@@ -79,13 +79,29 @@ extension CupcakeView {
     }
 }
 
-//#Preview {
-//    CupcakeView.NewCupcakeHighlights(
-//        name: "Chocolate",
-//        description: ["Chocolate"],
-//        cover: UIImage(systemName: Icon.bag.rawValue),
-//        price: 7.0,
-//        value: Cupcake.sampleCupcakes[0]
-//    )
-//    .padding()
-//}
+import SwiftData
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try? ModelContainer(for: Cupcake.self, configurations: config)
+    
+    guard let container else { return CupcakeView(inMemoryOnly: true) }
+    
+    let context = ModelContext(container)
+    
+    let cupcake = Cupcake.sampleCupcakes[0]
+    
+    context.insert(cupcake)
+    
+    print("Cupcake Saved")
+    
+    try? context.save()
+    
+    return CupcakeView.NewCupcakeHighlights(
+        name: "Chocolate",
+        description: ["Chocolate"],
+        cover: Icon.bag.systemImage,
+        price: 7.0,
+        value: cupcake
+    )
+    .padding()
+}

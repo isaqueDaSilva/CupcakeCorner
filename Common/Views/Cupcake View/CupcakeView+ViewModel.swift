@@ -121,9 +121,11 @@ extension CupcakeView {
             self.viewState = .load
         }
         
+        #if ADMIN
         func openCreateNewCupcakeView() {
             showingCreateNewCupcakeView = true
         }
+        #endif
         
         init(inMemoryOnly: Bool = false) {
             self.inMemoryOnly = inMemoryOnly
