@@ -22,15 +22,23 @@ extension CupcakeView {
         @Published var showingCreateNewCupcakeView = false
         #endif
         
-        var inMemoryOnly: Bool
+        private var inMemoryOnly: Bool
         
         #if CLIENT
         var newestCupcake: Cupcake?
         #endif
         
-        func loadCupcakes(with modelContext: ModelContext) {
+        func loadCupcakes(with isUserLogged: Bool, and modelContext: ModelContext) {
             Task {
                 do {
+                    #if ADMIN
+                    guard isUserLogged else {
+                        return await MainActor.run {
+                            displayError(title: "You are not connected", and: modelContext)
+                        }
+                    }
+                    #endif
+                    
                     if viewState != .loading {
                         await MainActor.run {
                             viewState = .loading
@@ -111,6 +119,10 @@ extension CupcakeView {
             showingError = true
             
             self.viewState = .load
+        }
+        
+        func openCreateNewCupcakeView() {
+            showingCreateNewCupcakeView = true
         }
         
         init(inMemoryOnly: Bool = false) {

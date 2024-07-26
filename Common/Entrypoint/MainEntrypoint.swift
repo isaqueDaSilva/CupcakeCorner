@@ -19,10 +19,11 @@ struct MainEntrypoint: Scene {
     var body: some Scene {
         WindowGroup {
             Group {
-                if isSplashViewPresented {
+                switch isSplashViewPresented {
+                case true:
                     CupcakeCornerSplashView(isSplashViewShowing: $isSplashViewPresented)
                         .matchedGeometryEffect(id: transitionKey, in: transition)
-                } else {
+                case false:
                     HomeView()
                         .matchedGeometryEffect(id: transitionKey, in: transition)
                 }

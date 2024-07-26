@@ -64,9 +64,6 @@ extension CupcakeView {
         #elseif ADMIN
         .navigationTitle("Cupcakes")
         #endif
-        .refreshable {
-            viewModel.loadCupcakes(with: modelContext)
-        }
     }
 }
 

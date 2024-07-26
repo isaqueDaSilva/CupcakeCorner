@@ -19,42 +19,42 @@ struct CupcakeView: View {
     
     var body: some View {
         NavigationStack {
-            Group {
-                switch viewModel.viewState {
-                case .load, .faliedToLoad:
-                    if viewModel.cupcakes.isEmpty {
-                        EmptyStateView(
-                            title: "No Cupcake Load",
-                            description: emptyStateDescription,
-                            icon: .magnifyingglass
-                        )
-                        .matchedGeometryEffect(id: transitionKey, in: transition)
-                    } else {
-                        CupcakeViewLoad()
+            ScrollView {
+                Group {
+                    switch viewModel.viewState {
+                    case .load, .faliedToLoad:
+                        switch viewModel.cupcakes.isEmpty {
+                        case true:
+                            EmptyStateView(
+                                title: "No Cupcake Load",
+                                description: emptyStateDescription,
+                                icon: .magnifyingglass
+                            )
+                            .containerRelativeFrame(.vertical)
+                            .matchedGeometryEffect(
+                                id: transitionKey,
+                                in: transition
+                            )
+                        case false:
+                            CupcakeViewLoad()
+                                .matchedGeometryEffect(
+                                    id: transitionKey,
+                                    in: transition
+                                )
+                        }
+                    case .loading:
+                        ProgressView()
+                            .containerRelativeFrame(.vertical)
                             .matchedGeometryEffect(id: transitionKey, in: transition)
                     }
-                case .loading:
-                    ProgressView()
-                        .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
             .onAppear {
                 if viewModel.cupcakes.isEmpty {
-                    #if CLIENT
-                    viewModel.loadCupcakes(with: modelContext)
-
-                    #elseif ADMIN
-                    if !viewModel.inMemoryOnly {
-                        guard (userRepo.user != nil) && !viewModel.inMemoryOnly else {
-                            viewModel.viewState = .load
-                            return
-                        }
-                        
-                        viewModel.loadCupcakes(with: modelContext)
-                    } else {
-                        viewModel.loadCupcakes(with: modelContext)
-                    }
-                    #endif
+                    viewModel.loadCupcakes(
+                        with: userRepo.user != nil,
+                        and: modelContext
+                    )
                 }
             }
             .alert(
@@ -64,35 +64,22 @@ struct CupcakeView: View {
             } message: {
                 Text(viewModel.errorDescription)
             }
+            .refreshable {
+                viewModel.loadCupcakes(
+                    with: userRepo.user != nil,
+                    and: modelContext
+                )
+            }
+            #if ADMIN
             .toolbar {
-                if viewModel.cupcakes.isEmpty {
-                    Button {
-                        #if ADMIN
-                        if userRepo.user != nil {
-                            viewModel.loadCupcakes(with: modelContext)
-                        } else {
-                            viewModel.displayError(title: "You are not connected")
-                        }
-                        #elseif CLIENT
-                        viewModel.loadCupcakes(with: modelContext)
-                        #endif
-                    } label: {
-                        Icon.arrowClockwise.systemImage
-                    }
-                    .disabled(viewModel.viewState == .loading)
-                }
-                
-                #if ADMIN
                 if userRepo.user != nil {
                     Button {
-                        viewModel.showingCreateNewCupcakeView = true
+                        viewModel.openCreateNewCupcakeView()
                     } label: {
                         Icon.plusCircle.systemImage
                     }
                 }
-                #endif
             }
-            #if ADMIN
             .sheet(isPresented: $viewModel.showingCreateNewCupcakeView) {
                 CreateCupcakeView { cupcake in
                     viewModel.insertNewCupcake(with: cupcake)
@@ -126,8 +113,10 @@ struct CupcakeView: View {
     try? context.save()
     print("User Saved")
     
+    let userRepo = UserRepositoty()
+    userRepo.getUser(with: context)
+    
     return CupcakeView(inMemoryOnly: true)
         .environment(\.modelContext, context)
-        .environmentObject(UserRepositoty())
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environmentObject(userRepo)
 }

@@ -61,3 +61,12 @@ struct ItemCard: View {
     }
 }
 
+#Preview {
+    ItemCard(
+        name: "Dummy Item",
+        description: "Dummy Description",
+        image: Icon.bag.systemImage,
+        price: 5.0
+    )
+    .padding()
+}

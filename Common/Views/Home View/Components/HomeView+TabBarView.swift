@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-#if os(iOS)
 extension HomeView {
     @ViewBuilder
     func TabBarHomeView() -> some View {
@@ -26,4 +25,3 @@ extension HomeView {
         }
     }
 }
-#endif
