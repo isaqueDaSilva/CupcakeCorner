@@ -48,9 +48,7 @@ struct EditCupcake: View {
                     TextField(
                         "Insert the price here...",
                         value: $price,
-                        format: .currency(
-                            code: "USD"
-                        )
+                        formatter: CurrencyFormatter.formatter
                     )
                     .keyboardType(.decimalPad)
                 }
