@@ -90,6 +90,8 @@
 		7E8917942BF0668D00B16B46 /* CupcakeViewLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */; };
 		7E8ADE5E2BEAF59900A16692 /* MainEntrypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8ADE5D2BEAF59900A16692 /* MainEntrypoint.swift */; };
 		7E8ADE5F2BEAF59900A16692 /* MainEntrypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8ADE5D2BEAF59900A16692 /* MainEntrypoint.swift */; };
+		7E8C774F2C54795E004F615A /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8C774E2C54795E004F615A /* CurrencyFormatter.swift */; };
+		7E8C77502C54795E004F615A /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8C774E2C54795E004F615A /* CurrencyFormatter.swift */; };
 		7E8E31992BE43D0700513538 /* Cupcake+DTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E26FDAE2BDB397700D1C5FA /* Cupcake+DTOs.swift */; };
 		7E8E319A2BE43D0700513538 /* User+DTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEAAD512BD0FD73002963F3 /* User+DTOs.swift */; };
 		7E8E319B2BE43D0700513538 /* Order+DTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E287EF92BD8915D0052438E /* Order+DTOs.swift */; };
@@ -229,6 +231,7 @@
 		7E7BFC6C2C33DCF000A6BA63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7E8917922BF0668D00B16B46 /* CupcakeViewLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeViewLoad.swift; sourceTree = "<group>"; };
 		7E8ADE5D2BEAF59900A16692 /* MainEntrypoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEntrypoint.swift; sourceTree = "<group>"; };
+		7E8C774E2C54795E004F615A /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		7E8E31A52BE4771100513538 /* CoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImageView.swift; sourceTree = "<group>"; };
 		7E8E31AB2BE47EF900513538 /* EditCupcake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCupcake.swift; sourceTree = "<group>"; };
 		7E8E31AD2BE4863900513538 /* CreateCupcakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCupcakeView.swift; sourceTree = "<group>"; };
@@ -487,6 +490,14 @@
 				7E638E422C083B3D00AC6D47 /* CupcakeCornerSplashView.swift */,
 			);
 			path = "Launch Screen";
+			sourceTree = "<group>";
+		};
+		7E695EC32C54787A003314F5 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				7E8C774E2C54795E004F615A /* CurrencyFormatter.swift */,
+			);
+			path = Formatters;
 			sourceTree = "<group>";
 		};
 		7E6B63782C1F84BB008936A6 /* Services */ = {
@@ -785,6 +796,7 @@
 				7E287F082BD8B0550052438E /* Network */,
 				7EEAAD572BD0FF7B002963F3 /* Persistence */,
 				7EA204552BD390B100C8A6DF /* Erros */,
+				7E695EC32C54787A003314F5 /* Formatters */,
 				7E9DDFC02BBFC20500C73D99 /* Extensions */,
 				7E9FB2EF2C2F7B3700D886D2 /* UserRepo */,
 				7E73D9512BE6B51500DC02FB /* Views */,
@@ -1011,6 +1023,7 @@
 				7E00CAD42BBE7F4C0033A2F9 /* CupcakeCornerApp.swift in Sources */,
 				7E22633B2BD1FCA8001AD0B6 /* LoginViewModel.swift in Sources */,
 				7E68F3A52BE7612800941DBC /* WebSocketTypeCommunication.swift in Sources */,
+				7E8C774F2C54795E004F615A /* CurrencyFormatter.swift in Sources */,
 				7E287F032BD8A0CE0052438E /* LoginType.swift in Sources */,
 				7E02202B2C1EC94A00350112 /* UserUpdateSender.swift in Sources */,
 				7ECFD35B2BD4CD6C00171C7C /* NamespaceKey.swift in Sources */,
@@ -1089,6 +1102,7 @@
 				7E8E31BC2BE4A74400513538 /* CupcakeView.swift in Sources */,
 				7E8ADE5F2BEAF59900A16692 /* MainEntrypoint.swift in Sources */,
 				7E68F3A62BE7612800941DBC /* WebSocketTypeCommunication.swift in Sources */,
+				7E8C77502C54795E004F615A /* CurrencyFormatter.swift in Sources */,
 				7E02202C2C1EC94A00350112 /* UserUpdateSender.swift in Sources */,
 				7E8E31C82BE5906300513538 /* HomeView.swift in Sources */,
 				7E287F042BD8A0CE0052438E /* LoginType.swift in Sources */,
