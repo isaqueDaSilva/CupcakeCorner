@@ -85,6 +85,9 @@ struct CupcakeView: View {
                     viewModel.insertNewCupcake(with: cupcake)
                 }
             }
+            .onChange(of: userRepo.user) { _, _ in
+                viewModel.deleteAllCupcakes(with: modelContext)
+            }
             #endif
         }
     }

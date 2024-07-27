@@ -54,7 +54,9 @@ final class Order {
         self.readyForDeliveryTime = readyForDeliveryTime
         self.deliveredTime = deliveredTime
     }
-    
+}
+
+extension Order {
     convenience init(from result: Get, and cupcake: Cupcake) {
         self.init(
             id: result.id,
@@ -70,6 +72,26 @@ final class Order {
             readyForDeliveryTime: result.readyForDeliveryTime,
             deliveredTime: result.deliveredTime
         )
+    }
+}
+
+extension Order {
+    func isEqual(to result: Get) -> Bool {
+        (status == result.status) &&
+        (readyForDeliveryTime == result.readyForDeliveryTime) &&
+        (deliveredTime == result.deliveredTime)
+    }
+}
+
+extension Order {
+    func update(from result: Get) {
+        if result.status != status {
+            status = result.status
+        }
+        
+        if result.readyForDeliveryTime != readyForDeliveryTime {
+            readyForDeliveryTime = result.readyForDeliveryTime
+        }
     }
 }
 

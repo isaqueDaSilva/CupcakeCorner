@@ -23,17 +23,20 @@ extension CupcakeView {
                 let cupcakes = try context.fetch(descriptor)
                 
                 guard (!cupcakes.isEmpty) && (cupcakes.count == 1) && (cupcakes[0].isEqual(to: cupcake)) else {
-                    if cupcakes.isEmpty {
+                    switch cupcakes.isEmpty {
+                    case true:
                         let newCupcake = Cupcake(from: cupcake)
                         context.insert(newCupcake)
-                    } else if cupcakes.count == 1 && !cupcakes[0].isEqual(to: cupcake) {
-                        cupcakes[0].update(from: cupcake)
-                    } else if cupcakes.count > 1 {
-                        for cupcake in cupcakes {
-                            context.delete(cupcake)
+                    case false:
+                        if cupcakes.count == 1 && !cupcakes[0].isEqual(to: cupcake) {
+                            cupcakes[0].update(from: cupcake)
+                        } else if cupcakes.count > 1 {
+                            for cupcake in cupcakes {
+                                context.delete(cupcake)
+                            }
+                            let newCupcake = Cupcake(from: cupcake)
+                            context.insert(newCupcake)
                         }
-                        let newCupcake = Cupcake(from: cupcake)
-                        context.insert(newCupcake)
                     }
                     continue
                 }

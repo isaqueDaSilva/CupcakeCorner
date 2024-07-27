@@ -93,6 +93,20 @@ extension CupcakeView {
                 displayError(title: "Failed to delete cupcake.", error: error)
             }
         }
+        
+        func deleteAllCupcakes(with context: ModelContext) {
+            do {
+                for cupcake in cupcakes {
+                    context.delete(cupcake)
+                }
+                
+                try context.save()
+                
+                self.cupcakes = []
+            } catch {
+                displayError(title: "Failed to delete Cupcakes", error: CacheStoreError.deleteError)
+            }
+        }
         #endif
         
         func displayError(
