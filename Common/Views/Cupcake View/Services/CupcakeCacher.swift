@@ -11,10 +11,10 @@ import SwiftData
 extension CupcakeView {
     enum CupcakeCacher {
         static func caching(
-            _ cupcakes: [Cupcake.Get],
+            _ cupcakesGetted: [Cupcake.Get],
             with context: ModelContext
         ) throws {
-            for cupcake in cupcakes {
+            for cupcake in cupcakesGetted {
                 let predicate = #Predicate<Cupcake> { savedCupcake in
                     savedCupcake.id == cupcake.id
                 }
@@ -22,15 +22,24 @@ extension CupcakeView {
                 let descriptor = FetchDescriptor<Cupcake>(predicate: predicate)
                 let cupcakes = try context.fetch(descriptor)
                 
-                if !cupcakes.isEmpty {
-                    for cupcake in cupcakes {
-                        context.delete(cupcake)
+                guard (!cupcakes.isEmpty) && (cupcakes.count == 1) && (cupcakes[0].isEqual(to: cupcake)) else {
+                    if cupcakes.isEmpty {
+                        let newCupcake = Cupcake(from: cupcake)
+                        context.insert(newCupcake)
+                    } else if cupcakes.count == 1 && !cupcakes[0].isEqual(to: cupcake) {
+                        cupcakes[0].update(from: cupcake)
+                    } else if cupcakes.count > 1 {
+                        for cupcake in cupcakes {
+                            context.delete(cupcake)
+                        }
+                        let newCupcake = Cupcake(from: cupcake)
+                        context.insert(newCupcake)
                     }
+                    continue
                 }
-                
-                let newCupcake = Cupcake(from: cupcake)
-                context.insert(newCupcake)
             }
+            
+            guard context.hasChanges else { return }
             
             try context.save()
         }
