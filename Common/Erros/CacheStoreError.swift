@@ -9,23 +9,26 @@ import Foundation
 
 enum CacheStoreError: Error, LocalizedError {
     case notFound
+    case inseringError
+    case loadingFailed
     case updateFailed
-    case objectNonValid
-    case batchInsertError
-    case persistentHistoryChangeError
+    case deleteError
+    case fetchActionFailed
     
     var errorDescription: String? {
         switch self {
         case .notFound:
             NSLocalizedString("No item found. Please try again", comment: "")
         case .updateFailed:
-            NSLocalizedString("Failed to update data in the store.", comment: "")
-        case .objectNonValid:
-            NSLocalizedString("There is something wrong with this object that causes a failure when trying update this.", comment: "")
-        case .batchInsertError:
-            NSLocalizedString("Failed to execute a batch insert request.", comment: "")
-        case .persistentHistoryChangeError:
-            NSLocalizedString("Failed to execute a persistent history change request.", comment: "")
+            NSLocalizedString("Failed to update data in the store. Try again or contact us.", comment: "")
+        case .fetchActionFailed:
+            NSLocalizedString("There is some error occur when the fetch action was executing.\n Try reload the page or contact us if this error persit.", comment: "")
+        case .inseringError:
+            NSLocalizedString("It wasn't possible to insert a new item in the list.\n Try reload the page.", comment: "")
+        case .loadingFailed:
+            NSLocalizedString("Failed to load the items list.\n Try reload the page or contact us if this error persit.", comment: "")
+        case .deleteError:
+            NSLocalizedString("Failed to delete item. Try again or contact us", comment: "")
         }
     }
 }
