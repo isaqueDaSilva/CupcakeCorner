@@ -14,7 +14,6 @@ struct BagView: View {
     @EnvironmentObject var userRepo: UserRepositoty
     
     @StateObject var viewModel = ViewModel()
-    @State private var userID: UUID?
     private var inMemoryOnly: Bool
     
     @Namespace private var transition
@@ -28,22 +27,28 @@ struct BagView: View {
     
     var body: some View {
         NavigationStack {
-            Group {
-                switch viewModel.viewState {
-                case .load:
-                    if !viewModel.orders.isEmpty {
-                        BagViewPopulated()
+            ScrollView {
+                Group {
+                    switch viewModel.viewState {
+                    case .load:
+                        switch viewModel.orders.isEmpty {
+                        case true:
+                            BagViewEmpty()
+                                .containerRelativeFrame(.vertical)
+                                .matchedGeometryEffect(id: transitionKey, in: transition)
+                        case false:
+                            BagViewPopulated()
+                                .matchedGeometryEffect(id: transitionKey, in: transition)
+                        }
+                    case .loading:
+                        ProgressView()
+                            .containerRelativeFrame(.vertical)
                             .matchedGeometryEffect(id: transitionKey, in: transition)
-                    } else {
-                        BagViewEmpty()
+                    case .faliedToLoad:
+                        BagViewEmpty(with: .error)
+                            .containerRelativeFrame(.vertical)
                             .matchedGeometryEffect(id: transitionKey, in: transition)
                     }
-                case .loading:
-                    ProgressView()
-                        .matchedGeometryEffect(id: transitionKey, in: transition)
-                case .faliedToLoad:
-                    BagViewEmpty(with: .error)
-                        .matchedGeometryEffect(id: transitionKey, in: transition)
                 }
             }
             .onAppear {
@@ -54,27 +59,26 @@ struct BagView: View {
                 
                 if (userRepo.user != nil) && (viewModel.webSocketService == nil) {
                     viewModel.connect(with: userRepo.user?.id, and: modelContex)
-                    userID = userRepo.user?.id
                 } else {
                     viewModel.viewState = .load
                 }
             }
+            .refreshable {
+                viewModel.reconnect(
+                    with: userRepo.user?.id,
+                    and: modelContex
+                )
+            }
             .onChange(of: scenePhase) { _, newValue in
                 if newValue == .background {
                     viewModel.disconnect(
-                        with: userRepo.user?.id,
                         isInBackground: true
                     )
                 }
             }
             .onChange(of: userRepo.user) { _, _ in
                 if userRepo.user == nil {
-                    viewModel.disconnect(
-                        with: userID
-                    )
-                    
-                    userID = nil
-                    
+                    viewModel.disconnect()
                     viewModel.deleteAllOrders(with: modelContex)
                 }
             }
@@ -87,12 +91,6 @@ struct BagView: View {
                     )
                 }
                 #endif
-                
-                if viewModel.orders.isEmpty {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        ReconnectButton()
-                    }
-                }
             }
             .alert(
                 viewModel.alertTitle,
@@ -106,21 +104,6 @@ struct BagView: View {
     
     init(_ inMemoryOnly: Bool = false) {
         self.inMemoryOnly = inMemoryOnly
-    }
-}
-
-extension BagView {
-    @ViewBuilder
-    func ReconnectButton() -> some View {
-        Button {
-            viewModel.reconnect(
-                with: userRepo.user?.id,
-                and: modelContex
-            )
-        } label: {
-            Icon.arrowClockwise.systemImage
-        }
-        .disabled(viewModel.viewState == .loading)
     }
 }
 

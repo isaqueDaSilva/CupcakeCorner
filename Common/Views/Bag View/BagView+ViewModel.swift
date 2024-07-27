@@ -19,6 +19,8 @@ extension BagView {
         @Published var alertTitle = ""
         @Published var alertMessage = ""
         
+        private var userID: UUID?
+        
         var orderedOrder: [Order] {
             let ordereds = orders.filter { $0.status == .ordered }
             
@@ -46,10 +48,33 @@ extension BagView {
         }
         #endif
         
-        private func establishWSConnection(with clientID: UUID?, with context: ModelContext) async throws {
-            guard let clientID else {
+        func connect(with clientID: UUID?, and context: ModelContext) {
+            Task {
+                do {
+                    self.userID = clientID
+                    guard let authorizationValue = try? Authentication.value() else {
+                        webSocketService = nil
+                        return
+                    }
+                    
+                    webSocketService = .init(with: authorizationValue)
+                    
+                    try await establishWSConnection(with: context)
+                } catch {
+                    await MainActor.run {
+                        showingError(
+                            with: "Failed to get orders",
+                            error.localizedDescription,
+                            and: context
+                        )
+                    }
+                }
+            }
+        }
+        
+        private func establishWSConnection(with context: ModelContext) async throws {
+            guard let userID else {
                 return await MainActor.run {
-                    orders = []
                     viewState = .faliedToLoad
                 }
             }
@@ -60,13 +85,68 @@ extension BagView {
                         try fetchOrders(with: context)
                     } catch {
                         viewState = .faliedToLoad
+                        print(error.localizedDescription)
                     }
                 }
             }
 
             sendPing()
-            receiveOrders(with: clientID, and: context)
-            try await webSocketService.startConnection(with: clientID)
+            receiveOrders(with: userID, and: context)
+            try await webSocketService.startConnection(with: userID)
+        }
+        
+        private func sendPing() {
+            guard let webSocketService else { return }
+            
+            pingTask = Task {
+                do {
+                    try? await Task.sleep(for: .seconds(15))
+                    try await webSocketService.sendPing()
+                    sendPing()
+                } catch {
+                    pingTask?.cancel()
+                    pingTask = nil
+                }
+            }
+        }
+        
+        func disconnect(isServerDisconnected: Bool = true, isInBackground: Bool = false) {
+            Task {
+                if isInBackground {
+                    try await Task.sleep(for: .seconds(300))
+                }
+                
+                guard let webSocketService, let userID else {
+                    showingError(with: "Failed to disconnect from the channel.")
+                    return
+                }
+                
+                do {
+                    if !isServerDisconnected {
+                        let disconnectMessage = WebSocketMessage<Send>(for: userID, with: .disconnect)
+                        try await webSocketService.send(disconnectMessage)
+                    }
+                    try await webSocketService.disconnect()
+                    self.orderTask?.cancel()
+                    self.orderTask = nil
+                    self.pingTask?.cancel()
+                    self.pingTask = nil
+                    self.webSocketService = nil
+                    self.userID = nil
+                } catch {
+                    await MainActor.run {
+                        showingError(with: "Failed to disconnect from the channel.", error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+        func reconnect(with clientID: UUID?, and context: ModelContext) {
+            if webSocketService != nil {
+                disconnect(isServerDisconnected: false)
+            }
+            
+            connect(with: clientID, and: context)
         }
         
         private func receiveOrders(with clientID: UUID, and context: ModelContext) {
@@ -86,10 +166,11 @@ extension BagView {
                     }
                 } catch {
                     await MainActor.run {
+                        let isOrderListEmpty = orderedOrder.isEmpty && readyForDeliveryOrder.isEmpty
                         showingError(
                             with:"Failed to receive orders",
                             error.localizedDescription,
-                            and: self.orders.isEmpty ? context : nil
+                            and: isOrderListEmpty ? context : nil
                         )
                     }
                 }
@@ -110,50 +191,72 @@ extension BagView {
         }
         
         private func insertNew(_ orderResult: Order.Get, with context: ModelContext) async throws {
-            let cupcake = try findCupcake(with: context, and: orderResult.cupcake)
-            
-            let newOrder = Order(from: orderResult, and: cupcake)
-            context.insert(newOrder)
-            try context.save()
-            
-            await MainActor.run {
-                withAnimation(.easeIn) {
-                    self.orders.insert(newOrder, at: 0)
+            do {
+                let cupcake = try findCupcake(with: context, and: orderResult.cupcake)
+                
+                let newOrder = Order(from: orderResult, and: cupcake)
+                context.insert(newOrder)
+                try context.save()
+                
+                await MainActor.run {
+                    withAnimation(.easeIn) {
+                        self.orders.insert(newOrder, at: 0)
+                    }
                 }
+            } catch {
+                throw CacheStoreError.inseringError
             }
         }
         
         private func load(_ ordersResult: [Order.Get], with context: ModelContext) async throws {
-            for order in ordersResult {
-                let predicate = #Predicate<Order> { savedOrder in
-                    savedOrder.id == order.id
-                }
-                
-                let descriptor = FetchDescriptor<Order>(predicate: predicate)
-                let orders = try context.fetch(descriptor)
-                
-                if !orders.isEmpty {
-                    for order in orders {
-                        context.delete(order)
+            do {
+                for order in ordersResult {
+                    let predicate = #Predicate<Order> { savedOrder in
+                        savedOrder.id == order.id
+                    }
+                    
+                    let descriptor = FetchDescriptor<Order>(predicate: predicate)
+                    let orders = try context.fetch(descriptor)
+                    
+                    guard (!orders.isEmpty) && (orders.count == 1) && (orders[0].isEqual(to: order)) else {
+                        switch orders.isEmpty {
+                        case true:
+                            let cupcake = try findCupcake(with: context, and: order.cupcake)
+                            let newOrder = Order(from: order, and: cupcake)
+                            context.insert(newOrder)
+                        case false:
+                            if orders.count == 1 && !orders[0].isEqual(to: order) {
+                                orders[0].update(from: order)
+                            } else if orders.count > 1 {
+                                for order in orders {
+                                    context.delete(order)
+                                }
+                                let cupcake = try findCupcake(with: context, and: order.cupcake)
+                                let newOrder = Order(from: order, and: cupcake)
+                                context.insert(newOrder)
+                            }
+                        }
+                        continue
                     }
                 }
+                guard context.hasChanges else { return }
+                try context.save()
                 
-                let cupcake = try findCupcake(with: context, and: order.cupcake)
-                
-                let newOrder = Order(from: order, and: cupcake)
-                context.insert(newOrder)
-            }
-            
-            try context.save()
-            
-            try await MainActor.run {
-                try fetchOrders(with: context)
+                try await MainActor.run {
+                    try fetchOrders(with: context)
+                }
+            } catch {
+                throw CacheStoreError.loadingFailed
             }
         }
         
         func fetchOrders(with context: ModelContext) throws {
             let descriptor = FetchDescriptor<Order>()
-            let orders = try context.fetch(descriptor)
+            
+            guard let orders = try? context.fetch(descriptor) else {
+                throw CacheStoreError.fetchActionFailed
+            }
+            
             self.orders = orders
             
             if viewState == .loading {
@@ -162,42 +265,40 @@ extension BagView {
         }
         
         private func update(_ updatedOrder: Order.Get, with context: ModelContext) async throws {
-            let order = orders.first(where: { $0.id == updatedOrder.id })
-            
-            guard let order else { throw CacheStoreError.notFound }
-            
-            guard updatedOrder.status != .delivered else {
-                guard let index = orders.firstIndex(of: order) else { throw CacheStoreError.notFound }
-                context.delete(order)
-                try context.save()
+            do {
+                let order = orders.first(where: { $0.id == updatedOrder.id })
                 
-                return await MainActor.run {
-                    return withAnimation(.easeOut) {
-                        orders.remove(at: index)
+                guard let order else { throw CacheStoreError.notFound }
+                
+                guard updatedOrder.status != .delivered else {
+                    guard let index = orders.firstIndex(of: order) else { throw CacheStoreError.notFound }
+                    context.delete(order)
+                    try context.save()
+                    
+                    return await MainActor.run {
+                        return withAnimation(.easeOut) {
+                            orders.remove(at: index)
+                        }
                     }
                 }
-            }
-            
-            try await MainActor.run {
-                withAnimation {
-                    if updatedOrder.status != order.status {
-                        order.status = updatedOrder.status
+                
+                try await MainActor.run {
+                    withAnimation(.easeIn) {
+                        order.update(from: updatedOrder)
                     }
                     
-                    if updatedOrder.readyForDeliveryTime != order.readyForDeliveryTime {
-                        order.readyForDeliveryTime = updatedOrder.readyForDeliveryTime
-                    }
+                    try context.save()
                 }
-                
-                try context.save()
+            } catch {
+                throw CacheStoreError.updateFailed
             }
         }
         
         #if ADMIN
-        func sendUpdatedOrder(for clientID: UUID?, orderID: UUID?, and currentStatus: Status?) {
+        func sendUpdatedOrder(with orderID: UUID?, and currentStatus: Status) {
             Task(priority: .background) {
                 do {
-                    guard let clientID, let orderID, let currentStatus else { throw APIError.fieldsEmpty }
+                    guard let userID, let orderID else { throw APIError.fieldsEmpty }
                     
                     guard let webSocketService else { throw WebSocketConnectionError.noConnection }
                     
@@ -211,7 +312,7 @@ extension BagView {
                     
                     let updatedOrder = Order.Update(id: orderID, status: newStatus)
                     let sendMessage: Send = .update(updatedOrder)
-                    let message = WebSocketMessage<Send>(for: clientID, with: sendMessage)
+                    let message = WebSocketMessage<Send>(for: userID, with: sendMessage)
                     
                     try await webSocketService.send(message)
                 } catch let error {
@@ -252,96 +353,17 @@ extension BagView {
             }
         }
         
-        func connect(with clientID: UUID?, and context: ModelContext) {
-            Task {
-                do {
-                    guard let authorizationValue = try? Authentication.value() else {
-                        webSocketService = nil
-                        return
-                    }
-                    
-                    webSocketService = .init(with: authorizationValue)
-                    
-                    try await establishWSConnection(with: clientID, with: context)
-                } catch {
-                    await MainActor.run {
-                        showingError(
-                            with: "Failed to get orders",
-                            error.localizedDescription,
-                            and: context
-                        )
-                    }
-                }
-            }
-        }
-        
-        private func sendPing() {
-            guard let webSocketService else { return }
-            
-            pingTask = Task {
-                
-                do {
-                    try? await Task.sleep(for: .seconds(15))
-                    try await webSocketService.sendPing()
-                    sendPing()
-                } catch {
-                    pingTask?.cancel()
-                    pingTask = nil
-                }
-            }
-        }
-        
-        func reconnect(with clientID: UUID?, and context: ModelContext) {
-            if webSocketService != nil {
-                disconnect(with: clientID, isServerDisconnected: false)
-            }
-            
-            connect(with: clientID, and: context)
-        }
-        
-        func disconnect(with clientID: UUID?, isServerDisconnected: Bool = true, isInBackground: Bool = false) {
-            Task {
-                if isInBackground {
-                    try await Task.sleep(for: .seconds(300))
-                }
-                
-                guard let webSocketService, let clientID else {
-                    showingError(with: "Failed to disconnect from the channel.")
-                    return
-                }
-                
-                do {
-                    if !isServerDisconnected {
-                        let disconnectMessage = WebSocketMessage<Send>(for: clientID, with: .disconnect)
-                        try await webSocketService.send(disconnectMessage)
-                    }
-                    try await webSocketService.disconnect()
-                    self.orderTask?.cancel()
-                    self.orderTask = nil
-                    self.pingTask?.cancel()
-                    self.pingTask = nil
-                    self.webSocketService = nil
-                } catch {
-                    await MainActor.run {
-                        showingError(with: "Failed to disconnect from the channel.", error.localizedDescription)
-                    }
-                }
-            }
-        }
-        
         func deleteAllOrders(with context: ModelContext) {
             do {
-                let descriptor = FetchDescriptor<Order>()
-                
-                let orders = try context.fetch(descriptor)
-                
                 for order in orders {
                     context.delete(order)
                 }
                 
+                try context.save()
+                
                 self.orders = []
             } catch {
-                showingError(with: "Failed to delete orders", error.localizedDescription)
+                showingError(with: "Failed to delete orders", CacheStoreError.deleteError.localizedDescription)
             }
         }
         
