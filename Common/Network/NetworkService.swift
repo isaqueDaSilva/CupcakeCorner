@@ -58,7 +58,12 @@ struct NetworkService {
     /// - Returns: Returns a Data representation and a URLResponse when the request will be finish without error.
     func run() async throws -> (Data, URLResponse) {
         let request = try makeRequest()
-        return try await type.urlSession(for: request)
+        
+        guard let (data, response) = try? await type.urlSession(for: request) else {
+            throw APIError.runFailed
+        }
+        
+        return (data, response)
     }
     
     init(

@@ -16,6 +16,8 @@ enum APIError: Error {
     /// This error is for time when the encoding data is failied.
     case badEncoding
     
+    case runFailed
+    
     /// This error is for time when the encoding data is failied.
     case badDecoding
     
@@ -46,6 +48,8 @@ enum APIError: Error {
             NSLocalizedString("Unable to decoding data, please try again or contact us.", comment: "")
         case .noChanges:
             NSLocalizedString("You need to make some change for execute this action.", comment: "")
+        case .runFailed:
+            NSLocalizedString("Failed to get data.", comment: "")
         }
     }
 }
