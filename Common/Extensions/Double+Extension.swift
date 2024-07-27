@@ -10,10 +10,7 @@ import Foundation
 extension Double {
     /// Converts the current Double value into currency String.
     var currency: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "$"
-        
-        return formatter.string(for: self) ?? "Unable to perform conversion."
+        CurrencyFormatter.formatter.string(for: self) ?? "Unable to perform conversion."
     }
 }
+
