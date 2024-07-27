@@ -10,7 +10,7 @@ import SwiftData
 import SwiftUI
 
 @Model
-final class Cupcake: Equatable {
+final class Cupcake {
     @Attribute(.unique)
     let id: UUID
     
@@ -44,7 +44,10 @@ final class Cupcake: Equatable {
         self.coverImage = coverImage
         self.createAt = createAt
     }
-    
+}
+
+// Create new cupcake from Result.
+extension Cupcake {
     convenience init(from result: Get) {
         self.init(
             id: result.id,
@@ -57,6 +60,38 @@ final class Cupcake: Equatable {
     }
 }
 
+// Checks if Result is equal to the saved object
+extension Cupcake {
+    func isEqual(to result: Get) -> Bool {
+        (flavor == result.flavor) &&
+        (ingredients == result.ingredients) &&
+        (price == result.price) &&
+        (coverImage == result.coverImage)
+    }
+}
+
+// Updates a Cupcake from Result
+extension Cupcake {
+    func update(from result: Get) {
+        if result.flavor != flavor {
+            flavor = result.flavor
+        }
+        
+        if result.ingredients != ingredients {
+            ingredients = result.ingredients
+        }
+        
+        if result.price != price {
+            price = result.price
+        }
+        
+        if result.coverImage != coverImage {
+            coverImage = coverImage
+        }
+    }
+}
+
+// Creates samples cupcakes for uses in preview.
 extension Cupcake {
     static var sampleCupcakes: [Cupcake] {
         var cupcakes = [Cupcake]()
