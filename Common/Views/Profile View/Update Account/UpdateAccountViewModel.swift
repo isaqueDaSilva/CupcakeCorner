@@ -46,13 +46,7 @@ extension UpdateAccountView {
                     let updatedUser = User.Update(name: name, paymentMethod: paymentMethod)
                     let userUpdated = try await UserUpdateSender.update(updatedUser)
                     
-                    if user.name != userUpdated.name {
-                        user.name = userUpdated.name
-                    }
-                    
-                    if user.paymentMethod != userUpdated.paymentMethod {
-                        user.paymentMethod = userUpdated.paymentMethod
-                    }
+                    user.update(from: userUpdated)
                     
                     try context.save()
                     

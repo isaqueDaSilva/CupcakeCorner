@@ -66,21 +66,7 @@ extension UpdateCupcakeView {
                     
                     let cupcakeResult = try await CupcakeUpdateSender.send(updatedCupcake, for: cupcake.id)
                     
-                    if cupcakeResult.coverImage != cupcake.coverImage {
-                        cupcake.coverImage = cupcakeResult.coverImage
-                    }
-                    
-                    if cupcakeResult.flavor != cupcake.flavor {
-                        cupcake.flavor = cupcakeResult.flavor
-                    }
-                    
-                    if cupcakeResult.ingredients != cupcake.ingredients {
-                        cupcake.ingredients = cupcakeResult.ingredients
-                    }
-                    
-                    if cupcakeResult.price != cupcake.price {
-                        cupcake.price = cupcakeResult.price
-                    }
+                    cupcake.update(from: cupcakeResult)
                     
                     try modelContext.save()
                     

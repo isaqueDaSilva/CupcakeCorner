@@ -20,6 +20,7 @@ extension BagView {
         @Published var alertMessage = ""
         
         private var userID: UUID?
+        private let inMemoryOnly: Bool
         
         var orderedOrder: [Order] {
             let ordereds = orders.filter { $0.status == .ordered }
@@ -51,7 +52,21 @@ extension BagView {
         func connect(with clientID: UUID?, and context: ModelContext) {
             Task {
                 do {
+                    
+                    guard !inMemoryOnly else {
+                        return try await MainActor.run {
+                            try fetchOrders(with: context)
+                        }
+                    }
+                    
+                    guard let clientID, webSocketService == nil else {
+                        return await MainActor.run {
+                            showingError(with: "You are not connected.")
+                        }
+                    }
+                    
                     self.userID = clientID
+                    
                     guard let authorizationValue = try? Authentication.value() else {
                         webSocketService = nil
                         return
@@ -142,6 +157,8 @@ extension BagView {
         }
         
         func reconnect(with clientID: UUID?, and context: ModelContext) {
+            viewState = .loading
+            
             if webSocketService != nil {
                 disconnect(isServerDisconnected: false)
             }
@@ -166,7 +183,7 @@ extension BagView {
                     }
                 } catch {
                     await MainActor.run {
-                        let isOrderListEmpty = orderedOrder.isEmpty && readyForDeliveryOrder.isEmpty
+                        let isOrderListEmpty = orders.isEmpty
                         showingError(
                             with:"Failed to receive orders",
                             error.localizedDescription,
@@ -331,8 +348,9 @@ extension BagView {
         ) {
             if orders.isEmpty {
                 do {
-                    guard let context else { return }
-                    try fetchOrders(with: context)
+                    if let context {
+                        try fetchOrders(with: context)
+                    }
                 } catch {
                     self.orders = []
                 }
@@ -346,7 +364,7 @@ extension BagView {
             
             showingAlert = true
             
-            if orders.isEmpty {
+            if orders.isEmpty && userID != nil {
                 viewState = .faliedToLoad
             } else {
                 viewState = .load
@@ -365,6 +383,10 @@ extension BagView {
             } catch {
                 showingError(with: "Failed to delete orders", CacheStoreError.deleteError.localizedDescription)
             }
+        }
+        
+        init(inMemoryOnly: Bool = false) {
+            self.inMemoryOnly = inMemoryOnly
         }
         
         deinit {

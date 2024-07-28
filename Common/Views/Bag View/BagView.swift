@@ -13,8 +13,7 @@ struct BagView: View {
     @Environment(\.modelContext) var modelContex
     @EnvironmentObject var userRepo: UserRepositoty
     
-    @StateObject var viewModel = ViewModel()
-    private var inMemoryOnly: Bool
+    @StateObject var viewModel: ViewModel
     
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
@@ -52,15 +51,8 @@ struct BagView: View {
                 }
             }
             .onAppear {
-                guard !inMemoryOnly else {
-                    try? viewModel.fetchOrders(with: modelContex)
-                    return
-                }
-                
-                if (userRepo.user != nil) && (viewModel.webSocketService == nil) {
+                if viewModel.webSocketService == nil {
                     viewModel.connect(with: userRepo.user?.id, and: modelContex)
-                } else {
-                    viewModel.viewState = .load
                 }
             }
             .refreshable {
@@ -103,7 +95,7 @@ struct BagView: View {
     }
     
     init(_ inMemoryOnly: Bool = false) {
-        self.inMemoryOnly = inMemoryOnly
+        _viewModel = StateObject(wrappedValue: .init(inMemoryOnly: inMemoryOnly))
     }
 }
 

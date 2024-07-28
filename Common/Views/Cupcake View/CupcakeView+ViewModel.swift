@@ -34,7 +34,7 @@ extension CupcakeView {
                     #if ADMIN
                     guard isUserLogged else {
                         return await MainActor.run {
-                            displayError(title: "You are not connected", and: modelContext)
+                            displayError(title: "You are not connected")
                         }
                     }
                     #endif

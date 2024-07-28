@@ -36,7 +36,6 @@ extension AccountView {
                     Text(userRepo.user?.paymentMethod.displayedName ?? "No User Saved")
                         .multilineTextAlignment(.trailing)
                 }
-                
                 #elseif ADMIN
                 NavigationLink {
                     CreateAnAccountView()
@@ -72,9 +71,3 @@ extension AccountView {
         }
     }
 }
-
-//#Preview {
-//    NavigationStack {
-//        ProfileView(inMemoryOnly: true)
-//    }
-//}

@@ -19,10 +19,11 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if userRepo.user != nil {
+                switch (userRepo.user != nil) {
+                case true:
                     AccountView()
                         .matchedGeometryEffect(id: transitionKey, in: transition)
-                } else {
+                case false:
                     LoginView {
                         viewState = .loading
                     } endAction: {

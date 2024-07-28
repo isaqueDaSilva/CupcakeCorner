@@ -25,21 +25,7 @@ struct UpdateCupcakeView: View {
             viewState: $viewModel.viewState
         ) { dismiss in
             viewModel.update(cupcake, with: modelContext) { updatedCupcake in
-                if updatedCupcake.coverImage != cupcake.coverImage {
-                    cupcake.coverImage = updatedCupcake.coverImage
-                }
-                
-                if updatedCupcake.flavor != cupcake.flavor {
-                    cupcake.flavor = updatedCupcake.flavor
-                }
-                
-                if updatedCupcake.ingredients != cupcake.ingredients {
-                    cupcake.ingredients = updatedCupcake.ingredients
-                }
-                
-                if updatedCupcake.price != cupcake.price {
-                    cupcake.price = updatedCupcake.price
-                }
+                cupcake = updatedCupcake
             }
             
             dismiss()

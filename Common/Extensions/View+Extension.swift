@@ -34,7 +34,7 @@ extension View {
     func headerSessionText(
         font: Font = .title2,
         fontWeight: Font.Weight = .bold,
-        color: Color = .black
+        color: Color = .primary
     ) -> some View {
         self.modifier(
             HeaderSessionText(

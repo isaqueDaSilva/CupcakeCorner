@@ -85,8 +85,12 @@ struct CupcakeView: View {
                     viewModel.insertNewCupcake(with: cupcake)
                 }
             }
-            .onChange(of: userRepo.user) { _, _ in
-                viewModel.deleteAllCupcakes(with: modelContext)
+            .onChange(of: userRepo.user) { oldValue, newValue in
+                if oldValue == nil && newValue != nil {
+                    viewModel.loadCupcakes(with: userRepo.user != nil, and: modelContext)
+                } else if newValue == nil {
+                    viewModel.deleteAllCupcakes(with: modelContext)
+                }
             }
             #endif
         }

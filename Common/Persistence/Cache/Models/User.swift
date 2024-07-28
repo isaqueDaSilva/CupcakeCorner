@@ -33,7 +33,9 @@ final class User {
         self.role = role
         self.paymentMethod = paymentMethod
     }
-    
+}
+
+extension User {
     convenience init(from result: Get) {
         self.init(
             id: result.id,
@@ -42,6 +44,18 @@ final class User {
             role: result.role,
             paymentMethod: result.paymentMethod
         )
+    }
+}
+
+extension User {
+    func update(from result: Get) {
+        if result.name != name {
+            name = result.name
+        }
+        
+        if result.paymentMethod != paymentMethod {
+            paymentMethod = result.paymentMethod
+        }
     }
 }
 
