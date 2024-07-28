@@ -81,5 +81,9 @@ extension BagView {
             isSendingPingValid = true
             receiveValuesObserver()
         }
+        
+        deinit {
+            print("OrderWebSocketService was deinitialized.")
+        }
     }
 }

@@ -125,7 +125,11 @@ extension BagView {
             }
         }
         
-        func disconnect(isServerDisconnected: Bool = true, isInBackground: Bool = false) {
+        func disconnect(
+            isServerDisconnected: Bool = true,
+            isInBackground: Bool = false,
+            tryToReconnect: (() -> Void)? = nil
+        ) {
             Task {
                 if isInBackground {
                     try await Task.sleep(for: .seconds(300))
@@ -147,7 +151,15 @@ extension BagView {
                     self.pingTask?.cancel()
                     self.pingTask = nil
                     self.webSocketService = nil
-                    self.userID = nil
+                    
+                    if isInBackground {
+                        self.userID = nil
+                    }
+                    
+                    if let tryToReconnect {
+                        tryToReconnect()
+                    }
+                    
                 } catch {
                     await MainActor.run {
                         showingError(with: "Failed to disconnect from the channel.", error.localizedDescription)
@@ -160,10 +172,13 @@ extension BagView {
             viewState = .loading
             
             if webSocketService != nil {
-                disconnect(isServerDisconnected: false)
+                disconnect(isServerDisconnected: false) { [weak self] in
+                    guard let self else { return }
+                    self.connect(with: clientID, and: context)
+                }
+            } else {
+                connect(with: clientID, and: context)
             }
-            
-            connect(with: clientID, and: context)
         }
         
         private func receiveOrders(with clientID: UUID, and context: ModelContext) {
@@ -227,37 +242,40 @@ extension BagView {
         
         private func load(_ ordersResult: [Order.Get], with context: ModelContext) async throws {
             do {
-                for order in ordersResult {
-                    let predicate = #Predicate<Order> { savedOrder in
-                        savedOrder.id == order.id
-                    }
-                    
-                    let descriptor = FetchDescriptor<Order>(predicate: predicate)
-                    let orders = try context.fetch(descriptor)
-                    
-                    guard (!orders.isEmpty) && (orders.count == 1) && (orders[0].isEqual(to: order)) else {
-                        switch orders.isEmpty {
-                        case true:
-                            let cupcake = try findCupcake(with: context, and: order.cupcake)
-                            let newOrder = Order(from: order, and: cupcake)
-                            context.insert(newOrder)
-                        case false:
-                            if orders.count == 1 && !orders[0].isEqual(to: order) {
-                                orders[0].update(from: order)
-                            } else if orders.count > 1 {
-                                for order in orders {
-                                    context.delete(order)
-                                }
+                if !ordersResult.isEmpty {
+                    for order in ordersResult {
+                        let predicate = #Predicate<Order> { savedOrder in
+                            savedOrder.id == order.id
+                        }
+                        
+                        let descriptor = FetchDescriptor<Order>(predicate: predicate)
+                        let orders = try context.fetch(descriptor)
+                        
+                        guard (!orders.isEmpty) && (orders.count == 1) && (orders[0].isEqual(to: order)) else {
+                            switch orders.isEmpty {
+                            case true:
                                 let cupcake = try findCupcake(with: context, and: order.cupcake)
                                 let newOrder = Order(from: order, and: cupcake)
                                 context.insert(newOrder)
+                            case false:
+                                if orders.count == 1 && !orders[0].isEqual(to: order) {
+                                    orders[0].update(from: order)
+                                } else if orders.count > 1 {
+                                    for order in orders {
+                                        context.delete(order)
+                                    }
+                                    let cupcake = try findCupcake(with: context, and: order.cupcake)
+                                    let newOrder = Order(from: order, and: cupcake)
+                                    context.insert(newOrder)
+                                }
                             }
+                            continue
                         }
-                        continue
+                    }
+                    if context.hasChanges {
+                        try context.save()
                     }
                 }
-                guard context.hasChanges else { return }
-                try context.save()
                 
                 try await MainActor.run {
                     try fetchOrders(with: context)
@@ -293,7 +311,7 @@ extension BagView {
                     try context.save()
                     
                     return await MainActor.run {
-                        return withAnimation(.easeOut) {
+                        return withAnimation(.smooth(duration: 0.5)) {
                             orders.remove(at: index)
                         }
                     }
