@@ -35,6 +35,7 @@ struct BagView: View {
                             BagViewEmpty()
                                 .containerRelativeFrame(.vertical)
                                 .matchedGeometryEffect(id: transitionKey, in: transition)
+                                .transition(.opacity)
                         case false:
                             BagViewPopulated()
                                 .matchedGeometryEffect(id: transitionKey, in: transition)

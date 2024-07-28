@@ -40,6 +40,13 @@ extension BagView {
                     price: order.finalPrice
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+                .transition(
+                    .asymmetric(
+                        insertion: .move(edge: .leading).animation(.easeIn),
+                        removal: .move(edge: .trailing).animation(.easeOut)
+                    )
+                )
+                .animation(.easeInOut, value: order)
                 #if ADMIN
                 .contextMenu {
                     Button {

@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import SwiftUI
 import WebSocketHandler
 
 extension BagView {
@@ -55,7 +54,7 @@ extension BagView {
                     
                     guard !inMemoryOnly else {
                         return try await MainActor.run {
-                            try fetchOrders(with: context)
+                            try loadOrders(with: context)
                         }
                     }
                     
@@ -97,7 +96,7 @@ extension BagView {
             guard let webSocketService else {
                 return await MainActor.run {
                     do {
-                        try fetchOrders(with: context)
+                        try loadOrders(with: context)
                     } catch {
                         viewState = .faliedToLoad
                         print(error.localizedDescription)
@@ -186,6 +185,12 @@ extension BagView {
                 do {
                     guard let webSocketService else { throw WebSocketConnectionError.noConnection }
                     
+                    let orders = try fetchOrders(with: context)
+                    
+                    for order in orders {
+                        context.delete(order)
+                    }
+                    
                     for try await message in webSocketService.orderReceivedSubject.values {
                         switch message {
                         case .newOrder(let order):
@@ -231,9 +236,7 @@ extension BagView {
                 try context.save()
                 
                 await MainActor.run {
-                    withAnimation(.easeIn) {
-                        self.orders.insert(newOrder, at: 0)
-                    }
+                    self.orders.insert(newOrder, at: 0)
                 }
             } catch {
                 throw CacheStoreError.inseringError
@@ -242,55 +245,34 @@ extension BagView {
         
         private func load(_ ordersResult: [Order.Get], with context: ModelContext) async throws {
             do {
-                if !ordersResult.isEmpty {
-                    for order in ordersResult {
-                        let predicate = #Predicate<Order> { savedOrder in
-                            savedOrder.id == order.id
-                        }
-                        
-                        let descriptor = FetchDescriptor<Order>(predicate: predicate)
-                        let orders = try context.fetch(descriptor)
-                        
-                        guard (!orders.isEmpty) && (orders.count == 1) && (orders[0].isEqual(to: order)) else {
-                            switch orders.isEmpty {
-                            case true:
-                                let cupcake = try findCupcake(with: context, and: order.cupcake)
-                                let newOrder = Order(from: order, and: cupcake)
-                                context.insert(newOrder)
-                            case false:
-                                if orders.count == 1 && !orders[0].isEqual(to: order) {
-                                    orders[0].update(from: order)
-                                } else if orders.count > 1 {
-                                    for order in orders {
-                                        context.delete(order)
-                                    }
-                                    let cupcake = try findCupcake(with: context, and: order.cupcake)
-                                    let newOrder = Order(from: order, and: cupcake)
-                                    context.insert(newOrder)
-                                }
-                            }
-                            continue
-                        }
-                    }
-                    if context.hasChanges {
-                        try context.save()
-                    }
+                for order in ordersResult {
+                    let cupcake = try findCupcake(with: context, and: order.cupcake)
+                    let newOrder = Order(from: order, and: cupcake)
+                    context.insert(newOrder)
                 }
                 
+                try context.save()
+                
                 try await MainActor.run {
-                    try fetchOrders(with: context)
+                    try loadOrders(with: context)
                 }
             } catch {
                 throw CacheStoreError.loadingFailed
             }
         }
         
-        func fetchOrders(with context: ModelContext) throws {
+        private func fetchOrders(with context: ModelContext) throws -> [Order] {
             let descriptor = FetchDescriptor<Order>()
             
             guard let orders = try? context.fetch(descriptor) else {
                 throw CacheStoreError.fetchActionFailed
             }
+            
+            return orders
+        }
+        
+        func loadOrders(with context: ModelContext) throws {
+            let orders = try fetchOrders(with: context)
             
             self.orders = orders
             
@@ -311,16 +293,12 @@ extension BagView {
                     try context.save()
                     
                     return await MainActor.run {
-                        return withAnimation(.smooth(duration: 0.5)) {
-                            orders.remove(at: index)
-                        }
+                        orders.remove(at: index)
                     }
                 }
                 
                 try await MainActor.run {
-                    withAnimation(.easeIn) {
-                        order.update(from: updatedOrder)
-                    }
+                    order.update(from: updatedOrder)
                     
                     try context.save()
                 }
@@ -367,7 +345,7 @@ extension BagView {
             if orders.isEmpty {
                 do {
                     if let context {
-                        try fetchOrders(with: context)
+                        try loadOrders(with: context)
                     }
                 } catch {
                     self.orders = []
