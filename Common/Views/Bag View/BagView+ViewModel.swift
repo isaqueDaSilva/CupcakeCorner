@@ -185,12 +185,6 @@ extension BagView {
                 do {
                     guard let webSocketService else { throw WebSocketConnectionError.noConnection }
                     
-                    let orders = try fetchOrders(with: context)
-                    
-                    for order in orders {
-                        context.delete(order)
-                    }
-                    
                     for try await message in webSocketService.orderReceivedSubject.values {
                         switch message {
                         case .newOrder(let order):
@@ -209,6 +203,7 @@ extension BagView {
                             error.localizedDescription,
                             and: isOrderListEmpty ? context : nil
                         )
+                        disconnect()
                     }
                 }
             }
@@ -245,6 +240,12 @@ extension BagView {
         
         private func load(_ ordersResult: [Order.Get], with context: ModelContext) async throws {
             do {
+                let orders = try fetchOrders(with: context)
+                
+                for order in orders {
+                    context.delete(order)
+                }
+                
                 for order in ordersResult {
                     let cupcake = try findCupcake(with: context, and: order.cupcake)
                     let newOrder = Order(from: order, and: cupcake)
@@ -311,7 +312,7 @@ extension BagView {
         func sendUpdatedOrder(with orderID: UUID?, and currentStatus: Status) {
             Task(priority: .background) {
                 do {
-                    guard let userID, let orderID else { throw APIError.fieldsEmpty }
+                    guard let userID, let orderID else { throw WebSocketConnectionError.receiveDataFailed }
                     
                     guard let webSocketService else { throw WebSocketConnectionError.noConnection }
                     

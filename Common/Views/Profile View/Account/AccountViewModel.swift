@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import KeychainService
+import NetworkHandler
 import SwiftData
 
 extension AccountView {
@@ -42,7 +44,7 @@ extension AccountView {
                     let (_, response) = try await request.run()
                     
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                        throw NetworkService.APIError.badResponse
                     }
                     
                     _ = try KeychainService.delete()

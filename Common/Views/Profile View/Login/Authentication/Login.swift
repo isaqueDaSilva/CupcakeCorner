@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import KeychainService
+import NetworkHandler
 
 struct Login {
     var email: String
@@ -13,14 +15,14 @@ struct Login {
     
     private func value() throws -> String {
         guard !email.isEmpty && !password.isEmpty else {
-            throw APIError.fieldsEmpty
+            throw NetworkService.APIError.fieldsEmpty
         }
         
         let loginData = ("\(email):\(password)".data(using: .utf8)?.base64EncodedString())
         let basicValue = AuthorizationHeader.basic.rawValue
         
         guard let loginData else {
-            throw APIError.badEncoding
+            throw NetworkService.APIError.badEncoding
         }
         
         return "\(basicValue) \(loginData)"
@@ -50,9 +52,9 @@ struct Login {
             let response = response as? HTTPURLResponse
             
             if response?.statusCode == 401 {
-                throw APIError.accessDenied
+                throw NetworkService.APIError.accessDenied
             } else {
-                throw APIError.badResponse
+                throw NetworkService.APIError.badResponse
             }
         }
         

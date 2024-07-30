@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 import SwiftUI
 
 extension OrderView {
@@ -68,7 +69,7 @@ extension OrderView {
                     }
                     
                     guard order.cupcake != nil else {
-                        throw APIError.fieldsEmpty
+                        throw NetworkService.APIError.fieldsEmpty
                     }
                     
                     let encoder = JSONEncoder()
@@ -90,7 +91,7 @@ extension OrderView {
                     let (_, response) = try await request.run()
                     
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                        throw NetworkService.APIError.badResponse
                     }
                     
                     await MainActor.run {

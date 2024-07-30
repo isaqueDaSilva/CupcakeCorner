@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 
 extension CupcakeDetailView {
     enum CupcakeDeleteSender {
@@ -22,7 +23,7 @@ extension CupcakeDetailView {
             let (_, response) = try await request.run()
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw APIError.badResponse
+                throw NetworkService.APIError.badResponse
             }
         }
     }

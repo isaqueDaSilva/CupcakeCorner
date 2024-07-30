@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 import SwiftData
 
 extension UpdateAccountView {
@@ -40,7 +41,7 @@ extension UpdateAccountView {
                     }
                     
                     guard user.name != name || user.paymentMethod != paymentMethod else {
-                        throw APIError.noChanges
+                        throw NetworkService.APIError.noChanges
                     }
                     
                     let updatedUser = User.Update(name: name, paymentMethod: paymentMethod)

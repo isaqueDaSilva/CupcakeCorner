@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 
 extension CreateAnAccountView {
     @MainActor
@@ -47,7 +48,7 @@ extension CreateAnAccountView {
                     let (_, response) = try await request.run()
                     
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw APIError.badResponse
+                        throw NetworkService.APIError.badResponse
                     }
                     
                     await MainActor.run {

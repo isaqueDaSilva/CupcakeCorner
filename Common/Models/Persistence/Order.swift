@@ -76,14 +76,6 @@ extension Order {
 }
 
 extension Order {
-    func isEqual(to result: Get) -> Bool {
-        (status == result.status) &&
-        (readyForDeliveryTime == result.readyForDeliveryTime) &&
-        (deliveredTime == result.deliveredTime)
-    }
-}
-
-extension Order {
     func update(from result: Get) {
         if result.status != status {
             status = result.status

@@ -2,7 +2,7 @@
 //  AuthorizationHeader.swift
 //  CupcakeCorner
 //
-//  Created by Isaque da Silva on 20/04/24.
+//  Created by Isaque da Silva on 07/06/24.
 //
 
 import Foundation

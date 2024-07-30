@@ -1,6 +1,24 @@
 {
-  "originHash" : "9603b0b765a56d257a5f5533c295106a5168d5511bc3cd3615612b457c722aed",
+  "originHash" : "3eb44a08c0a10be179ab67afd70a8f7dc0364590973160c74338c75433a7b57b",
   "pins" : [
+    {
+      "identity" : "keychainservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/isaqueDaSilva/KeychainService.git",
+      "state" : {
+        "revision" : "c453ffd6b04ea38512963a63ec19ec7276a38cb8",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "networkhandler",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/isaqueDaSilva/NetworkHandler.git",
+      "state" : {
+        "revision" : "9f8e1045da23ac0bd55c59685bf1ca86c73aac88",
+        "version" : "1.0.5"
+      }
+    },
     {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",

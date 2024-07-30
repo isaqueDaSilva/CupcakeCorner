@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 
 extension CreateCupcakeView {
     enum CupcakeCreateSender {
@@ -28,7 +29,7 @@ extension CreateCupcakeView {
             let (data, response) = try await request.run()
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw APIError.badResponse
+                throw NetworkService.APIError.badResponse
             }
             
             let cupcakeResult = try data.decode(Cupcake.Get.self)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 
 extension LoginView {
     enum LoginHandler {
@@ -23,9 +24,9 @@ extension LoginView {
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 if let response = response as? HTTPURLResponse, response.statusCode == 401 {
-                    throw APIError.accessDenied
+                    throw NetworkService.APIError.accessDenied
                 } else {
-                    throw APIError.badResponse
+                    throw NetworkService.APIError.badResponse
                 }
             }
             

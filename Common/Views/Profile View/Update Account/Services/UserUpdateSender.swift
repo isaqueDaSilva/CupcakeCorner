@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkHandler
 
 extension UpdateAccountView {
     enum UserUpdateSender {
@@ -28,7 +29,7 @@ extension UpdateAccountView {
             let (data, response) = try await request.run()
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw APIError.badResponse
+                throw NetworkService.APIError.badResponse
             }
             
             let user = try data.decode(User.Get.self)
