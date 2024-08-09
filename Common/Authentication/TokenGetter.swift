@@ -9,8 +9,8 @@ import Foundation
 import KeychainService
 
 /// Stores a method that gets a Token value stored in Keychain.
-enum Authentication {
-    static func value() throws -> String {
+enum TokenGetter {
+    static func getValue() throws -> String {
         let tokenValue = try KeychainService.retrive(Token.self)
         let bearerValue = AuthorizationHeader.bearer.rawValue
         

@@ -67,10 +67,10 @@ struct LoginView: View {
         }
         #endif
         .alert(
-            viewModel.errorTitle,
+            viewModel.alert.title,
             isPresented: $viewModel.showingError
         ) { } message: {
-            Text(viewModel.errorMessage)
+            Text(viewModel.alert.message)
         }
     }
     

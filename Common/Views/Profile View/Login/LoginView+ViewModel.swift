@@ -14,8 +14,7 @@ extension LoginView {
         @Published var loginCredentials: Login
         @Published var viewState: ViewState = .load
         @Published var showingError = false
-        @Published var errorTitle = ""
-        @Published var errorMessage = ""
+        @Published var alert = AlertHandler()
         
         func login(with context: ModelContext, _ completation: @escaping () -> Void) {
            Task(priority: .background) {
@@ -24,12 +23,18 @@ extension LoginView {
                         self.viewState = .loading
                     }
                     
-                    let userResult = try await LoginHandler.makeLogin(with: loginCredentials)
+                    guard let userResult = try? await Profile.get(with: loginCredentials) else {
+                        throw LoginError.unauthorized
+                    }
                     let user = User(from: userResult)
                     
                     context.insert(user)
                     
-                    try context.save()
+                    do {
+                        try context.save()
+                    } catch {
+                        throw CacheStoreError.inseringError
+                    }
                     
                     await MainActor.run {
                         completation()
@@ -37,8 +42,10 @@ extension LoginView {
                     }
                 } catch let error {
                     await MainActor.run {
-                        self.errorTitle = "Login Falied"
-                        self.errorMessage = error.localizedDescription
+                        self.alert.setAlert(
+                            with: "Login Falied",
+                            and: error.localizedDescription
+                        )
                         self.viewState = .load
                         self.showingError = true
                     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Login {
+extension LoginView.Login {
     enum LoginType: String {
         case forAdmin
         case forClient

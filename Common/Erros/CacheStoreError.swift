@@ -24,7 +24,7 @@ enum CacheStoreError: Error, LocalizedError {
         case .fetchActionFailed:
             NSLocalizedString("There is some error occur when the fetch action was executing.\n Try reload the page or contact us if this error persit.", comment: "")
         case .inseringError:
-            NSLocalizedString("It wasn't possible to insert a new item in the list.\n Try reload the page.", comment: "")
+            NSLocalizedString("It wasn't possible to save this item.\n Please try again or contact us.", comment: "")
         case .loadingFailed:
             NSLocalizedString("Failed to load the items list.\n Try reload the page or contact us if this error persit.", comment: "")
         case .deleteError:

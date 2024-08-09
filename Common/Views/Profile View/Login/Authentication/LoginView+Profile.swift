@@ -1,5 +1,5 @@
 //
-//  LoginHandler.swift
+//  LoginView+Profile.swift
 //  CupcakeCorner
 //
 //  Created by Isaque da Silva on 16/06/24.
@@ -9,12 +9,12 @@ import Foundation
 import NetworkHandler
 
 extension LoginView {
-    enum LoginHandler {
-        static func makeLogin(with credentials: Login) async throws -> User.Get {
+    enum Profile {
+        static func get(with credentials: Login) async throws -> User.Get {
             try await credentials.getTokenValue()
-            let authenticationValue = try Authentication.value()
+            let authenticationValue = try TokenGetter.getValue()
             let request = NetworkService(
-                endpoint: "http://127.0.0.1:8080/api/user/get",
+                endpoint: "http://127.0.0.1:8080/user/profile",
                 values: [.init(value: authenticationValue, httpHeaderField: .authorization)],
                 httpMethod: .get,
                 type: .getData
