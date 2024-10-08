@@ -6,14 +6,303 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7E0EE4C42CB371960006F882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0EE4C32CB371960006F882 /* LoginView.swift */; };
+		7E0EE4C52CB371960006F882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0EE4C32CB371960006F882 /* LoginView.swift */; };
+		7E0EE4C72CB371C50006F882 /* LoginView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0EE4C62CB371C50006F882 /* LoginView+ViewModel.swift */; };
+		7E0EE4C82CB371C50006F882 /* LoginView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0EE4C62CB371C50006F882 /* LoginView+ViewModel.swift */; };
+		7E1409D92CA6C1320041F806 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409D82CA6C1320041F806 /* EmptyStateView.swift */; };
+		7E1409DA2CA6C1320041F806 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409D82CA6C1320041F806 /* EmptyStateView.swift */; };
+		7E1409DD2CA6C1E80041F806 /* CupcakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409DC2CA6C1E80041F806 /* CupcakeView.swift */; };
+		7E1409DE2CA6C1E80041F806 /* CupcakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409DC2CA6C1E80041F806 /* CupcakeView.swift */; };
+		7E1409E02CA6C5630041F806 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409DF2CA6C5630041F806 /* View+Extensions.swift */; };
+		7E1409E12CA6C5630041F806 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409DF2CA6C5630041F806 /* View+Extensions.swift */; };
+		7E1409E32CA6CAC80041F806 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409E22CA6CAC80041F806 /* Dictionary+Extension.swift */; };
+		7E1409E42CA6CAC80041F806 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1409E22CA6CAC80041F806 /* Dictionary+Extension.swift */; };
+		7E146FB72CA52FA2002976AC /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E146FB62CA52FA1002976AC /* DataResponse.swift */; };
+		7E146FB82CA52FA2002976AC /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E146FB62CA52FA1002976AC /* DataResponse.swift */; };
+		7E2208CF2CA7A18E009CBFCA /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2208CE2CA7A18E009CBFCA /* Double+Extension.swift */; };
+		7E2208D02CA7A18E009CBFCA /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2208CE2CA7A18E009CBFCA /* Double+Extension.swift */; };
+		7E3242F02CA8C506006D2C77 /* AlertHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242EF2CA8C506006D2C77 /* AlertHandler.swift */; };
+		7E3242F12CA8C506006D2C77 /* AlertHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242EF2CA8C506006D2C77 /* AlertHandler.swift */; };
+		7E3242F32CA8C6FE006D2C77 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242F22CA8C6FE006D2C77 /* ViewState.swift */; };
+		7E3242F42CA8C6FE006D2C77 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242F22CA8C6FE006D2C77 /* ViewState.swift */; };
+		7E3242F62CA8C883006D2C77 /* TokenGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242F52CA8C883006D2C77 /* TokenGetter.swift */; };
+		7E3242F72CA8C883006D2C77 /* TokenGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242F52CA8C883006D2C77 /* TokenGetter.swift */; };
+		7E3242F92CA8CE7A006D2C77 /* AuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242F82CA8CE7A006D2C77 /* AuthorizationHeader.swift */; };
+		7E3242FA2CA8CE7A006D2C77 /* AuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3242F82CA8CE7A006D2C77 /* AuthorizationHeader.swift */; };
+		7E32431B2CA8E90A006D2C77 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32431A2CA8E90A006D2C77 /* ActionButton.swift */; };
+		7E32431C2CA8E90A006D2C77 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32431A2CA8E90A006D2C77 /* ActionButton.swift */; };
+		7E32431E2CA8E9EE006D2C77 /* InformationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32431D2CA8E9EE006D2C77 /* InformationLabel.swift */; };
+		7E32431F2CA8E9EE006D2C77 /* InformationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32431D2CA8E9EE006D2C77 /* InformationLabel.swift */; };
+		7E34E1972C9F934B00E39901 /* CupcakeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1962C9F934B00E39901 /* CupcakeRepository.swift */; };
+		7E34E1982C9F934B00E39901 /* CupcakeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1962C9F934B00E39901 /* CupcakeRepository.swift */; };
+		7E34E19A2C9FB34600E39901 /* OrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1992C9FB34600E39901 /* OrderRepository.swift */; };
+		7E34E19B2C9FB34600E39901 /* OrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1992C9FB34600E39901 /* OrderRepository.swift */; };
+		7E34E19F2C9FE82800E39901 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ECB45962C9E714100E92257 /* Assets.xcassets */; };
+		7E34E1A12CA0195D00E39901 /* NamespaceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1A02CA0195D00E39901 /* NamespaceKey.swift */; };
+		7E34E1A22CA0195D00E39901 /* NamespaceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1A02CA0195D00E39901 /* NamespaceKey.swift */; };
+		7E34E1AF2CA022EE00E39901 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1AE2CA022EE00E39901 /* Date+Extension.swift */; };
+		7E34E1B02CA022EE00E39901 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E34E1AE2CA022EE00E39901 /* Date+Extension.swift */; };
+		7E4F64672CB501EE00E9B9A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7E4F64662CB501E200E9B9A4 /* README.md */; };
+		7E4F64692CB52D4A00E9B9A4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 7E4F64682CB52D3600E9B9A4 /* LICENSE */; };
+		7E6188CB2CAF7502006C3C43 /* TextFieldFocused.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6188CA2CAF7502006C3C43 /* TextFieldFocused.swift */; };
+		7E6188CC2CAF7502006C3C43 /* TextFieldFocused.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6188CA2CAF7502006C3C43 /* TextFieldFocused.swift */; };
+		7ECB45972C9E714100E92257 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ECB45962C9E714100E92257 /* Assets.xcassets */; };
+		7ECB45D32C9E735500E92257 /* KeychainService in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECB45D22C9E735500E92257 /* KeychainService */; };
+		7ECB45D52C9E735B00E92257 /* WebSocketHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECB45D42C9E735B00E92257 /* WebSocketHandler */; };
+		7ECB45D72C9E735F00E92257 /* NetworkHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECB45D62C9E735F00E92257 /* NetworkHandler */; };
+		7ECB45D92C9E736B00E92257 /* KeychainService in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECB45D82C9E736B00E92257 /* KeychainService */; };
+		7ECB45DB2C9E736F00E92257 /* NetworkHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECB45DA2C9E736F00E92257 /* NetworkHandler */; };
+		7ECB45DD2C9E737300E92257 /* WebSocketHandler in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECB45DC2C9E737300E92257 /* WebSocketHandler */; };
+		7ECB45E12C9E742300E92257 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45E02C9E742300E92257 /* SplashScreen.swift */; };
+		7ECB45E22C9E742300E92257 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45E02C9E742300E92257 /* SplashScreen.swift */; };
+		7ECB45E72C9E84DD00E92257 /* MainEntrypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45E62C9E84DD00E92257 /* MainEntrypoint.swift */; };
+		7ECB45E82C9E84DD00E92257 /* MainEntrypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45E62C9E84DD00E92257 /* MainEntrypoint.swift */; };
+		7ECB45EC2C9E894700E92257 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45EB2C9E894700E92257 /* HomeView.swift */; };
+		7ECB45ED2C9E894700E92257 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45EB2C9E894700E92257 /* HomeView.swift */; };
+		7ECB45F02C9E89A500E92257 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45EF2C9E89A500E92257 /* StorageManager.swift */; };
+		7ECB45F12C9E89A500E92257 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45EF2C9E89A500E92257 /* StorageManager.swift */; };
+		7ECB45F52C9E89D100E92257 /* Cupcake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45F42C9E89D100E92257 /* Cupcake.swift */; };
+		7ECB45F62C9E89D100E92257 /* Cupcake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45F42C9E89D100E92257 /* Cupcake.swift */; };
+		7ECB45F82C9E89EB00E92257 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45F72C9E89EB00E92257 /* Order.swift */; };
+		7ECB45F92C9E89EB00E92257 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45F72C9E89EB00E92257 /* Order.swift */; };
+		7ECB45FB2C9E89F100E92257 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45FA2C9E89F100E92257 /* User.swift */; };
+		7ECB45FC2C9E89F200E92257 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45FA2C9E89F100E92257 /* User.swift */; };
+		7ECB45FE2C9E8A6900E92257 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45FD2C9E8A6900E92257 /* Role.swift */; };
+		7ECB45FF2C9E8A6900E92257 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB45FD2C9E8A6900E92257 /* Role.swift */; };
+		7ECB46022C9E8AC900E92257 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46012C9E8AC900E92257 /* PaymentMethod.swift */; };
+		7ECB46032C9E8AC900E92257 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46012C9E8AC900E92257 /* PaymentMethod.swift */; };
+		7ECB46072C9E8B6900E92257 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46062C9E8B6900E92257 /* DataModel.swift */; };
+		7ECB46082C9E8B6900E92257 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46062C9E8B6900E92257 /* DataModel.swift */; };
+		7ECB460A2C9E8BA200E92257 /* User+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46092C9E8BA200E92257 /* User+Get.swift */; };
+		7ECB460B2C9E8BA200E92257 /* User+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46092C9E8BA200E92257 /* User+Get.swift */; };
+		7ECB46112C9E93D300E92257 /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46102C9E93D300E92257 /* Image+Extensions.swift */; };
+		7ECB46122C9E93D300E92257 /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46102C9E93D300E92257 /* Image+Extensions.swift */; };
+		7ECB46162C9E943E00E92257 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46152C9E943E00E92257 /* Icon.swift */; };
+		7ECB46172C9E943E00E92257 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46152C9E943E00E92257 /* Icon.swift */; };
+		7ECB46192C9E95E300E92257 /* Cupcake+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46182C9E95E300E92257 /* Cupcake+Get.swift */; };
+		7ECB461A2C9E95E300E92257 /* Cupcake+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46182C9E95E300E92257 /* Cupcake+Get.swift */; };
+		7ECB461C2C9E96FA00E92257 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB461B2C9E96FA00E92257 /* Status.swift */; };
+		7ECB461D2C9E96FA00E92257 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB461B2C9E96FA00E92257 /* Status.swift */; };
+		7ECB461F2C9E976E00E92257 /* Order+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB461E2C9E976E00E92257 /* Order+Get.swift */; };
+		7ECB46202C9E976E00E92257 /* Order+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB461E2C9E976E00E92257 /* Order+Get.swift */; };
+		7ECB46232C9E986700E92257 /* StorageManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46222C9E986700E92257 /* StorageManagerError.swift */; };
+		7ECB46242C9E986700E92257 /* StorageManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46222C9E986700E92257 /* StorageManagerError.swift */; };
+		7ECB46262C9E98FF00E92257 /* Order+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46252C9E98FF00E92257 /* Order+Create.swift */; };
+		7ECB46272C9E98FF00E92257 /* Order+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46252C9E98FF00E92257 /* Order+Create.swift */; };
+		7ECB46292C9E9A6C00E92257 /* Order+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46282C9E9A6C00E92257 /* Order+Update.swift */; };
+		7ECB462A2C9E9A6C00E92257 /* Order+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46282C9E9A6C00E92257 /* Order+Update.swift */; };
+		7ECB462F2C9E9B8400E92257 /* User+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB462E2C9E9B8400E92257 /* User+Create.swift */; };
+		7ECB46302C9E9B8400E92257 /* User+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB462E2C9E9B8400E92257 /* User+Create.swift */; };
+		7ECB46322C9E9C8600E92257 /* AccountCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46312C9E9C8600E92257 /* AccountCreationError.swift */; };
+		7ECB46332C9E9C8600E92257 /* AccountCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46312C9E9C8600E92257 /* AccountCreationError.swift */; };
+		7ECB46352C9E9CC100E92257 /* User+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46342C9E9CC100E92257 /* User+Update.swift */; };
+		7ECB46362C9E9CC100E92257 /* User+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46342C9E9CC100E92257 /* User+Update.swift */; };
+		7ECB46382C9E9CFC00E92257 /* CupcakeUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46372C9E9CFC00E92257 /* CupcakeUpdate.swift */; };
+		7ECB46392C9E9CFC00E92257 /* CupcakeUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46372C9E9CFC00E92257 /* CupcakeUpdate.swift */; };
+		7ECB463B2C9E9D2900E92257 /* Cupcake+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB463A2C9E9D2900E92257 /* Cupcake+Create.swift */; };
+		7ECB463C2C9E9D2900E92257 /* Cupcake+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB463A2C9E9D2900E92257 /* Cupcake+Create.swift */; };
+		7ECB463E2C9E9D7C00E92257 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB463D2C9E9D7C00E92257 /* Token.swift */; };
+		7ECB463F2C9E9D7C00E92257 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB463D2C9E9D7C00E92257 /* Token.swift */; };
+		7ECB46412C9E9D9100E92257 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46402C9E9D9100E92257 /* LoginResponse.swift */; };
+		7ECB46422C9E9D9100E92257 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46402C9E9D9100E92257 /* LoginResponse.swift */; };
+		7ECB46452C9E9E7000E92257 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46442C9E9E7000E92257 /* UserRepository.swift */; };
+		7ECB46462C9E9E7000E92257 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB46442C9E9E7000E92257 /* UserRepository.swift */; };
+		7ECB464B2C9ECAF000E92257 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB464A2C9ECAF000E92257 /* RepositoryError.swift */; };
+		7ECB464C2C9ECAF000E92257 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECB464A2C9ECAF000E92257 /* RepositoryError.swift */; };
+		7ED1B1292CAB863500E0C918 /* CupcakeView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1B1282CAB863500E0C918 /* CupcakeView+ViewModel.swift */; };
+		7ED1B12A2CAB863500E0C918 /* CupcakeView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1B1282CAB863500E0C918 /* CupcakeView+ViewModel.swift */; };
+		7ED1B1302CAB87EC00E0C918 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1B12F2CAB87EC00E0C918 /* Data+Extension.swift */; };
+		7ED1B1312CAB87EC00E0C918 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1B12F2CAB87EC00E0C918 /* Data+Extension.swift */; };
+		7EE281582CB0C26A003D6E5C /* BagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281572CB0C26A003D6E5C /* BagView.swift */; };
+		7EE281592CB0C26A003D6E5C /* BagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281572CB0C26A003D6E5C /* BagView.swift */; };
+		7EE2815B2CB0C751003D6E5C /* ItemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2815A2CB0C751003D6E5C /* ItemCard.swift */; };
+		7EE2815C2CB0C751003D6E5C /* ItemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2815A2CB0C751003D6E5C /* ItemCard.swift */; };
+		7EE2815E2CB0C7FC003D6E5C /* OrderEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2815D2CB0C7FB003D6E5C /* OrderEmptyView.swift */; };
+		7EE2815F2CB0C7FC003D6E5C /* OrderEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2815D2CB0C7FB003D6E5C /* OrderEmptyView.swift */; };
+		7EE281692CB0D242003D6E5C /* OrderFilterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281682CB0D242003D6E5C /* OrderFilterPickerView.swift */; };
+		7EE2816A2CB0D242003D6E5C /* OrderFilterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281682CB0D242003D6E5C /* OrderFilterPickerView.swift */; };
+		7EE2817A2CB0F39B003D6E5C /* BagView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281792CB0F39B003D6E5C /* BagView+ViewModel.swift */; };
+		7EE2817B2CB0F39B003D6E5C /* BagView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281792CB0F39B003D6E5C /* BagView+ViewModel.swift */; };
+		7EE2817F2CB10DA8003D6E5C /* CreateAnAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2817E2CB10DA8003D6E5C /* CreateAnAccountView.swift */; };
+		7EE281802CB10DA8003D6E5C /* CreateAnAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2817E2CB10DA8003D6E5C /* CreateAnAccountView.swift */; };
+		7EE281822CB10DE0003D6E5C /* EditAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281812CB10DE0003D6E5C /* EditAccount.swift */; };
+		7EE281832CB10DE0003D6E5C /* EditAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281812CB10DE0003D6E5C /* EditAccount.swift */; };
+		7EE281852CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281842CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift */; };
+		7EE281862CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281842CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift */; };
+		7EE281892CB1113B003D6E5C /* UpdateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281882CB1113B003D6E5C /* UpdateAccountView.swift */; };
+		7EE2818A2CB1113B003D6E5C /* UpdateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281882CB1113B003D6E5C /* UpdateAccountView.swift */; };
+		7EE2818C2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2818B2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift */; };
+		7EE2818D2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2818B2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift */; };
+		7EE281942CB11451003D6E5C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281932CB11451003D6E5C /* AccountView.swift */; };
+		7EE281952CB11451003D6E5C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281932CB11451003D6E5C /* AccountView.swift */; };
+		7EE281972CB114B6003D6E5C /* AccountView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281962CB114B6003D6E5C /* AccountView+ViewModel.swift */; };
+		7EE281982CB114B6003D6E5C /* AccountView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE281962CB114B6003D6E5C /* AccountView+ViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7ECB45BC2C9E721300E92257 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ECB45872C9E714000E92257 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ECB458E2C9E714000E92257;
+			remoteInfo = CupcakeCorner;
+		};
+		7ECB45C92C9E723E00E92257 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ECB45872C9E714000E92257 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ECB45A42C9E71C000E92257;
+			remoteInfo = CupcakeCornerForAdmin;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		7E0EE4C32CB371960006F882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7E0EE4C62CB371C50006F882 /* LoginView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+ViewModel.swift"; sourceTree = "<group>"; };
+		7E1409D82CA6C1320041F806 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		7E1409DC2CA6C1E80041F806 /* CupcakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeView.swift; sourceTree = "<group>"; };
+		7E1409DF2CA6C5630041F806 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		7E1409E22CA6CAC80041F806 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
+		7E146FB62CA52FA1002976AC /* DataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
+		7E2208CE2CA7A18E009CBFCA /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		7E3242EF2CA8C506006D2C77 /* AlertHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHandler.swift; sourceTree = "<group>"; };
+		7E3242F22CA8C6FE006D2C77 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		7E3242F52CA8C883006D2C77 /* TokenGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenGetter.swift; sourceTree = "<group>"; };
+		7E3242F82CA8CE7A006D2C77 /* AuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationHeader.swift; sourceTree = "<group>"; };
+		7E32431A2CA8E90A006D2C77 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		7E32431D2CA8E9EE006D2C77 /* InformationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationLabel.swift; sourceTree = "<group>"; };
+		7E34E1962C9F934B00E39901 /* CupcakeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeRepository.swift; sourceTree = "<group>"; };
+		7E34E1992C9FB34600E39901 /* OrderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRepository.swift; sourceTree = "<group>"; };
+		7E34E1A02CA0195D00E39901 /* NamespaceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamespaceKey.swift; sourceTree = "<group>"; };
+		7E34E1AE2CA022EE00E39901 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		7E4F64662CB501E200E9B9A4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7E4F64682CB52D3600E9B9A4 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		7E6188CA2CAF7502006C3C43 /* TextFieldFocused.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldFocused.swift; sourceTree = "<group>"; };
 		7ECB458F2C9E714000E92257 /* CupcakeCorner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CupcakeCorner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ECB45962C9E714100E92257 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7ECB45A52C9E71C000E92257 /* CupcakeCornerForAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CupcakeCornerForAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ECB45B82C9E721300E92257 /* CupcakeCorner_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CupcakeCorner_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ECB45C52C9E723E00E92257 /* CupcakeCornerForAdmin_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CupcakeCornerForAdmin_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ECB45E02C9E742300E92257 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		7ECB45E62C9E84DD00E92257 /* MainEntrypoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEntrypoint.swift; sourceTree = "<group>"; };
+		7ECB45EB2C9E894700E92257 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7ECB45EF2C9E89A500E92257 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		7ECB45F42C9E89D100E92257 /* Cupcake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cupcake.swift; sourceTree = "<group>"; };
+		7ECB45F72C9E89EB00E92257 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		7ECB45FA2C9E89F100E92257 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7ECB45FD2C9E8A6900E92257 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
+		7ECB46012C9E8AC900E92257 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
+		7ECB46062C9E8B6900E92257 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		7ECB46092C9E8BA200E92257 /* User+Get.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Get.swift"; sourceTree = "<group>"; };
+		7ECB46102C9E93D300E92257 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
+		7ECB46152C9E943E00E92257 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		7ECB46182C9E95E300E92257 /* Cupcake+Get.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cupcake+Get.swift"; sourceTree = "<group>"; };
+		7ECB461B2C9E96FA00E92257 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		7ECB461E2C9E976E00E92257 /* Order+Get.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Order+Get.swift"; sourceTree = "<group>"; };
+		7ECB46222C9E986700E92257 /* StorageManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerError.swift; sourceTree = "<group>"; };
+		7ECB46252C9E98FF00E92257 /* Order+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Order+Create.swift"; sourceTree = "<group>"; };
+		7ECB46282C9E9A6C00E92257 /* Order+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Order+Update.swift"; sourceTree = "<group>"; };
+		7ECB462E2C9E9B8400E92257 /* User+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Create.swift"; sourceTree = "<group>"; };
+		7ECB46312C9E9C8600E92257 /* AccountCreationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationError.swift; sourceTree = "<group>"; };
+		7ECB46342C9E9CC100E92257 /* User+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Update.swift"; sourceTree = "<group>"; };
+		7ECB46372C9E9CFC00E92257 /* CupcakeUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeUpdate.swift; sourceTree = "<group>"; };
+		7ECB463A2C9E9D2900E92257 /* Cupcake+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cupcake+Create.swift"; sourceTree = "<group>"; };
+		7ECB463D2C9E9D7C00E92257 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		7ECB46402C9E9D9100E92257 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		7ECB46442C9E9E7000E92257 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		7ECB464A2C9ECAF000E92257 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
+		7ED1B1282CAB863500E0C918 /* CupcakeView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CupcakeView+ViewModel.swift"; sourceTree = "<group>"; };
+		7ED1B12F2CAB87EC00E0C918 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
+		7EE281572CB0C26A003D6E5C /* BagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagView.swift; sourceTree = "<group>"; };
+		7EE2815A2CB0C751003D6E5C /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
+		7EE2815D2CB0C7FB003D6E5C /* OrderEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderEmptyView.swift; sourceTree = "<group>"; };
+		7EE281682CB0D242003D6E5C /* OrderFilterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFilterPickerView.swift; sourceTree = "<group>"; };
+		7EE281792CB0F39B003D6E5C /* BagView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BagView+ViewModel.swift"; sourceTree = "<group>"; };
+		7EE2817E2CB10DA8003D6E5C /* CreateAnAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnAccountView.swift; sourceTree = "<group>"; };
+		7EE281812CB10DE0003D6E5C /* EditAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccount.swift; sourceTree = "<group>"; };
+		7EE281842CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAnAccountView+ViewModel.swift"; sourceTree = "<group>"; };
+		7EE281882CB1113B003D6E5C /* UpdateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAccountView.swift; sourceTree = "<group>"; };
+		7EE2818B2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpdateAccountView+ViewModel.swift"; sourceTree = "<group>"; };
+		7EE281932CB11451003D6E5C /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		7EE281962CB114B6003D6E5C /* AccountView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountView+ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		7E0EE4C92CB371F30006F882 /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7E0EE5302CB383000006F882 /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
+			sourceTree = "<group>";
+		};
 		7ECB45912C9E714000E92257 /* CupcakeCorner */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CupcakeCorner;
+			sourceTree = "<group>";
+		};
+		7ECB45A62C9E71C000E92257 /* CupcakeCornerForAdmin */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CupcakeCornerForAdmin;
+			sourceTree = "<group>";
+		};
+		7ECB45B92C9E721300E92257 /* CupcakeCorner_Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CupcakeCorner_Tests;
+			sourceTree = "<group>";
+		};
+		7ECB45C62C9E723E00E92257 /* CupcakeCornerForAdmin_Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CupcakeCornerForAdmin_Tests;
+			sourceTree = "<group>";
+		};
+		7ECB45E42C9E74E800E92257 /* Preview Content */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7ED1B12B2CAB87B700E0C918 /* Service */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Service;
+			sourceTree = "<group>";
+		};
+		7EE281612CB0C823003D6E5C /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7EE2816B2CB0D77E003D6E5C /* WebSocket */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WebSocket;
+			sourceTree = "<group>";
+		};
+		7EE281722CB0D80F003D6E5C /* Error */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Error;
+			sourceTree = "<group>";
+		};
+		7EE2818E2CB1127C003D6E5C /* Service */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Service;
+			sourceTree = "<group>";
+		};
+		7EE281992CB11511003D6E5C /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7EE2819D2CB11571003D6E5C /* All Orders View */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "All Orders View";
+			sourceTree = "<group>";
+		};
+		7EE281A52CB11825003D6E5C /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,16 +312,78 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ECB45D72C9E735F00E92257 /* NetworkHandler in Frameworks */,
+				7ECB45D32C9E735500E92257 /* KeychainService in Frameworks */,
+				7ECB45D52C9E735B00E92257 /* WebSocketHandler in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45A22C9E71C000E92257 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ECB45DB2C9E736F00E92257 /* NetworkHandler in Frameworks */,
+				7ECB45D92C9E736B00E92257 /* KeychainService in Frameworks */,
+				7ECB45DD2C9E737300E92257 /* WebSocketHandler in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45B52C9E721300E92257 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45C22C9E723E00E92257 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E0EE4C22CB3714E0006F882 /* Login View */ = {
+			isa = PBXGroup;
+			children = (
+				7E0EE4C92CB371F30006F882 /* Services */,
+				7E0EE4C62CB371C50006F882 /* LoginView+ViewModel.swift */,
+				7E0EE4C32CB371960006F882 /* LoginView.swift */,
+			);
+			path = "Login View";
+			sourceTree = "<group>";
+		};
+		7E1409D62CA6C0D50041F806 /* Cupcake View */ = {
+			isa = PBXGroup;
+			children = (
+				7ED1B12B2CAB87B700E0C918 /* Service */,
+				7E1409DC2CA6C1E80041F806 /* CupcakeView.swift */,
+				7ED1B1282CAB863500E0C918 /* CupcakeView+ViewModel.swift */,
+			);
+			path = "Cupcake View";
+			sourceTree = "<group>";
+		};
+		7E34E1A32CA0196C00E39901 /* Entrypoint */ = {
+			isa = PBXGroup;
+			children = (
+				7E34E1A02CA0195D00E39901 /* NamespaceKey.swift */,
+			);
+			path = Entrypoint;
+			sourceTree = "<group>";
+		};
 		7ECB45862C9E714000E92257 = {
 			isa = PBXGroup;
 			children = (
+				7E4F64682CB52D3600E9B9A4 /* LICENSE */,
+				7E4F64662CB501E200E9B9A4 /* README.md */,
+				7ECB45DE2C9E73E400E92257 /* Common */,
 				7ECB45912C9E714000E92257 /* CupcakeCorner */,
+				7ECB45A62C9E71C000E92257 /* CupcakeCornerForAdmin */,
+				7ECB45B92C9E721300E92257 /* CupcakeCorner_Tests */,
+				7ECB45C62C9E723E00E92257 /* CupcakeCornerForAdmin_Tests */,
+				7ECB45D12C9E735500E92257 /* Frameworks */,
 				7ECB45902C9E714000E92257 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +392,246 @@
 			isa = PBXGroup;
 			children = (
 				7ECB458F2C9E714000E92257 /* CupcakeCorner.app */,
+				7ECB45A52C9E71C000E92257 /* CupcakeCornerForAdmin.app */,
+				7ECB45B82C9E721300E92257 /* CupcakeCorner_Tests.xctest */,
+				7ECB45C52C9E723E00E92257 /* CupcakeCornerForAdmin_Tests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7ECB45D12C9E735500E92257 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7ECB45DE2C9E73E400E92257 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB45E42C9E74E800E92257 /* Preview Content */,
+				7ECB45962C9E714100E92257 /* Assets.xcassets */,
+				7ECB45DF2C9E73FD00E92257 /* Entrypoint */,
+				7ECB45EE2C9E897A00E92257 /* Models */,
+				7ECB46432C9E9E4B00E92257 /* Repositories */,
+				7ECB460C2C9E937C00E92257 /* Extensions */,
+				7ECB46212C9E985300E92257 /* Errors */,
+				7ECB46142C9E943000E92257 /* Shared Components */,
+				7ECB45E92C9E891A00E92257 /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7ECB45DF2C9E73FD00E92257 /* Entrypoint */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB45E02C9E742300E92257 /* SplashScreen.swift */,
+				7ECB45E62C9E84DD00E92257 /* MainEntrypoint.swift */,
+			);
+			path = Entrypoint;
+			sourceTree = "<group>";
+		};
+		7ECB45E92C9E891A00E92257 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7E0EE4C22CB3714E0006F882 /* Login View */,
+				7ECB45EA2C9E893E00E92257 /* Home */,
+				7E1409D62CA6C0D50041F806 /* Cupcake View */,
+				7EE281532CB0C23B003D6E5C /* Bag View */,
+				7EE281922CB11446003D6E5C /* Account View */,
+				7EE281872CB11129003D6E5C /* Update Profile View */,
+				7EE2817D2CB10D8F003D6E5C /* Create Profile View */,
+				7EE2819D2CB11571003D6E5C /* All Orders View */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7ECB45EA2C9E893E00E92257 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7E0EE5302CB383000006F882 /* Components */,
+				7ECB45EB2C9E894700E92257 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		7ECB45EE2C9E897A00E92257 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB45F42C9E89D100E92257 /* Cupcake.swift */,
+				7ECB45F72C9E89EB00E92257 /* Order.swift */,
+				7ECB45FA2C9E89F100E92257 /* User.swift */,
+				7ECB45F22C9E89BD00E92257 /* Protocols */,
+				7ECB46002C9E8A7A00E92257 /* Complement Models */,
+				7ECB46052C9E8B3B00E92257 /* DTOs */,
+				7ECB46042C9E8B2200E92257 /* Persistence Manager */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7ECB45F22C9E89BD00E92257 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7E146FB62CA52FA1002976AC /* DataResponse.swift */,
+				7ECB46062C9E8B6900E92257 /* DataModel.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		7ECB46002C9E8A7A00E92257 /* Complement Models */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB461B2C9E96FA00E92257 /* Status.swift */,
+				7ECB46012C9E8AC900E92257 /* PaymentMethod.swift */,
+				7ECB45FD2C9E8A6900E92257 /* Role.swift */,
+			);
+			path = "Complement Models";
+			sourceTree = "<group>";
+		};
+		7ECB46042C9E8B2200E92257 /* Persistence Manager */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB45EF2C9E89A500E92257 /* StorageManager.swift */,
+			);
+			path = "Persistence Manager";
+			sourceTree = "<group>";
+		};
+		7ECB46052C9E8B3B00E92257 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB46402C9E9D9100E92257 /* LoginResponse.swift */,
+				7ECB463D2C9E9D7C00E92257 /* Token.swift */,
+				7ECB462D2C9E9B3100E92257 /* User */,
+				7ECB462C2C9E9B2900E92257 /* Cupcake */,
+				7ECB462B2C9E9B1A00E92257 /* Order */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		7ECB460C2C9E937C00E92257 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7ED1B12F2CAB87EC00E0C918 /* Data+Extension.swift */,
+				7E34E1AE2CA022EE00E39901 /* Date+Extension.swift */,
+				7ECB46102C9E93D300E92257 /* Image+Extensions.swift */,
+				7E1409DF2CA6C5630041F806 /* View+Extensions.swift */,
+				7E1409E22CA6CAC80041F806 /* Dictionary+Extension.swift */,
+				7E2208CE2CA7A18E009CBFCA /* Double+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7ECB46142C9E943000E92257 /* Shared Components */ = {
+			isa = PBXGroup;
+			children = (
+				7EE281812CB10DE0003D6E5C /* EditAccount.swift */,
+				7EE2815D2CB0C7FB003D6E5C /* OrderEmptyView.swift */,
+				7EE2815A2CB0C751003D6E5C /* ItemCard.swift */,
+				7E6188CA2CAF7502006C3C43 /* TextFieldFocused.swift */,
+				7E32431D2CA8E9EE006D2C77 /* InformationLabel.swift */,
+				7E32431A2CA8E90A006D2C77 /* ActionButton.swift */,
+				7E3242F82CA8CE7A006D2C77 /* AuthorizationHeader.swift */,
+				7E3242F52CA8C883006D2C77 /* TokenGetter.swift */,
+				7E3242F22CA8C6FE006D2C77 /* ViewState.swift */,
+				7E1409D82CA6C1320041F806 /* EmptyStateView.swift */,
+				7E34E1A32CA0196C00E39901 /* Entrypoint */,
+				7ECB46152C9E943E00E92257 /* Icon.swift */,
+				7EE281682CB0D242003D6E5C /* OrderFilterPickerView.swift */,
+			);
+			path = "Shared Components";
+			sourceTree = "<group>";
+		};
+		7ECB46212C9E985300E92257 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				7E3242EF2CA8C506006D2C77 /* AlertHandler.swift */,
+				7ECB46312C9E9C8600E92257 /* AccountCreationError.swift */,
+				7ECB46222C9E986700E92257 /* StorageManagerError.swift */,
+				7ECB464A2C9ECAF000E92257 /* RepositoryError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		7ECB462B2C9E9B1A00E92257 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB46282C9E9A6C00E92257 /* Order+Update.swift */,
+				7ECB46252C9E98FF00E92257 /* Order+Create.swift */,
+				7ECB461E2C9E976E00E92257 /* Order+Get.swift */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		7ECB462C2C9E9B2900E92257 /* Cupcake */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB463A2C9E9D2900E92257 /* Cupcake+Create.swift */,
+				7ECB46372C9E9CFC00E92257 /* CupcakeUpdate.swift */,
+				7ECB46182C9E95E300E92257 /* Cupcake+Get.swift */,
+			);
+			path = Cupcake;
+			sourceTree = "<group>";
+		};
+		7ECB462D2C9E9B3100E92257 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				7ECB46342C9E9CC100E92257 /* User+Update.swift */,
+				7ECB462E2C9E9B8400E92257 /* User+Create.swift */,
+				7ECB46092C9E8BA200E92257 /* User+Get.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		7ECB46432C9E9E4B00E92257 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				7E34E1992C9FB34600E39901 /* OrderRepository.swift */,
+				7E34E1962C9F934B00E39901 /* CupcakeRepository.swift */,
+				7ECB46442C9E9E7000E92257 /* UserRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		7EE281532CB0C23B003D6E5C /* Bag View */ = {
+			isa = PBXGroup;
+			children = (
+				7EE281722CB0D80F003D6E5C /* Error */,
+				7EE2816B2CB0D77E003D6E5C /* WebSocket */,
+				7EE281612CB0C823003D6E5C /* Components */,
+				7EE281572CB0C26A003D6E5C /* BagView.swift */,
+				7EE281792CB0F39B003D6E5C /* BagView+ViewModel.swift */,
+			);
+			path = "Bag View";
+			sourceTree = "<group>";
+		};
+		7EE2817D2CB10D8F003D6E5C /* Create Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				7EE281842CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift */,
+				7EE2817E2CB10DA8003D6E5C /* CreateAnAccountView.swift */,
+			);
+			path = "Create Profile View";
+			sourceTree = "<group>";
+		};
+		7EE281872CB11129003D6E5C /* Update Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				7EE2818E2CB1127C003D6E5C /* Service */,
+				7EE2818B2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift */,
+				7EE281882CB1113B003D6E5C /* UpdateAccountView.swift */,
+			);
+			path = "Update Profile View";
+			sourceTree = "<group>";
+		};
+		7EE281922CB11446003D6E5C /* Account View */ = {
+			isa = PBXGroup;
+			children = (
+				7EE281A52CB11825003D6E5C /* Components */,
+				7EE281992CB11511003D6E5C /* Services */,
+				7EE281962CB114B6003D6E5C /* AccountView+ViewModel.swift */,
+				7EE281932CB11451003D6E5C /* AccountView.swift */,
+			);
+			path = "Account View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,14 +650,109 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				7E0EE4C92CB371F30006F882 /* Services */,
+				7E0EE5302CB383000006F882 /* Components */,
 				7ECB45912C9E714000E92257 /* CupcakeCorner */,
+				7ECB45E42C9E74E800E92257 /* Preview Content */,
+				7ED1B12B2CAB87B700E0C918 /* Service */,
+				7EE281612CB0C823003D6E5C /* Components */,
+				7EE2816B2CB0D77E003D6E5C /* WebSocket */,
+				7EE281722CB0D80F003D6E5C /* Error */,
+				7EE2818E2CB1127C003D6E5C /* Service */,
+				7EE281992CB11511003D6E5C /* Services */,
+				7EE2819D2CB11571003D6E5C /* All Orders View */,
+				7EE281A52CB11825003D6E5C /* Components */,
 			);
 			name = CupcakeCorner;
 			packageProductDependencies = (
+				7ECB45D22C9E735500E92257 /* KeychainService */,
+				7ECB45D42C9E735B00E92257 /* WebSocketHandler */,
+				7ECB45D62C9E735F00E92257 /* NetworkHandler */,
 			);
 			productName = CupcakeCorner;
 			productReference = 7ECB458F2C9E714000E92257 /* CupcakeCorner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		7ECB45A42C9E71C000E92257 /* CupcakeCornerForAdmin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ECB45B12C9E71C200E92257 /* Build configuration list for PBXNativeTarget "CupcakeCornerForAdmin" */;
+			buildPhases = (
+				7ECB45A12C9E71C000E92257 /* Sources */,
+				7ECB45A22C9E71C000E92257 /* Frameworks */,
+				7ECB45A32C9E71C000E92257 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7E0EE4C92CB371F30006F882 /* Services */,
+				7E0EE5302CB383000006F882 /* Components */,
+				7ECB45A62C9E71C000E92257 /* CupcakeCornerForAdmin */,
+				7ED1B12B2CAB87B700E0C918 /* Service */,
+				7EE281612CB0C823003D6E5C /* Components */,
+				7EE2816B2CB0D77E003D6E5C /* WebSocket */,
+				7EE281722CB0D80F003D6E5C /* Error */,
+				7EE2818E2CB1127C003D6E5C /* Service */,
+				7EE281992CB11511003D6E5C /* Services */,
+				7EE2819D2CB11571003D6E5C /* All Orders View */,
+				7EE281A52CB11825003D6E5C /* Components */,
+			);
+			name = CupcakeCornerForAdmin;
+			packageProductDependencies = (
+				7ECB45D82C9E736B00E92257 /* KeychainService */,
+				7ECB45DA2C9E736F00E92257 /* NetworkHandler */,
+				7ECB45DC2C9E737300E92257 /* WebSocketHandler */,
+			);
+			productName = CupcakeCornerForAdmin;
+			productReference = 7ECB45A52C9E71C000E92257 /* CupcakeCornerForAdmin.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7ECB45B72C9E721300E92257 /* CupcakeCorner_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ECB45BE2C9E721300E92257 /* Build configuration list for PBXNativeTarget "CupcakeCorner_Tests" */;
+			buildPhases = (
+				7ECB45B42C9E721300E92257 /* Sources */,
+				7ECB45B52C9E721300E92257 /* Frameworks */,
+				7ECB45B62C9E721300E92257 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7ECB45BD2C9E721300E92257 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7ECB45B92C9E721300E92257 /* CupcakeCorner_Tests */,
+			);
+			name = CupcakeCorner_Tests;
+			packageProductDependencies = (
+			);
+			productName = CupcakeCorner_Tests;
+			productReference = 7ECB45B82C9E721300E92257 /* CupcakeCorner_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7ECB45C42C9E723E00E92257 /* CupcakeCornerForAdmin_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ECB45CB2C9E723E00E92257 /* Build configuration list for PBXNativeTarget "CupcakeCornerForAdmin_Tests" */;
+			buildPhases = (
+				7ECB45C12C9E723E00E92257 /* Sources */,
+				7ECB45C22C9E723E00E92257 /* Frameworks */,
+				7ECB45C32C9E723E00E92257 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7ECB45CA2C9E723E00E92257 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7ECB45C62C9E723E00E92257 /* CupcakeCornerForAdmin_Tests */,
+			);
+			name = CupcakeCornerForAdmin_Tests;
+			packageProductDependencies = (
+			);
+			productName = CupcakeCornerForAdmin_Tests;
+			productReference = 7ECB45C52C9E723E00E92257 /* CupcakeCornerForAdmin_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -83,6 +767,19 @@
 					7ECB458E2C9E714000E92257 = {
 						CreatedOnToolsVersion = 16.0;
 					};
+					7ECB45A42C9E71C000E92257 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					7ECB45B72C9E721300E92257 = {
+						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
+						TestTargetID = 7ECB458E2C9E714000E92257;
+					};
+					7ECB45C42C9E723E00E92257 = {
+						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
+						TestTargetID = 7ECB45A42C9E71C000E92257;
+					};
 				};
 			};
 			buildConfigurationList = 7ECB458A2C9E714000E92257 /* Build configuration list for PBXProject "CupcakeCorner" */;
@@ -94,18 +791,51 @@
 			);
 			mainGroup = 7ECB45862C9E714000E92257;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7ECB45CE2C9E72FC00E92257 /* XCRemoteSwiftPackageReference "KeychainService" */,
+				7ECB45CF2C9E731E00E92257 /* XCRemoteSwiftPackageReference "NetworkHandler" */,
+				7ECB45D02C9E734600E92257 /* XCRemoteSwiftPackageReference "WebSocketHandler" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7ECB45902C9E714000E92257 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				7ECB458E2C9E714000E92257 /* CupcakeCorner */,
+				7ECB45A42C9E71C000E92257 /* CupcakeCornerForAdmin */,
+				7ECB45B72C9E721300E92257 /* CupcakeCorner_Tests */,
+				7ECB45C42C9E723E00E92257 /* CupcakeCornerForAdmin_Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7ECB458D2C9E714000E92257 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E4F64672CB501EE00E9B9A4 /* README.md in Resources */,
+				7E4F64692CB52D4A00E9B9A4 /* LICENSE in Resources */,
+				7ECB45972C9E714100E92257 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45A32C9E71C000E92257 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E34E19F2C9FE82800E39901 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45B62C9E721300E92257 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45C32C9E723E00E92257 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -119,10 +849,166 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ECB45E72C9E84DD00E92257 /* MainEntrypoint.swift in Sources */,
+				7E34E19B2C9FB34600E39901 /* OrderRepository.swift in Sources */,
+				7EE281822CB10DE0003D6E5C /* EditAccount.swift in Sources */,
+				7ECB45E12C9E742300E92257 /* SplashScreen.swift in Sources */,
+				7E146FB82CA52FA2002976AC /* DataResponse.swift in Sources */,
+				7E3242F92CA8CE7A006D2C77 /* AuthorizationHeader.swift in Sources */,
+				7EE281582CB0C26A003D6E5C /* BagView.swift in Sources */,
+				7E3242F72CA8C883006D2C77 /* TokenGetter.swift in Sources */,
+				7ECB46032C9E8AC900E92257 /* PaymentMethod.swift in Sources */,
+				7ECB461D2C9E96FA00E92257 /* Status.swift in Sources */,
+				7ECB46162C9E943E00E92257 /* Icon.swift in Sources */,
+				7ECB461A2C9E95E300E92257 /* Cupcake+Get.swift in Sources */,
+				7ECB46412C9E9D9100E92257 /* LoginResponse.swift in Sources */,
+				7ECB46122C9E93D300E92257 /* Image+Extensions.swift in Sources */,
+				7EE2817A2CB0F39B003D6E5C /* BagView+ViewModel.swift in Sources */,
+				7ECB462F2C9E9B8400E92257 /* User+Create.swift in Sources */,
+				7EE281942CB11451003D6E5C /* AccountView.swift in Sources */,
+				7EE281692CB0D242003D6E5C /* OrderFilterPickerView.swift in Sources */,
+				7ECB45F82C9E89EB00E92257 /* Order.swift in Sources */,
+				7E3242F32CA8C6FE006D2C77 /* ViewState.swift in Sources */,
+				7EE2815C2CB0C751003D6E5C /* ItemCard.swift in Sources */,
+				7ECB463E2C9E9D7C00E92257 /* Token.swift in Sources */,
+				7ECB46202C9E976E00E92257 /* Order+Get.swift in Sources */,
+				7E34E1972C9F934B00E39901 /* CupcakeRepository.swift in Sources */,
+				7EE281972CB114B6003D6E5C /* AccountView+ViewModel.swift in Sources */,
+				7E32431E2CA8E9EE006D2C77 /* InformationLabel.swift in Sources */,
+				7ECB462A2C9E9A6C00E92257 /* Order+Update.swift in Sources */,
+				7ECB46082C9E8B6900E92257 /* DataModel.swift in Sources */,
+				7EE2818A2CB1113B003D6E5C /* UpdateAccountView.swift in Sources */,
+				7E1409E42CA6CAC80041F806 /* Dictionary+Extension.swift in Sources */,
+				7ED1B1312CAB87EC00E0C918 /* Data+Extension.swift in Sources */,
+				7ECB45F12C9E89A500E92257 /* StorageManager.swift in Sources */,
+				7E1409D92CA6C1320041F806 /* EmptyStateView.swift in Sources */,
+				7ECB45FB2C9E89F100E92257 /* User.swift in Sources */,
+				7E32431B2CA8E90A006D2C77 /* ActionButton.swift in Sources */,
+				7ECB45F62C9E89D100E92257 /* Cupcake.swift in Sources */,
+				7EE2817F2CB10DA8003D6E5C /* CreateAnAccountView.swift in Sources */,
+				7ECB460A2C9E8BA200E92257 /* User+Get.swift in Sources */,
+				7ECB46452C9E9E7000E92257 /* UserRepository.swift in Sources */,
+				7ECB46382C9E9CFC00E92257 /* CupcakeUpdate.swift in Sources */,
+				7ECB45EC2C9E894700E92257 /* HomeView.swift in Sources */,
+				7E2208D02CA7A18E009CBFCA /* Double+Extension.swift in Sources */,
+				7E3242F02CA8C506006D2C77 /* AlertHandler.swift in Sources */,
+				7ED1B1292CAB863500E0C918 /* CupcakeView+ViewModel.swift in Sources */,
+				7EE2815F2CB0C7FC003D6E5C /* OrderEmptyView.swift in Sources */,
+				7E0EE4C82CB371C50006F882 /* LoginView+ViewModel.swift in Sources */,
+				7E0EE4C52CB371960006F882 /* LoginView.swift in Sources */,
+				7E34E1A22CA0195D00E39901 /* NamespaceKey.swift in Sources */,
+				7ECB46362C9E9CC100E92257 /* User+Update.swift in Sources */,
+				7ECB45FF2C9E8A6900E92257 /* Role.swift in Sources */,
+				7EE281862CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift in Sources */,
+				7E1409DE2CA6C1E80041F806 /* CupcakeView.swift in Sources */,
+				7ECB46322C9E9C8600E92257 /* AccountCreationError.swift in Sources */,
+				7EE2818D2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift in Sources */,
+				7E1409E12CA6C5630041F806 /* View+Extensions.swift in Sources */,
+				7ECB46232C9E986700E92257 /* StorageManagerError.swift in Sources */,
+				7E34E1AF2CA022EE00E39901 /* Date+Extension.swift in Sources */,
+				7E6188CC2CAF7502006C3C43 /* TextFieldFocused.swift in Sources */,
+				7ECB464B2C9ECAF000E92257 /* RepositoryError.swift in Sources */,
+				7ECB46262C9E98FF00E92257 /* Order+Create.swift in Sources */,
+				7ECB463B2C9E9D2900E92257 /* Cupcake+Create.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45A12C9E71C000E92257 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ECB45E82C9E84DD00E92257 /* MainEntrypoint.swift in Sources */,
+				7E34E19A2C9FB34600E39901 /* OrderRepository.swift in Sources */,
+				7ECB45E22C9E742300E92257 /* SplashScreen.swift in Sources */,
+				7EE281952CB11451003D6E5C /* AccountView.swift in Sources */,
+				7E146FB72CA52FA2002976AC /* DataResponse.swift in Sources */,
+				7ECB46022C9E8AC900E92257 /* PaymentMethod.swift in Sources */,
+				7ECB461C2C9E96FA00E92257 /* Status.swift in Sources */,
+				7E32431F2CA8E9EE006D2C77 /* InformationLabel.swift in Sources */,
+				7ECB46172C9E943E00E92257 /* Icon.swift in Sources */,
+				7EE2815B2CB0C751003D6E5C /* ItemCard.swift in Sources */,
+				7ECB46192C9E95E300E92257 /* Cupcake+Get.swift in Sources */,
+				7E3242F42CA8C6FE006D2C77 /* ViewState.swift in Sources */,
+				7ECB46422C9E9D9100E92257 /* LoginResponse.swift in Sources */,
+				7EE2817B2CB0F39B003D6E5C /* BagView+ViewModel.swift in Sources */,
+				7ECB46112C9E93D300E92257 /* Image+Extensions.swift in Sources */,
+				7EE281592CB0C26A003D6E5C /* BagView.swift in Sources */,
+				7E3242F12CA8C506006D2C77 /* AlertHandler.swift in Sources */,
+				7EE281832CB10DE0003D6E5C /* EditAccount.swift in Sources */,
+				7E32431C2CA8E90A006D2C77 /* ActionButton.swift in Sources */,
+				7ECB46302C9E9B8400E92257 /* User+Create.swift in Sources */,
+				7E6188CB2CAF7502006C3C43 /* TextFieldFocused.swift in Sources */,
+				7EE281802CB10DA8003D6E5C /* CreateAnAccountView.swift in Sources */,
+				7ECB45F92C9E89EB00E92257 /* Order.swift in Sources */,
+				7ECB463F2C9E9D7C00E92257 /* Token.swift in Sources */,
+				7ECB461F2C9E976E00E92257 /* Order+Get.swift in Sources */,
+				7E34E1982C9F934B00E39901 /* CupcakeRepository.swift in Sources */,
+				7ECB46292C9E9A6C00E92257 /* Order+Update.swift in Sources */,
+				7EE281852CB110B0003D6E5C /* CreateAnAccountView+ViewModel.swift in Sources */,
+				7ECB46072C9E8B6900E92257 /* DataModel.swift in Sources */,
+				7E1409E32CA6CAC80041F806 /* Dictionary+Extension.swift in Sources */,
+				7ED1B1302CAB87EC00E0C918 /* Data+Extension.swift in Sources */,
+				7ECB45F02C9E89A500E92257 /* StorageManager.swift in Sources */,
+				7E1409DA2CA6C1320041F806 /* EmptyStateView.swift in Sources */,
+				7E0EE4C72CB371C50006F882 /* LoginView+ViewModel.swift in Sources */,
+				7ECB45FC2C9E89F200E92257 /* User.swift in Sources */,
+				7ECB45F52C9E89D100E92257 /* Cupcake.swift in Sources */,
+				7EE281892CB1113B003D6E5C /* UpdateAccountView.swift in Sources */,
+				7ECB460B2C9E8BA200E92257 /* User+Get.swift in Sources */,
+				7ECB46462C9E9E7000E92257 /* UserRepository.swift in Sources */,
+				7ECB46392C9E9CFC00E92257 /* CupcakeUpdate.swift in Sources */,
+				7ECB45ED2C9E894700E92257 /* HomeView.swift in Sources */,
+				7E34E1A12CA0195D00E39901 /* NamespaceKey.swift in Sources */,
+				7E3242F62CA8C883006D2C77 /* TokenGetter.swift in Sources */,
+				7EE2816A2CB0D242003D6E5C /* OrderFilterPickerView.swift in Sources */,
+				7EE2818C2CB11178003D6E5C /* UpdateAccountView+ViewModel.swift in Sources */,
+				7EE281982CB114B6003D6E5C /* AccountView+ViewModel.swift in Sources */,
+				7E3242FA2CA8CE7A006D2C77 /* AuthorizationHeader.swift in Sources */,
+				7ED1B12A2CAB863500E0C918 /* CupcakeView+ViewModel.swift in Sources */,
+				7E1409DD2CA6C1E80041F806 /* CupcakeView.swift in Sources */,
+				7E2208CF2CA7A18E009CBFCA /* Double+Extension.swift in Sources */,
+				7ECB46352C9E9CC100E92257 /* User+Update.swift in Sources */,
+				7E1409E02CA6C5630041F806 /* View+Extensions.swift in Sources */,
+				7ECB45FE2C9E8A6900E92257 /* Role.swift in Sources */,
+				7EE2815E2CB0C7FC003D6E5C /* OrderEmptyView.swift in Sources */,
+				7E0EE4C42CB371960006F882 /* LoginView.swift in Sources */,
+				7ECB46332C9E9C8600E92257 /* AccountCreationError.swift in Sources */,
+				7ECB46242C9E986700E92257 /* StorageManagerError.swift in Sources */,
+				7E34E1B02CA022EE00E39901 /* Date+Extension.swift in Sources */,
+				7ECB464C2C9ECAF000E92257 /* RepositoryError.swift in Sources */,
+				7ECB46272C9E98FF00E92257 /* Order+Create.swift in Sources */,
+				7ECB463C2C9E9D2900E92257 /* Cupcake+Create.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45B42C9E721300E92257 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ECB45C12C9E723E00E92257 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7ECB45BD2C9E721300E92257 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7ECB458E2C9E714000E92257 /* CupcakeCorner */;
+			targetProxy = 7ECB45BC2C9E721300E92257 /* PBXContainerItemProxy */;
+		};
+		7ECB45CA2C9E723E00E92257 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7ECB45A42C9E71C000E92257 /* CupcakeCornerForAdmin */;
+			targetProxy = 7ECB45C92C9E723E00E92257 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7ECB459C2C9E714100E92257 /* Debug */ = {
@@ -247,11 +1133,12 @@
 				CODE_SIGN_ENTITLEMENTS = CupcakeCorner/CupcakeCorner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Common/Preview Content\"";
 				DEVELOPMENT_TEAM = 9798UJJCY4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Cupcake Corner";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -267,13 +1154,15 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DCLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = IsaqueSoftwares.CupcakeCorner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
@@ -286,7 +1175,49 @@
 				CODE_SIGN_ENTITLEMENTS = CupcakeCorner/CupcakeCorner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"CupcakeCorner/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Common/Preview Content\"";
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Cupcake Corner";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DCLIENT";
+				PRODUCT_BUNDLE_IDENTIFIER = IsaqueSoftwares.CupcakeCorner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		7ECB45B22C9E71C200E92257 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CupcakeCornerForAdmin/CupcakeCornerForAdmin.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Common/Preview Content\"";
 				DEVELOPMENT_TEAM = 9798UJJCY4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -306,13 +1237,160 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = IsaqueSoftwares.CupcakeCorner;
+				OTHER_SWIFT_FLAGS = "-DADMIN";
+				PRODUCT_BUNDLE_IDENTIFIER = IsaqueSoftwares.CupcakeCornerForAdmin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		7ECB45B32C9E71C200E92257 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CupcakeCornerForAdmin/CupcakeCornerForAdmin.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Common/Preview Content\"";
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-DADMIN";
+				PRODUCT_BUNDLE_IDENTIFIER = IsaqueSoftwares.CupcakeCornerForAdmin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		7ECB45BF2C9E721300E92257 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "IsaqueSoftwares.CupcakeCorner-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CupcakeCorner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CupcakeCorner";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		7ECB45C02C9E721300E92257 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "IsaqueSoftwares.CupcakeCorner-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CupcakeCorner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CupcakeCorner";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		7ECB45CC2C9E723E00E92257 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "IsaqueSoftwares.CupcakeCornerForAdmin-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "CupcakeCornerForAdmin_Tests/CupcakeCornerForAdmin_Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CupcakeCornerForAdmin.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CupcakeCornerForAdmin";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		7ECB45CD2C9E723E00E92257 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9798UJJCY4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "IsaqueSoftwares.CupcakeCornerForAdmin-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "CupcakeCornerForAdmin_Tests/CupcakeCornerForAdmin_Tests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CupcakeCornerForAdmin.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CupcakeCornerForAdmin";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
@@ -338,7 +1416,94 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		7ECB45B12C9E71C200E92257 /* Build configuration list for PBXNativeTarget "CupcakeCornerForAdmin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ECB45B22C9E71C200E92257 /* Debug */,
+				7ECB45B32C9E71C200E92257 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ECB45BE2C9E721300E92257 /* Build configuration list for PBXNativeTarget "CupcakeCorner_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ECB45BF2C9E721300E92257 /* Debug */,
+				7ECB45C02C9E721300E92257 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ECB45CB2C9E723E00E92257 /* Build configuration list for PBXNativeTarget "CupcakeCornerForAdmin_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ECB45CC2C9E723E00E92257 /* Debug */,
+				7ECB45CD2C9E723E00E92257 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7ECB45CE2C9E72FC00E92257 /* XCRemoteSwiftPackageReference "KeychainService" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/isaqueDaSilva/KeychainService.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+		7ECB45CF2C9E731E00E92257 /* XCRemoteSwiftPackageReference "NetworkHandler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/isaqueDaSilva/NetworkHandler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.9;
+			};
+		};
+		7ECB45D02C9E734600E92257 /* XCRemoteSwiftPackageReference "WebSocketHandler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/isaqueDaSilva/WebSocketHandler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.37;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7ECB45D22C9E735500E92257 /* KeychainService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECB45CE2C9E72FC00E92257 /* XCRemoteSwiftPackageReference "KeychainService" */;
+			productName = KeychainService;
+		};
+		7ECB45D42C9E735B00E92257 /* WebSocketHandler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECB45D02C9E734600E92257 /* XCRemoteSwiftPackageReference "WebSocketHandler" */;
+			productName = WebSocketHandler;
+		};
+		7ECB45D62C9E735F00E92257 /* NetworkHandler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECB45CF2C9E731E00E92257 /* XCRemoteSwiftPackageReference "NetworkHandler" */;
+			productName = NetworkHandler;
+		};
+		7ECB45D82C9E736B00E92257 /* KeychainService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECB45CE2C9E72FC00E92257 /* XCRemoteSwiftPackageReference "KeychainService" */;
+			productName = KeychainService;
+		};
+		7ECB45DA2C9E736F00E92257 /* NetworkHandler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECB45CF2C9E731E00E92257 /* XCRemoteSwiftPackageReference "NetworkHandler" */;
+			productName = NetworkHandler;
+		};
+		7ECB45DC2C9E737300E92257 /* WebSocketHandler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECB45D02C9E734600E92257 /* XCRemoteSwiftPackageReference "WebSocketHandler" */;
+			productName = WebSocketHandler;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7ECB45872C9E714000E92257 /* Project object */;
 }
