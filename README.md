@@ -1,6 +1,6 @@
 # Table of Contents
 1. [Overview](#overview)
-2. [Features and Technologies](#features_and_technologies)
+2. [Features and Technologies](#featuresandtechnologies)
 3. [Getting started](#getting-started)
 4. [Usage](#usage)
 5. [Requirements](#requirements)
