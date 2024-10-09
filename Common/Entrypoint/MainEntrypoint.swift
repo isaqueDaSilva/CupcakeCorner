@@ -9,6 +9,9 @@ import SwiftData
 import SwiftUI
 
 struct MainEntrypoint: Scene {
+    @AppStorage("is_open_for_first_time")
+    private var isFirstOpen: Bool = true
+    
     private let container: ModelContainer
     private let storageManager: StorageManager
     
@@ -60,7 +63,11 @@ struct MainEntrypoint: Scene {
             .environment(\.isMacOS, isMacOS)
             .task {
                 do {
-                    try await userRepo.load()
+                    try await userRepo.load(isFirstOpen: isFirstOpen)
+                    
+                    if isFirstOpen {
+                        isFirstOpen = false
+                    }
                 } catch {
                     await MainActor.run {
                         self.showError = true
