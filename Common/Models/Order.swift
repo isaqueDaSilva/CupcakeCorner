@@ -126,6 +126,7 @@ extension Order {
     }
 }
 
+#if DEBUG
 // MARK: - Sample -
 extension Order {
     static func makeSampleOrders(in context: ModelContext) throws {
@@ -158,3 +159,4 @@ extension Order {
         try context.save()
     }
 }
+#endif
