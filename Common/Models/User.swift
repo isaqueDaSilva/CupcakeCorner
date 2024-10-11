@@ -63,6 +63,7 @@ extension User {
     }
 }
 
+#if DEBUG
 // MARK: - Sample -
 extension User {
     static func makeSampleUser(in context: ModelContext) throws {
@@ -78,3 +79,4 @@ extension User {
         try context.save()
     }
 }
+#endif
