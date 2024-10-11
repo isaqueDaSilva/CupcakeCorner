@@ -87,6 +87,7 @@ extension Cupcake {
     }
 }
 
+#if DEBUG
 // MARK: - Sample -
 extension Cupcake {
     static func makeSampleCupcakes(in context: ModelContext) throws {
@@ -116,3 +117,4 @@ extension Cupcake {
         try context.save()
     }
 }
+#endif
