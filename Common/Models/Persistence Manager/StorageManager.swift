@@ -30,6 +30,11 @@ final actor StorageManager: ModelActor {
         }
     }
     
+    /// Find all instances of the ``DataModel`` saved in Persistence Store.
+    /// - Parameters:
+    ///   - model: Type of model that will be sought.
+    ///   - predicate: Specific coordinations to find a specific instance.
+    ///   - sortedBy: Specific sorting description to organize the results and given back to top level as expected.
     func find<T: DataModel>(
         _ model: T.Type,
         with predicate: Predicate<T>? = nil,
@@ -44,6 +49,17 @@ final actor StorageManager: ModelActor {
         return models
     }
     
+    /// Compare results from API call with the stored instances
+    ///
+    /// When we given some result from API, those will be compared with the saved instances, flowing this steps:
+    /// - The API's result is the source of truth, so because this we check if has some instance with the same ID saved.
+    /// - If yes, we make an update in the instance to garantie that is stays always syncronized with the instance saved on database.
+    /// - If not exist, a new instance will be created.
+    /// - Finaly if some instance only exist on persistence storage, it's will be deleted.
+    ///
+    /// - Parameters:
+    ///   - savedModels: All saved persistence models.
+    ///   - modelsResult: All API's call result.
     private func checkIfModelsExist<T: DataModel, R: DataResponse>(
         in savedModels: [T],
         with modelsResult: [R]
@@ -85,6 +101,12 @@ final actor StorageManager: ModelActor {
         return models
     }
     
+    /// Gets, compare, find and load instances saved on persistence store and give back to app's top level modules.
+    /// - Parameters:
+    ///   - savedModels: All saved persistence models.
+    ///   - predicate: Specific coordinations to find a specific instance.
+    ///   - sortedBy: Specific sorting description to organize the results and given back to top level as expected.
+    ///   - results: All API's call result models.
     func load<T: DataModel, R: DataResponse>(
         with savedModels: [T],
         _ predicate: Predicate<T>? = nil,
@@ -112,7 +134,11 @@ final actor StorageManager: ModelActor {
             return existingModels
         }
     }
-
+    
+    /// Insert a new instance into a persistence store based on API's result model.
+    /// - Parameters:
+    ///   - modelResult: An API's call result model.
+    ///   - modelType: The type of persistence model that will be want to save.
     func insert<T: DataModel, R: Codable>(
         new modelResult: R,
         as modelType: T.Type
@@ -128,13 +154,19 @@ final actor StorageManager: ModelActor {
         return model
     }
     
+    /// Removes an specific instance from persistence store.
+    /// - Parameter model: The model's instance that we want to delete.
     func remove<T: DataModel>(
         _ model: T
     ) throws(StorageManagerError) {
         modelContext.delete(model)
         try save()
     }
-   
+    
+    /// Remove all instances of specific Persistence Model saved.
+    /// - Parameters:
+    ///   - modelType: The type of persistence model that will be want to save.
+    ///   - isincludeSubclasses: Indicates if we want delete relationships as well when we deleting a main model.
     func removeAll<T: DataModel>(
         _ modelType: T.Type,
         isincludeSubclasses: Bool = false
@@ -148,6 +180,10 @@ final actor StorageManager: ModelActor {
         try save()
     }
 
+    #if DEBUG
+    /// Creates a StorageManager instance to use in Xcode Previews.
+    /// - Parameter isInsertingData: Indicates if we insert dummy datas when the instance is created.
+    /// - Returns: Returns a new instance of ``StorageManagerError``.
     nonisolated static func preview(isInsertingData: Bool = true) -> StorageManager {
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: true)
@@ -171,6 +207,7 @@ final actor StorageManager: ModelActor {
             fatalError("Failed to create a preview storage manager: \(error.localizedDescription).")
         }
     }
+    #endif
     
     init(with container: ModelContainer) {
         self.modelContainer = container
