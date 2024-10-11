@@ -49,7 +49,7 @@ Even there, to access all functionality of the app, is required an user account.
 - Xcode 16+
 - iOS 18+
 - iPadOS 18+
-- macOS Sequoia 15+ **(In development)**
+- macOS Sequoia 15+ *(In development)*
 
 # Workflow
 * Reporting bugs:<br> 
