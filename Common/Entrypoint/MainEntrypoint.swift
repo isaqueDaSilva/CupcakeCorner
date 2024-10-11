@@ -8,16 +8,22 @@
 import SwiftData
 import SwiftUI
 
+/// The Main scene of the App.
 struct MainEntrypoint: Scene {
+    /// Set a tracker to monitoring if is the first time that user opens the app.
     @AppStorage("is_open_for_first_time")
     private var isFirstOpen: Bool = true
     
+    /// The default model container of the App.
     private let container: ModelContainer
+    
+    /// The main storage manager of the app.
     private let storageManager: StorageManager
     
     @Environment(\.verticalSizeClass) private var vSizeClass
     @Environment(\.horizontalSizeClass) private var hSizeClass
     
+    /// Sets if the current device used is an iPad base on vertical and horizontal size class.
     private var itsAnIPadDevice: Bool {
         #if os(iOS)
         vSizeClass == .regular && hSizeClass == .regular
@@ -26,6 +32,7 @@ struct MainEntrypoint: Scene {
         #endif
     }
     
+    /// Set if the current device used is a Mac base on the OS target identifier.
     private var isMacOS: Bool {
         #if os(macOS)
         true
@@ -34,13 +41,22 @@ struct MainEntrypoint: Scene {
         #endif
     }
     
+    /// Set if the current screen that has been displeyed is the Splash Screen.
     @State private var isSplashViewPresented = true
+    
+    /// Set if a Storage error that will be needed to display to user.
     @State private var showError = false
     
+    /// Set the main ``UserRepository`` instance that will be used inside the app.
     @StateObject var userRepo: UserRepository
+    
+    /// Set the main ``CupcakeRepository`` instance that will be used inside the app.
     @StateObject var cupcakeRepo: CupcakeRepository
+    
+    /// Set the main ``OrderRepository`` instance that will be used inside the app.
     @StateObject var orderRepo: OrderRepository
     
+    /// Set a NamespaceID to use as identifier on views marked with `.matchedGeometryEffect(id:in:)` modifier saying to compiler that those views are the same.
     @Namespace private var transition
     private var transitionKey = NamespaceKey.transition.rawValue
     
@@ -97,6 +113,9 @@ struct MainEntrypoint: Scene {
 }
 
 extension EnvironmentValues {
+    /// Identifies whether the current device is an iPad.
     @Entry var itsAnIPadDevice = false
+    
+    /// Identifies whether the current device is a Mac.
     @Entry var isMacOS = false
 }
