@@ -13,6 +13,10 @@ final class CupcakeRepository: ObservableObject {
     @Published var cupcakes = [UUID: Cupcake]()
     @Published var selectedCupcake: Cupcake?
     
+    var cupcakeList: [Cupcake] {
+        cupcakes.valuesArray.sorted(by: { $0.createAt > $1.createAt })
+    }
+    
     #if CLIENT
     var newestCupcake: Cupcake?
     #endif
@@ -38,6 +42,9 @@ final class CupcakeRepository: ObservableObject {
         
         await MainActor.run {
             self.cupcakes = cupcakes
+            #if CLIENT
+            newestCupcake = cupcakes.values.min(by: { $0.createAt > $1.createAt })
+            #endif
         }
     }
     
@@ -52,12 +59,11 @@ final class CupcakeRepository: ObservableObject {
             cupcakes.updateValue(cupcake, forKey: cupcake.id)
         }
         
-        #if CLIENT
-        newestCupcake = cupcakes.values.min(by: { $0.createAt > $1.createAt })
-        #endif
-        
         await MainActor.run {
             self.cupcakes = cupcakes
+            #if CLIENT
+            newestCupcake = cupcakes.values.min(by: { $0.createAt > $1.createAt })
+            #endif
         }
     }
     

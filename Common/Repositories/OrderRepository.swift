@@ -13,6 +13,7 @@ import SwiftUI
 final class OrderRepository: ObservableObject {
     @Published var orders = [UUID: Order]()
     @Published var filteredOrderStatus: Status = .ordered
+    @Published var newOrdersCount = 0
     
     var filteredOrder: [Order] {
         switch filteredOrderStatus {
@@ -30,18 +31,18 @@ final class OrderRepository: ObservableObject {
     private var orderedOrder: [Order] {
         let orders = self.orders.values.filter({$0.status == .ordered})
         
-        return orders.sorted(by: { $0.orderTime > $1.orderTime})
+        return orders.sorted(by: { $0.orderTime < $1.orderTime})
     }
     private var readyForDeliveryOrder: [Order] {
         let orders = self.orders.values.filter({$0.status == .readyForDelivery})
         
-        return orders.sorted(by: { ($0.readyForDeliveryTime ?? .now) > ($1.readyForDeliveryTime ?? .now) })
+        return orders.sorted(by: { ($0.readyForDeliveryTime ?? .now) < ($1.readyForDeliveryTime ?? .now) })
     }
     
     private var deliveredOrders: [Order] {
         let orders = self.orders.values.filter({$0.status == .delivered})
         
-        return orders.sorted(by: { ($0.deliveredTime ?? .now) > ($1.deliveredTime ?? .now) })
+        return orders.sorted(by: { ($0.deliveredTime ?? .now) < ($1.deliveredTime ?? .now) })
     }
     
     #if CLIENT
@@ -112,6 +113,7 @@ final class OrderRepository: ObservableObject {
             
             await MainActor.run {
                 _ = self.orders.updateValue(orderWithCupcake, forKey: order.id)
+                newOrdersCount += 1
             }
         } catch {
             throw RepositoryError.invalidInsertion
