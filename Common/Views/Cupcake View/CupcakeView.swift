@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CupcakeView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    
     @EnvironmentObject private var userRepo: UserRepository
     @EnvironmentObject private var cupcakeRepo: CupcakeRepository
     
@@ -64,10 +66,12 @@ struct CupcakeView: View {
             }
             .onAppear {
                 viewDisplayedCount += 1
-                
+                print(viewDisplayedCount)
                 if viewDisplayedCount == 1 && cupcakeRepo.cupcakes.isEmpty {
                     viewModel.fetchCupcakes(with: cupcakeRepo.cupcakes.isEmpty) { cupcakesResult in
                         try await cupcakeRepo.load(with: cupcakesResult)
+                    } failureComletation: {
+                        try await cupcakeRepo.load()
                     }
                 }
             }
@@ -93,6 +97,8 @@ struct CupcakeView: View {
             .refreshable {
                 viewModel.fetchCupcakes(with: cupcakeRepo.cupcakes.isEmpty) { cupcakesResult in
                     try await cupcakeRepo.load(with: cupcakesResult)
+                } failureComletation: {
+                    try await cupcakeRepo.load()
                 }
             }
             #if ADMIN
@@ -351,9 +357,7 @@ extension CupcakeView {
     private var cupcakeScrollList: some View {
         LazyVGrid(columns: colums) {
             ForEach(
-                cupcakeRepo.cupcakes.valuesArray.sorted(
-                    by: { $0.createAt > $1.createAt }
-                ),
+                cupcakeRepo.cupcakeList,
                 id: \.id
             ) { cupcake in
                 NavigationLink(value: cupcake) {
@@ -381,6 +385,7 @@ extension CupcakeView {
     }
 }
 
+#if DEBUG
 #Preview {
     let managerPreview = StorageManager.preview()
     
@@ -388,3 +393,4 @@ extension CupcakeView {
         .environmentObject(CupcakeRepository(storageManager: managerPreview))
         .environmentObject(UserRepository(storageManager: managerPreview))
 }
+#endif
