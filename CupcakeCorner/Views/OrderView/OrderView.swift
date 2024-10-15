@@ -167,9 +167,9 @@ extension OrderView {
     @ViewBuilder
     private var orderTotalLabel: some View {
         LabeledContent {
-            Text(viewModel.orderRequest.finalPrice.currency)
-                .animation(.default, value: viewModel.orderRequest.finalPrice)
-                .contentTransition(.numericText(value: Double(viewModel.orderRequest.finalPrice)))
+            Text(viewModel.finalPrice.currency)
+                .animation(.default, value: viewModel.finalPrice)
+                .contentTransition(.numericText(value: Double(viewModel.finalPrice)))
         } label: {
             Text("Total:")
                 .bold()
@@ -190,12 +190,12 @@ extension OrderView {
             HStack {
                 
                 Stepper(
-                    "Number of Cakes: \(viewModel.orderRequest.quantity)",
-                    value: $viewModel.orderRequest.quantity,
+                    "Number of Cakes: \(viewModel.quantity)",
+                    value: $viewModel.quantity,
                     in: 1...20
                 )
-                .animation(.default, value: viewModel.orderRequest.quantity)
-                .contentTransition(.numericText(value: Double(viewModel.orderRequest.quantity)))
+                .animation(.default, value: viewModel.quantity)
+                .contentTransition(.numericText(value: Double(viewModel.quantity)))
                 .font(itsAnIPadDevice ? .title2 : .headline)
             }
         }
@@ -213,20 +213,20 @@ extension OrderView {
             
             VStack {
                 SpecialRequest(
-                    isActive: $viewModel.orderRequest.extraFrosting,
-                    price: viewModel.orderRequest.extraFrostingPrice,
+                    isActive: $viewModel.extraFrosting,
+                    price: viewModel.extraFrostingPrice,
                     requestName: "Extra Frosting:"
                 )
-                .animation(.default, value: viewModel.orderRequest.extraFrostingPrice)
-                .contentTransition(.numericText(value: Double(viewModel.orderRequest.extraFrostingPrice)))
+                .animation(.default, value: viewModel.extraFrostingPrice)
+                .contentTransition(.numericText(value: Double(viewModel.extraFrostingPrice)))
                 
                 SpecialRequest(
-                    isActive: $viewModel.orderRequest.addSprinkles,
-                    price: viewModel.orderRequest.addSprinklesPrice,
+                    isActive: $viewModel.addSprinkles,
+                    price: viewModel.addSprinklesPrice,
                     requestName: "Extra Sprinkles:"
                 )
-                .animation(.default, value: viewModel.orderRequest.addSprinklesPrice)
-                .contentTransition(.numericText(value: Double(viewModel.orderRequest.addSprinklesPrice)))
+                .animation(.default, value: viewModel.addSprinklesPrice)
+                .contentTransition(.numericText(value: Double(viewModel.addSprinklesPrice)))
             }
             .font(itsAnIPadDevice ? .title2 : .headline)
         }
@@ -353,6 +353,7 @@ extension OrderView {
     }
 }
 
+#if DEBUG
 #Preview {
     @Previewable @Environment(\.verticalSizeClass) var vSizeClass
     
@@ -423,3 +424,4 @@ extension OrderView {
         .environment(\.isMacOS, isMacOS)
     }
 }
+#endif
