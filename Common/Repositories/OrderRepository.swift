@@ -11,14 +11,7 @@ import SwiftUI
 
 @MainActor
 final class OrderRepository: ObservableObject {
-    @Published var orders = [UUID: Order]() {
-        didSet {
-            orderedOrder = orders.valuesArray.sorted(by: { $0.orderTime < $1.orderTime})
-            readyForDeliveryOrder = orders.valuesArray.sorted(by: { ($0.readyForDeliveryTime ?? .now) < ($1.readyForDeliveryTime ?? .now) })
-            deliveredOrders = orders.valuesArray.sorted(by: { ($0.deliveredTime ?? .now) < ($1.deliveredTime ?? .now) })
-        }
-    }
-    
+    @Published var orders = [UUID: Order]()
     @Published var filteredOrderStatus: Status = .ordered
     @Published var newOrdersCount = 0
     
@@ -35,9 +28,22 @@ final class OrderRepository: ObservableObject {
     
     private let storageManager: StorageManager
     
-    private var orderedOrder = [Order]()
-    private var readyForDeliveryOrder = [Order]()
-    private var deliveredOrders = [Order]()
+    private var orderedOrder: [Order] {
+        let orders = self.orders.values.filter({$0.status == .ordered})
+        
+        return orders.sorted(by: { $0.orderTime < $1.orderTime})
+    }
+    private var readyForDeliveryOrder: [Order] {
+        let orders = self.orders.values.filter({$0.status == .readyForDelivery})
+        
+        return orders.sorted(by: { ($0.readyForDeliveryTime ?? .now) < ($1.readyForDeliveryTime ?? .now) })
+    }
+    
+    private var deliveredOrders: [Order] {
+        let orders = self.orders.values.filter({$0.status == .delivered})
+        
+        return orders.sorted(by: { ($0.deliveredTime ?? .now) < ($1.deliveredTime ?? .now) })
+    }
     
     #if CLIENT
     var totalOfBag: Double {

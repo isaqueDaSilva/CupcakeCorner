@@ -10,10 +10,6 @@ import SwiftUI
 
 /// The Main scene of the App.
 struct MainEntrypoint: Scene {
-    /// Set a tracker to monitoring if is the first time that user opens the app.
-    @AppStorage("is_open_for_first_time")
-    private var isFirstOpen: Bool = true
-    
     /// The default model container of the App.
     private let container: ModelContainer
     
@@ -79,11 +75,7 @@ struct MainEntrypoint: Scene {
             .environment(\.isMacOS, isMacOS)
             .task(priority: .high) {
                 do {
-                    try await userRepo.load(isFirstOpen: isFirstOpen)
-                    
-                    if isFirstOpen {
-                        isFirstOpen = false
-                    }
+                    try await userRepo.load()
                 } catch {
                     await MainActor.run {
                         self.showError = true

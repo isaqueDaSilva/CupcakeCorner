@@ -15,7 +15,7 @@ final class CupcakeRepository: ObservableObject {
         didSet {
             cupcakeList = cupcakes.valuesArray.sorted(by: { $0.createAt > $1.createAt })
             totalSales = cupcakes.valuesArray.reduce(0, { $0 + $1.salesQuantity })
-            avarge = totalSales / cupcakes.count
+            avarge = cupcakes.count > 0 ? totalSales / cupcakes.count : 0
         }
     }
     

@@ -24,13 +24,11 @@ final class UserRepository: ObservableObject {
         }
     }
     
-    func load(isFirstOpen: Bool = false) async throws {
+    func load() async throws {
         let users = try await storageManager.find(User.self)
         
-        if !isFirstOpen {
-            guard !users.isEmpty && users.count == 1 else {
-                throw RepositoryError.invalidQuantity
-            }
+        guard users.isEmpty || users.count == 1 else {
+            throw RepositoryError.invalidQuantity
         }
         
         await MainActor.run {
