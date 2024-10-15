@@ -54,7 +54,8 @@ extension BagView {
         func handleWithMessages(
             insert: @escaping (Order.Get) async throws -> Void,
             load: @escaping ([Order.Get]) async throws -> Void,
-            update: @escaping (Order.Get) async throws -> Void
+            update: @escaping (Order.Get) async throws -> Void,
+            failureCompletation: @escaping () async throws -> Void
         ) {
             Task {
                 guard let wsService else {
@@ -86,11 +87,17 @@ extension BagView {
                         }
                     }
                 } catch {
-                    showError(
-                        title: "Failed to receive orders",
-                        description: error.localizedDescription,
-                        isChangingViewState: false /* Is set to false, because when some error occur after than the stream starts, will be only display the alert.*/
-                    )
+                    try? await failureCompletation()
+                    
+                    await MainActor.run {
+                        showError(
+                            title: "Failed to receive orders",
+                            description: error.localizedDescription,
+                            isChangingViewState: false /* Is set to false, because when some error occur after than the stream starts, will be only display the alert.*/
+                        )
+                        
+                        viewState = .faliedToLoad
+                    }
                 }
             }
         }
