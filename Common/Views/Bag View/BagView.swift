@@ -43,9 +43,13 @@ struct BagView: View {
                                 .containerRelativeFrame(.vertical)
                                 .matchedGeometryEffect(id: transitionKey, in: transition)
                         case .faliedToLoad:
-                            OrderEmptyView(with: .error)
-                                .containerRelativeFrame(.vertical)
-                                .matchedGeometryEffect(id: transitionKey, in: transition)
+                            if orderRepo.filteredOrder.isEmpty {
+                                OrderEmptyView(with: .error)
+                                    .containerRelativeFrame(.vertical)
+                                    .matchedGeometryEffect(id: transitionKey, in: transition)
+                            } else {
+                                orderListPopulated
+                            }
                         }
                     }
                 }
@@ -61,6 +65,8 @@ struct BagView: View {
                 if viewModel.wsService == nil && viewDisplayedCount == 1 {
                     startConnection()
                 }
+                
+                orderRepo.newOrdersCount = 0
             }
             .refreshable {
                 restartConnection()
@@ -121,6 +127,8 @@ extension BagView {
             try await orderRepo.load(with: orders)
         } update: { updatedOrder in
             try await orderRepo.update(with: updatedOrder)
+        } failureCompletation: {
+            try await orderRepo.load()
         }
     }
 }
@@ -130,9 +138,7 @@ extension BagView {
     private var orderList: some View {
         Group {
             if !orderRepo.filteredOrder.isEmpty {
-                ForEach(orderRepo.orders.valuesArray.sorted(
-                    by: { $0.orderTime > $1.orderTime }
-                )) { order in
+                ForEach(orderRepo.filteredOrder, id: \.id) { order in
                     ItemCard(
                         name: OrderDescriptionService.displayName(order.userName),
                         description: OrderDescriptionService.displayDescription(
@@ -206,6 +212,7 @@ extension BagView {
     }
 }
 
+#if DEBUG
 #Preview {
     let manager = StorageManager.preview()
     
@@ -214,3 +221,4 @@ extension BagView {
         .environmentObject(OrderRepository(storageManager: manager))
         .environmentObject(UserRepository(storageManager: manager))
 }
+#endif
