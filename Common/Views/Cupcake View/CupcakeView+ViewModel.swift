@@ -18,7 +18,8 @@ extension CupcakeView {
         
         func fetchCupcakes(
             with isCupcakeListEmpty: Bool,
-            _ completation: @escaping @Sendable (([Cupcake.Get]) async throws -> Void)
+            _ completation: @escaping @Sendable (([Cupcake.Get]) async throws -> Void),
+            failureComletation: @escaping @Sendable () async throws -> Void
         ) {
             Task {
                 do {
@@ -37,7 +38,7 @@ extension CupcakeView {
                         viewState = .load
                     }
                 } catch {
-                    try await completation([])
+                    try await failureComletation()
                     
                     await MainActor.run {
                         alert.setAlert(
