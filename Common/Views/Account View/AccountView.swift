@@ -5,7 +5,7 @@
 //  Created by Isaque da Silva on 10/5/24.
 //
 
-
+import Charts
 import SwiftUI
 
 struct AccountView: View {
@@ -14,11 +14,12 @@ struct AccountView: View {
     @EnvironmentObject var cupcakeRepo: CupcakeRepository
     
     @State private var viewDisplayedCount = 0
+    @State private var presentedUsers: [User] = []
     
-    @StateObject var viewModel = ViewModel()
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $presentedUsers) {
             ScrollView {
                 VStack {
                     userInfo
@@ -37,18 +38,22 @@ struct AccountView: View {
                     
                     allOrdersButton
                     
-                    DemonstrativeChart()
+                    demonstrativeChart
                         .padding(.top)
-
+                    
                 }
-                #if os(iOS)
+                    #if os(iOS)
                 .padding(.horizontal)
-                #elseif os(macOS)
+                    #elseif os(macOS)
                 .padding()
-                #endif
+                    #endif
+                .frame(maxHeight: .infinity, alignment: .top)
             }
             .environmentObject(userRepo)
             .environmentObject(orderRepo)
+            .navigationDestination(for: User.self) { user in
+                UpdateAccountView(with: user.name, and: user.paymentMethod)
+            }
             .navigationTitle("Account")
             .onAppear {
                 viewDisplayedCount += 1
@@ -143,14 +148,7 @@ extension AccountView {
 extension AccountView {
     @ViewBuilder
     private var userInfo: some View {
-        NavigationLink {
-            if let user = userRepo.user {
-                UpdateAccountView(
-                    with: user.name,
-                    and: user.paymentMethod
-                )
-            }
-        } label: {
+        NavigationLink(value: userRepo.user) {
             HStack {
                 VStack(alignment: .leading) {
                     Text(userRepo.user?.name ?? "No User Saved")
@@ -253,6 +251,65 @@ extension AccountView {
     }
 }
 
+extension AccountView {
+    private var text: String {
+        #if ADMIN
+        return "Cupcake Sales"
+        #elseif CLIENT
+        return "Total Purchases"
+        #endif
+    }
+    
+    @ViewBuilder
+    private var demonstrativeChart: some View {
+        VStack(alignment: .leading) {
+            Text(text)
+                .bold()
+            
+            Text("Total: \(cupcakeRepo.totalSales)")
+                .headerSessionText(
+                    font: .footnote,
+                    color: .secondary
+                )
+            
+            Chart {
+                RuleMark(y: .value("Average", cupcakeRepo.avarge))
+                    .foregroundStyle(.mint)
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
+                
+                ForEach(cupcakeRepo.cupcakeList, id: \.id) { cupcake in
+                    BarMark(
+                        x: .value(
+                            "Cupcakes",
+                            cupcake.flavor
+                        ),
+                        y: .value(
+                            "Sale numbers",
+                            cupcake.salesQuantity
+                        )
+                    )
+                }
+                .foregroundStyle(Color.pink.gradient)
+                .cornerRadius(5)
+            }
+            .frame(height: 200)
+            
+            HStack {
+                Image(systemName: "line.diagonal")
+                    .rotationEffect(Angle(degrees: 45))
+                    .foregroundColor(.mint)
+                
+                Text("Avarge")
+                    .headerSessionText(
+                        font: .caption2,
+                        color: .secondary
+                    )
+            }
+        }
+    }
+}
+
+#if DEBUG
 #Preview {
     let manager = StorageManager.preview()
     
@@ -261,3 +318,4 @@ extension AccountView {
         .environmentObject(OrderRepository(storageManager: manager))
         .environmentObject(CupcakeRepository(storageManager: manager))
 }
+#endif
