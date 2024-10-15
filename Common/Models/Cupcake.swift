@@ -32,6 +32,10 @@ final class Cupcake {
     
     var image: Image { .init(by: coverImage) }
     
+    var salesQuantity: Int {
+        ordersWrapped.reduce(0, { $0 + $1.quantity })
+    }
+    
     private init(
         id: UUID,
         flavor: String,
