@@ -7,15 +7,23 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 @MainActor
 final class CupcakeRepository: ObservableObject {
-    @Published var cupcakes = [UUID: Cupcake]()
-    @Published var selectedCupcake: Cupcake?
-    
-    var cupcakeList: [Cupcake] {
-        cupcakes.valuesArray.sorted(by: { $0.createAt > $1.createAt })
+    @Published var cupcakes = [UUID: Cupcake]() {
+        didSet {
+            cupcakeList = cupcakes.valuesArray.sorted(by: { $0.createAt > $1.createAt })
+            totalSales = cupcakes.valuesArray.reduce(0, { $0 + $1.salesQuantity })
+            avarge = totalSales / cupcakes.count
+        }
     }
+    
+    @Published var selectedCupcake: Cupcake?
+    @Published var totalSales = 0
+    @Published var avarge = 0
+    
+    var cupcakeList: [Cupcake] = []
     
     #if CLIENT
     var newestCupcake: Cupcake?
@@ -80,6 +88,7 @@ final class CupcakeRepository: ObservableObject {
             cupcakes.removeAll()
         }
     }
+    
     
     #if ADMIN
     func insert(_ cupcake: Cupcake.Get) async throws {
