@@ -11,7 +11,13 @@ import NetworkHandler
 extension OrderView {
     @MainActor
     final class ViewModel: ObservableObject {
-        @Published var orderRequest: Order.Create
+        @Published var quantity = 1
+        @Published var basePrice: Double
+        @Published var extraFrosting = false
+        @Published var addSprinkles = false
+        
+        let cupcakeID: UUID
+        
         @Published var viewState: ViewState = .load
         @Published var alert = AlertHandler()
         @Published var isAlertDisplaying = false
@@ -22,6 +28,33 @@ extension OrderView {
             viewState == .loading
         }
         
+        var extraFrostingPrice: Double {
+            Double(quantity) * 1.5
+        }
+        
+        var addSprinklesPrice: Double {
+            Double(quantity) / 2.0
+        }
+        
+        var finalPrice: Double {
+            var cupcakeCost: Double {
+                basePrice * Double(quantity)
+            }
+            
+            var extraFrostingTax: Double {
+                extraFrosting ? extraFrostingPrice : 0
+            }
+            
+            var addSprinklesTax: Double {
+                addSprinkles ? addSprinklesPrice : 0
+            }
+            
+            let finalPrice = cupcakeCost + extraFrostingTax + addSprinklesTax
+            
+        
+            return finalPrice
+        }
+        
         func makeOrder() {
             Task {
                 await MainActor.run {
@@ -29,9 +62,18 @@ extension OrderView {
                 }
                 
                 do {
-                    guard let orderData = try? JSONEncoder().encode(orderRequest) else {
+                    let newOrder = Order.Create(
+                        cupcakeID: self.cupcakeID,
+                        quantity: self.quantity,
+                        extraFrosting: self.extraFrosting,
+                        addSprinkles: self.addSprinkles,
+                        finalPrice: self.finalPrice
+                    )
+                    
+                    guard let orderData = try? JSONEncoder().encode(newOrder) else {
                         throw NetworkService.APIError.badEncoding
                     }
+                    
                     
                     let authenticationValue = try TokenGetter.getValue()
                     
@@ -79,15 +121,9 @@ extension OrderView {
         }
         
         init(with cupcakeID: UUID, and cupcakePrice: Double) {
-            _orderRequest = .init(
-                wrappedValue: .init(
-                    cupcake: cupcakeID,
-                    quantity: 1,
-                    extraFrosting: false,
-                    addSprinkles: false,
-                    basePrice: cupcakePrice
-                )
-            )
+            _basePrice = .init(initialValue: cupcakePrice)
+            
+            self.cupcakeID = cupcakeID
         }
     }
 }
