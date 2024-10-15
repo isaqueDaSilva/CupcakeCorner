@@ -23,7 +23,7 @@ struct AllOrdersView: View {
             
             ScrollView {
                 Group {
-                    if !orderRepo.orders.isEmpty {
+                    if !orderRepo.filteredOrder.isEmpty {
                         ForEach(orderRepo.filteredOrder) { order in
                             ItemCard(
                                 name: OrderDescriptionService.displayName(order.userName),
@@ -64,7 +64,9 @@ struct AllOrdersView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     AllOrdersView()
         .environmentObject(OrderRepository(storageManager: .preview()))
 }
+#endif
