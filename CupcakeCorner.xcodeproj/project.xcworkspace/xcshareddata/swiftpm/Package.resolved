@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/isaqueDaSilva/NetworkHandler.git",
       "state" : {
-        "revision" : "3fb3b4f4dff6151849dbbbb6eec1baf0e5974485",
-        "version" : "1.0.9"
+        "revision" : "ecbcdd70cc67f0c63a569d39a608dfbe8a6e305b",
+        "version" : "1.0.11"
       }
     },
     {
