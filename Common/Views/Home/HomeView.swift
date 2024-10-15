@@ -42,36 +42,47 @@ struct HomeView: View {
         .environmentObject(cupcakeRepo)
         .environmentObject(orderRepo)
     }
+    
+    
 }
 
 extension HomeView {
     @ViewBuilder
     private var tabs: some View {
         TabView(selection: $tabSelected) {
+            
             Tab(
                 TabSelection.cupcakes.title,
                 systemImage: TabSelection.cupcakes.iconName,
                 value: .cupcakes
             ) {
-                TabSelection.cupcakes.view()
+                CupcakeView()
             }
             
-            Tab(TabSelection.orders.title, systemImage: TabSelection.orders.iconName, value: .orders) {
-                TabSelection.orders.view()
+            Tab(
+                TabSelection.orders.title,
+                systemImage: TabSelection.orders.iconName,
+                value: .orders
+            ) {
+                BagView()
             }
+            #if os(iOS)
+            .badge(orderRepo.newOrdersCount)
+            #endif
             
             Tab(
                 TabSelection.profile.title,
                 systemImage: TabSelection.profile.iconName,
                 value: .profile
             ) {
-                TabSelection.profile.view()
+                AccountView()
             }
         }
         .tabViewStyle(.sidebarAdaptable)
     }
 }
 
+#if DEBUG
 #Preview {
     let manager = StorageManager.preview()
     
@@ -80,3 +91,4 @@ extension HomeView {
         .environmentObject(OrderRepository(storageManager: manager))
         .environmentObject(CupcakeRepository(storageManager: manager))
 }
+#endif
