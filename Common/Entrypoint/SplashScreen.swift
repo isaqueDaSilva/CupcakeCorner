@@ -10,11 +10,10 @@ import SwiftUI
 struct SplashScreen: View {
     @Binding var isSplashViewShowing: Bool
     
-    @Environment(\.verticalSizeClass) private var vSizeClass
-    @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.itsAnIPadDevice) private var itsAnIPadDevice
     
     private var scaleView: CGFloat {
-        (vSizeClass == .regular && hSizeClass == .regular) ? 2 : 1
+        itsAnIPadDevice ? 1.5 : 1
     }
     
     @State private var timerCount = 3
