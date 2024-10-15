@@ -77,7 +77,7 @@ struct MainEntrypoint: Scene {
             .environmentObject(orderRepo)
             .environment(\.itsAnIPadDevice, itsAnIPadDevice)
             .environment(\.isMacOS, isMacOS)
-            .task {
+            .task(priority: .high) {
                 do {
                     try await userRepo.load(isFirstOpen: isFirstOpen)
                     
