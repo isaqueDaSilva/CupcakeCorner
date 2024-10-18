@@ -14,24 +14,17 @@ struct AccountView: View {
     @EnvironmentObject var cupcakeRepo: CupcakeRepository
     
     @State private var viewDisplayedCount = 0
-    @State private var presentedUsers: [User] = []
     
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
-        NavigationStack(path: $presentedUsers) {
+        NavigationStack {
             ScrollView {
                 VStack {
                     userInfo
                     
                     #if CLIENT
-                    
-                    #if os(iOS)
-                    mainPaymentDescription_iOS
-                    #elseif os(macOS)
-                    mainPaymentDescription_macOS
-                    #endif
-                    
+                    mainPaymentDescription
                     #elseif ADMIN
                     createAccountButton
                     #endif
@@ -42,17 +35,15 @@ struct AccountView: View {
                         .padding(.top)
                     
                 }
-                    #if os(iOS)
                 .padding(.horizontal)
-                    #elseif os(macOS)
-                .padding()
-                    #endif
                 .frame(maxHeight: .infinity, alignment: .top)
             }
             .environmentObject(userRepo)
             .environmentObject(orderRepo)
-            .navigationDestination(for: User.self) { user in
-                UpdateAccountView(with: user.name, and: user.paymentMethod)
+            .navigationDestination(for: User?.self) { user in
+                if let user {
+                    UpdateAccountView(with: user.name, and: user.paymentMethod)
+                }
             }
             .navigationTitle("Account")
             .onAppear {
@@ -148,7 +139,12 @@ extension AccountView {
 extension AccountView {
     @ViewBuilder
     private var userInfo: some View {
-        NavigationLink(value: userRepo.user) {
+        NavigationLink {
+            UpdateAccountView(
+                with: userRepo.user?.name ?? "No User Saved",
+                and: userRepo.user?.paymentMethod ?? .cash
+            )
+        } label: {
             HStack {
                 VStack(alignment: .leading) {
                     Text(userRepo.user?.name ?? "No User Saved")
@@ -174,10 +170,9 @@ extension AccountView {
 }
 
 #if CLIENT
-#if os(iOS)
 extension AccountView {
     @ViewBuilder
-    private var mainPaymentDescription_iOS: some View {
+    private var mainPaymentDescription: some View {
         LabeledContent("Main Payment:") {
             Text(
                 userRepo.user?.paymentMethod.displayedName ?? "No User Saved"
@@ -187,28 +182,6 @@ extension AccountView {
         .softBackground()
     }
 }
-#endif
-
-#if os(macOS)
-extension AccountView {
-    @ViewBuilder
-    private var mainPaymentDescription_macOS: some View {
-        HStack {
-            HStack {
-                Text("Main Payment")
-                
-                Text(
-                    userRepo.user?.paymentMethod.displayedName ?? "No User Saved"
-                )
-                .multilineTextAlignment(.trailing)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .softBackground()
-        }
-    }
-}
-#endif
 #endif
 
 #if ADMIN

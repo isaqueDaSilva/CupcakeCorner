@@ -129,7 +129,6 @@ extension EditCupcake {
 extension EditCupcake {
     @ViewBuilder
     private var insertFlavorField: some View {
-        #if canImport(UIKit)
         TextFieldFocused(
             focusedField: $focusedField,
             focusedFieldValue: .flavorName,
@@ -139,23 +138,12 @@ extension EditCupcake {
             ),
             inputAutocapitalization: .sentences
         )
-        #elseif canImport(AppKit)
-        TextFieldFocused(
-            focusedField: $focusedField,
-            focusedFieldValue: .flavorName,
-            fieldType: .textField(
-                "Insert flavor name here...",
-                $flavorName
-            )
-        )
-        #endif
     }
 }
 
 extension EditCupcake {
     @ViewBuilder
     private var priceField: some View {
-        #if canImport(UIKit)
         TextFieldFocused(
             focusedField: $focusedField,
             focusedFieldValue: .price,
@@ -175,25 +163,6 @@ extension EditCupcake {
             keyboardType: .decimalPad,
             inputAutocapitalization: .sentences
         )
-        #elseif canImport(AppKit)
-        TextFieldFocused(
-            focusedField: $focusedField,
-            focusedFieldValue: .price,
-            fieldType: .textField(
-                "Insert the price here...",
-                Binding(get: {
-                    price.currency
-                }, set: { newValue in
-                    var newPrice = newValue
-                    let range = String.Index(
-                        utf16Offset: 2,
-                        in: newPrice)
-                    newPrice.removeSubrange(..<range)
-                    price = (newPrice as NSString).doubleValue
-                })
-            )
-        )
-        #endif
     }
 }
 
@@ -208,7 +177,6 @@ extension EditCupcake {
     
     @ViewBuilder
     private var ingredientsField: some View {
-#if canImport(UIKit)
         TextFieldFocused(
             focusedField: $focusedField,
             focusedFieldValue: .ingredients,
@@ -218,16 +186,6 @@ extension EditCupcake {
             ),
             inputAutocapitalization: .sentences
         )
-        #elseif canImport(AppKit)
-        TextFieldFocused(
-            focusedField: $focusedField,
-            focusedFieldValue: .ingredients,
-            fieldType: .textField(
-                "Insert a new Ingredient here...",
-                $ingredientName
-            )
-        )
-        #endif
     }
 }
 

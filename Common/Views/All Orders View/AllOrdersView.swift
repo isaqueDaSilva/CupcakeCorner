@@ -17,9 +17,6 @@ struct AllOrdersView: View {
                 filerList: Status.allStatusCase
             )
             .labelsHidden()
-            #if os(macOS)
-            .padding(.top, 5)
-            #endif
             
             ScrollView {
                 Group {
@@ -58,9 +55,6 @@ struct AllOrdersView: View {
         .onDisappear {
             orderRepo.filteredOrderStatus = .ordered
         }
-        #if os(macOS)
-        .padding(.bottom)
-        #endif
     }
 }
 

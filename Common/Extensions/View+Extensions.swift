@@ -53,21 +53,8 @@ extension View {
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 10)
-                    #if canImport(UIKit)
                     .foregroundStyle(Color(.systemGray5))
-                    #elseif canImport(AppKit)
-                    .foregroundStyle(Color(nsColor: .systemGray.withAlphaComponent(0.25)))
-                    #endif
             }
     }
 }
 
-#if canImport(AppKit)
-extension View {
-    func macOSPadding() -> some View {
-        self
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal)
-    }
-}
-#endif

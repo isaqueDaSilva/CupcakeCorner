@@ -13,7 +13,7 @@ struct SplashScreen: View {
     @Environment(\.itsAnIPadDevice) private var itsAnIPadDevice
     
     private var scaleView: CGFloat {
-        itsAnIPadDevice ? 1.5 : 1
+        itsAnIPadDevice ? 1.7 : 1
     }
     
     @State private var timerCount = 3
@@ -46,9 +46,7 @@ struct SplashScreen: View {
             .frame(maxHeight: .infinity, alignment: .center)
             
         }
-        #if !os(macOS)
         .scaleEffect(scaleView)
-        #endif
         .opacity(viewOpacity)
         .onReceive(timer) { newTime in
             if isSplashViewShowing {
@@ -65,7 +63,7 @@ struct SplashScreen: View {
                     withAnimation(.easeInOut) {
                         scale = .init(width: 50, height: 50)
                         viewOpacity = 0
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        MainActor.assumeIsolated {
                             isSplashViewShowing = false
                         }
                     }

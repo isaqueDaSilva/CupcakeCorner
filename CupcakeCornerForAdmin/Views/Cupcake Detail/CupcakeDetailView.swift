@@ -61,9 +61,10 @@ struct CupcakeDetailView: View {
             .padding()
         }
         .navigationTitle("Details")
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .onDisappear {
+            cupcakeRepo.set(nil)
+        }
         .toolbar {
             Button(role: .destructive) {
                 viewModel.showingConfirmation()
@@ -127,24 +128,9 @@ extension CupcakeDetailView {
         with title: String,
         and description: String
     ) -> some View {
-        #if os(iOS)
         LabeledContent("\(title)", value: description)
             .font(itsAnIpadDevice ? .headline : nil)
             .softBackground()
-        #elseif os(macOS)
-        HStack {
-            Text("\(title):")
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text(description)
-                .font(itsAnIpadDevice ? .title3 : nil)
-                .fontWeight(.medium)
-                .foregroundStyle(.gray)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .softBackground()
-        #endif
     }
 }
 
@@ -156,11 +142,7 @@ extension CupcakeDetailView {
     let manager = StorageManager.preview()
     
     var itsAnIPadDevice: Bool {
-        #if os(iOS)
         vSizeClass == .regular && hSizeClass == .regular
-        #elseif os(macOS)
-        false
-        #endif
     }
     
     NavigationStack {

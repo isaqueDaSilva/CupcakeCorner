@@ -31,7 +31,6 @@ struct EditAccount: View {
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            #if os(iOS)
             TextFieldFocused(
                 focusedField: $focusedField,
                 focusedFieldValue: .name,
@@ -41,19 +40,8 @@ struct EditAccount: View {
                 ),
                 inputAutocapitalization: .sentences
             )
-            #elseif os(macOS)
-            TextFieldFocused(
-                focusedField: $focusedField,
-                focusedFieldValue: .name,
-                fieldType: .textField(
-                    "Insert your name here...",
-                    $name
-                )
-            )
-            #endif
             
             if !isDisabled {
-                #if os(iOS)
                 TextFieldFocused(
                     focusedField: $focusedField,
                     focusedFieldValue: .email,
@@ -84,37 +72,6 @@ struct EditAccount: View {
                     ),
                     isAutocorrectionDisabled: true
                 )
-                #elseif os(macOS)
-                TextFieldFocused(
-                    focusedField: $focusedField,
-                    focusedFieldValue: .email,
-                    fieldType: .textField(
-                        "Insert your email here...",
-                        $email
-                    ),
-                    isAutocorrectionDisabled: true
-                )
-                
-                TextFieldFocused(
-                    focusedField: $focusedField,
-                    focusedFieldValue: .password,
-                    fieldType: .secureField(
-                        "Creates a password here...",
-                        $password
-                    ),
-                    isAutocorrectionDisabled: true
-                )
-                
-                TextFieldFocused(
-                    focusedField: $focusedField,
-                    focusedFieldValue: .confirmPassword,
-                    fieldType: .secureField(
-                        "Confirm your password here...",
-                        $confirmPassword
-                    ),
-                    isAutocorrectionDisabled: true
-                )
-                #endif
             }
             
             #if CLIENT
@@ -157,9 +114,6 @@ struct EditAccount: View {
             }
         }
         .padding(.horizontal)
-        #if os(macOS)
-        .padding(.top, 5)
-        #endif
     }
     
     init(

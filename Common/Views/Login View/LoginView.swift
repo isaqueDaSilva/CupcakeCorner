@@ -25,11 +25,7 @@ struct LoginView: View {
                     .frame(width: 200, height: 200)
                     #endif
                 
-                #if os(iOS)
-                fields_iOS
-                #elseif os(macOS)
-                fields_macOS
-                #endif
+                fields
                 
                 ActionButton(
                     viewState: $viewModel.viewState,
@@ -46,16 +42,11 @@ struct LoginView: View {
             }
             .padding()
             .navigationTitle("Login")
-            #if CLIENT && os(iOS)
+            #if CLIENT
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     createAccountButton
                 }
-            }
-            #elseif CLIENT && os(macOS)
-            .safeAreaInset(edge: .bottom) {
-                createAccountButton
-                    .padding(.bottom)
             }
             #endif
             .alert(
@@ -68,10 +59,9 @@ struct LoginView: View {
     }
 }
 
-#if os(iOS)
 extension LoginView {
     @ViewBuilder
-    private var fields_iOS: some View {
+    private var fields: some View {
         VStack {
             TextFieldFocused(
                 focusedField: $focusedField,
@@ -96,37 +86,8 @@ extension LoginView {
         }
     }
 }
-#endif
 
-#if os(macOS)
-extension LoginView {
-    @ViewBuilder
-    private var fields_macOS: some View {
-        VStack {
-            TextFieldFocused(
-                focusedField: $focusedField,
-                focusedFieldValue: .email,
-                fieldType: .textField(
-                    "Insert your email here...",
-                    $viewModel.loginCredentials.email
-                ),
-                isAutocorrectionDisabled: true
-            )
-            
-            TextFieldFocused(
-                focusedField: $focusedField,
-                focusedFieldValue: .password,
-                fieldType: .secureField(
-                    "Insert your password here...",
-                    $viewModel.loginCredentials.password
-                ),
-                isAutocorrectionDisabled: true
-            )
-        }
-    }
-}
-#endif
-
+#if CLIENT
 extension LoginView {
     @ViewBuilder
     private var createAccountButton: some View {
@@ -145,6 +106,7 @@ extension LoginView {
         }
     }
 }
+#endif
 
 extension LoginView {
     enum FocusedField: Hashable {

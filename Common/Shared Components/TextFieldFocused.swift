@@ -13,15 +13,12 @@ struct TextFieldFocused<FocusedFieldValue: Hashable>: View {
     
     let focusedFieldValue: FocusedFieldValue
     let field: FieldType
-    #if canImport(UIKit)
     let keyboardType: UIKeyboardType
     let inputAutocapitalization: TextInputAutocapitalization
-    #endif
     let isAutocorrectionDisabled: Bool
     
     var body: some View {
         field.makeField()
-            #if canImport(UIKit)
             .padding(10)
             .background {
                 RoundedRectangle(cornerRadius: 10)
@@ -29,15 +26,10 @@ struct TextFieldFocused<FocusedFieldValue: Hashable>: View {
             }
             .keyboardType(keyboardType)
             .textInputAutocapitalization(inputAutocapitalization)
-            #endif
             .autocorrectionDisabled(isAutocorrectionDisabled)
             .focused($focusedField, equals: focusedFieldValue)
-            #if os(macOS)
-            .clipShape(RoundedRectangle(cornerRadius: 7))
-            #endif
     }
     
-    #if os(iOS)
     init(
         focusedField: FocusState<FocusedFieldValue?>.Binding,
         focusedFieldValue: FocusedFieldValue,
@@ -53,19 +45,6 @@ struct TextFieldFocused<FocusedFieldValue: Hashable>: View {
         self.inputAutocapitalization = inputAutocapitalization
         self.isAutocorrectionDisabled = isAutocorrectionDisabled
     }
-    #elseif os(macOS)
-    init(
-        focusedField: FocusState<FocusedFieldValue?>.Binding,
-        focusedFieldValue: FocusedFieldValue,
-        fieldType: FieldType,
-        isAutocorrectionDisabled: Bool = false
-    ) {
-        _focusedField = focusedField
-        self.field = fieldType
-        self.focusedFieldValue = focusedFieldValue
-        self.isAutocorrectionDisabled = isAutocorrectionDisabled
-    }
-    #endif
 }
 
 extension TextFieldFocused {
@@ -86,7 +65,6 @@ extension TextFieldFocused {
 }
 
 
-#if canImport(UIKit)
 #Preview {
     @FocusState var focus: Bool?
     
@@ -103,19 +81,4 @@ extension TextFieldFocused {
     )
     .padding()
 }
-#elseif canImport(AppKit)
-#Preview {
-    @FocusState var focus: Bool?
-    
-    TextFieldFocused(
-        focusedField: $focus,
-        focusedFieldValue: false,
-        fieldType: .textField(
-            "Hello World",
-            .constant("Hello!")
-        ),
-        isAutocorrectionDisabled: true
-    )
-    .padding()
-}
-#endif
+

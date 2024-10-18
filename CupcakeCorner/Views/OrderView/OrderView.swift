@@ -14,7 +14,6 @@ struct OrderView: View {
     @StateObject private var viewModel: ViewModel
     
     @Environment(\.itsAnIPadDevice) private var itsAnIPadDevice
-    @Environment(\.isMacOS) private var isMacOS
     
     @State private var isShowingAboutCupcake = false
     
@@ -22,7 +21,6 @@ struct OrderView: View {
     
     var body: some View {
         Group {
-            #if os(iOS)
             ScrollView {
                 VStack {
                     cupcakeHighlight
@@ -32,19 +30,6 @@ struct OrderView: View {
                 }
             }
             .padding(.horizontal)
-            #elseif os(macOS)
-            HStack(alignment: .top) {
-                cupcakeHighlight
-                
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        containerView
-                    }
-                }
-            }
-            .padding(.horizontal)
-            .padding([.bottom, .top])
-            #endif
         }
         .sheet(
             isPresented: $isShowingAboutCupcake
@@ -101,7 +86,6 @@ extension OrderView {
                 viewState: $viewModel.viewState,
                 label: "Make Order",
                 width: .infinity,
-                height: isMacOS ? 44 : nil,
                 isDisabled: viewModel.isDisable
             ) {
                 viewModel.makeOrder()
@@ -114,7 +98,7 @@ extension OrderView {
 extension OrderView {
     @ViewBuilder
     private var cupcakeHighlight: some View {
-        VStack(alignment: isMacOS ? .leading : .center) {
+        VStack {
             if isCupcakeNew {
                 Text("New")
                     .font(itsAnIPadDevice ? .title3 : .callout)
@@ -136,9 +120,6 @@ extension OrderView {
                         .font(itsAnIPadDevice ? .title3 : nil)
                         .foregroundStyle(.blue)
                 }
-                #if os(macOS)
-                .buttonStyle(.plain)
-                #endif
             }
             
             (cupcakeRepo.selectedCupcake?.image ?? Icon.questionmarkDiamond.systemImage)
@@ -146,20 +127,8 @@ extension OrderView {
                 .scaledToFill()
                 .frame(maxWidth: 150, maxHeight: 150)
                 .padding()
-                #if os(macOS)
-                .frame(maxWidth: .infinity)
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(Color(nsColor: .gray))
-                }
-                .padding(.trailing, 25)
-                #endif
         }
-        #if os(iOS)
         .frame(maxWidth: .infinity)
-        #elseif os(macOS)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        #endif
     }
 }
 
@@ -256,11 +225,7 @@ extension OrderView {
             .background() {
                 RoundedRectangle(cornerRadius: 10.0)
                     .stroke(lineWidth: 2.0)
-                    #if canImport(AppKit)
-                    .fill(isActive.wrappedValue ? .blue : Color(.systemGray))
-                    #elseif canImport(UIKit)
                     .fill(isActive.wrappedValue ? .blue : Color(uiColor: .systemGray3))
-                    #endif
             }
         }
         .buttonStyle(.plain)
@@ -338,10 +303,8 @@ extension OrderView {
                 }
                 .padding()
             }
-            #if os(iOS)
             .navigationTitle(cupcakeRepo.selectedCupcake?.flavor ?? "Unknown Flavor")
             .navigationBarTitleDisplayMode(.inline)
-            #endif
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     ActionButton(viewState: .constant(.load), label: "OK") {
@@ -360,19 +323,7 @@ extension OrderView {
     @Previewable @Environment(\.horizontalSizeClass) var hSizeClass
     
     var itsAnIPadDevice: Bool {
-        #if os(iOS)
         vSizeClass == .regular && hSizeClass == .regular
-        #elseif os(macOS)
-        false
-        #endif
-    }
-    
-    var isMacOS: Bool {
-        #if os(iOS)
-        false
-        #elseif os(macOS)
-        true
-        #endif
     }
     
     let managerPreview = StorageManager.preview()
@@ -385,7 +336,6 @@ extension OrderView {
         .environmentObject(UserRepository(storageManager: managerPreview))
         .environmentObject(CupcakeRepository(storageManager: managerPreview))
         .environment(\.itsAnIPadDevice, itsAnIPadDevice)
-        .environment(\.isMacOS, isMacOS)
     }
 }
 
@@ -395,19 +345,7 @@ extension OrderView {
     @Previewable @Environment(\.horizontalSizeClass) var hSizeClass
     
     var itsAnIPadDevice: Bool {
-        #if os(iOS)
         vSizeClass == .regular && hSizeClass == .regular
-        #elseif os(macOS)
-        false
-        #endif
-    }
-    
-    var isMacOS: Bool {
-        #if os(iOS)
-        false
-        #elseif os(macOS)
-        true
-        #endif
     }
     
     let managerPreview = StorageManager.preview()
@@ -421,7 +359,6 @@ extension OrderView {
         .environmentObject(UserRepository(storageManager: managerPreview))
         .environmentObject(CupcakeRepository(storageManager: managerPreview))
         .environment(\.itsAnIPadDevice, itsAnIPadDevice)
-        .environment(\.isMacOS, isMacOS)
     }
 }
 #endif

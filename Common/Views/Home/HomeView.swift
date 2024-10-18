@@ -26,16 +26,7 @@ struct HomeView: View {
             case .none:
                 LoginView()
                     .matchedGeometryEffect(id: transitionKey, in: transition)
-                    .transition(
-                        AnyTransition.asymmetric(
-                            insertion: .move(
-                                edge: .leading
-                            ),
-                            removal: .move(
-                                edge: .trailing
-                            )
-                        ).animation(.spring())
-                    )
+                    .transition(.scale)
             }
         }
         .environmentObject(userRepo)

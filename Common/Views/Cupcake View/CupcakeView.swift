@@ -9,12 +9,12 @@ import SwiftUI
 
 struct CupcakeView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.itsAnIPadDevice) private var itsAnIPadDevice
     
     @EnvironmentObject private var userRepo: UserRepository
     @EnvironmentObject private var cupcakeRepo: CupcakeRepository
     
     @State private var viewDisplayedCount: Int = 0
-    @State private var presentedCupcakes: [Cupcake] = []
     
     #if ADMIN
     @State private var showCreateNewCupcake = false
@@ -28,7 +28,7 @@ struct CupcakeView: View {
     private let colums: [GridItem] = [.init(.adaptive(minimum: 150))]
     
     var body: some View {
-        NavigationStack(path: $presentedCupcakes) {
+        NavigationStack {
             ScrollView {
                 Group {
                     switch viewModel.viewState {
@@ -173,20 +173,12 @@ extension CupcakeView {
             #endif
             NavigationLink(value: cupcake) {
                 Text("Buy")
-                    #if canImport(AppKit)
-                    .foregroundStyle(Color(nsColor: .blue))
-                    #elseif canImport(UIKit)
                     .foregroundStyle(.blue)
-                    #endif
                     .padding([.top, .bottom], 2)
                     .padding(.horizontal, 10)
                     .background(
                         Capsule()
-                        #if canImport(AppKit)
-                            .fill(.gray)
-                        #elseif canImport(UIKit)
                             .fill(.gray.opacity(0.25))
-                        #endif
                     )
             }
             .buttonStyle(.plain)
@@ -220,24 +212,14 @@ extension CupcakeView {
     private var newestCupcakeHighlights: some View {
         VStack {
             if let newstCupcake = cupcakeRepo.newestCupcake {
-                Group {
-                    #if os(iOS)
-                    cupcakeHighlight_iOS(newstCupcake)
-                    #elseif os(macOS)
-                    cupcakeHighlight_macOS(newstCupcake)
-                    #endif
-                }
-                .overlay {
-                    buyButton(newstCupcake)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .frame(maxHeight: .infinity, alignment: .bottom)
-                        .padding(.horizontal, 10)
-                        #if os(macOS)
-                        .padding(.bottom)
-                        #elseif os(iOS)
-                        .padding(.bottom, 22.5)
-                        #endif
-                }
+                cupcakeHighlight(newstCupcake)
+                    .overlay {
+                        buyButton(newstCupcake)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .frame(maxHeight: .infinity, alignment: .bottom)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom, 22.5)
+                    }
             }
         }
         .padding(.bottom)
@@ -245,10 +227,10 @@ extension CupcakeView {
 }
 #endif
 
-#if os(iOS) && CLIENT
+#if CLIENT
 extension CupcakeView {
     @ViewBuilder
-    private func cupcakeHighlight_iOS(_ newestCupcake: Cupcake) -> some View {
+    private func cupcakeHighlight(_ newestCupcake: Cupcake) -> some View {
         VStack {
             Text("New")
                 .headerSessionText()
@@ -273,82 +255,20 @@ extension CupcakeView {
 }
 #endif
 
-#if os(macOS) && CLIENT
-extension CupcakeView {
-    @ViewBuilder
-    private func cupcakeHighlight_macOS(_ newestCupcake: Cupcake) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("New")
-                            .headerSessionText()
-                        
-                        Text(newestCupcake.flavor)
-                        
-                    }
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    
-                    newestCupcake.image
-                        .resizable()
-                        .scaledToFit()
-                        .padding(.bottom)
-                        .frame(maxWidth: 150)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                }
-                Text("Made with \(newestCupcake.ingredients.joined(separator: ", "))")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .padding(.trailing, 50)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-        }
-        .frame(maxWidth: .infinity)
-        .padding(10)
-        .background {
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(Color(nsColor: .systemGray))
-                .opacity(0.5)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-#endif
-
 extension CupcakeView {
     @ViewBuilder
     private func CupcakeCard(
         with flavor: String,
         and cover: Image
     ) -> some View {
-        #if os(iOS)
-        GroupBox(flavor) {
+        GroupBox {
             cover
                 .resizable()
                 .scaledToFit()
+        } label: {
+            Text(flavor)
+                .lineLimit(1)
         }
-        #elseif os(macOS)
-        HStack {
-            VStack {
-                Text(flavor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                cover
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 150)
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(10)
-        .background {
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(Color(nsColor: .systemGray))
-                .opacity(0.5)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        #endif
     }
 }
 
@@ -367,9 +287,6 @@ extension CupcakeView {
                     )
                 }
                 .buttonStyle(.plain)
-                #if os(iOS)
-                .buttonStyle(.plain)
-                #endif
             }
         }
     }

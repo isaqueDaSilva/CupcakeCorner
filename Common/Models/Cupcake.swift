@@ -95,13 +95,8 @@ extension Cupcake {
 // MARK: - Sample -
 extension Cupcake {
     static func makeSampleCupcakes(in context: ModelContext) throws {
-        #if canImport(UIKit)
         let image = UIImage(systemName: Icon.shippingBox.rawValue)
         let imageData = image?.pngData()
-        #elseif canImport(AppKit)
-        let image = NSImage(systemSymbolName: Icon.shippingBox.rawValue, accessibilityDescription: nil)
-        let imageData = image?.tiffRepresentation
-        #endif
         
         for index in 0..<10 {
             guard let imageData else { break }

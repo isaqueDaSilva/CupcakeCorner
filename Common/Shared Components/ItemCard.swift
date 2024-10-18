@@ -39,9 +39,6 @@ struct ItemCard: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
             }
-            #if os(macOS)
-            .padding(5)
-            #endif
         }
     }
     

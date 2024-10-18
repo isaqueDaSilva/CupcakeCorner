@@ -21,20 +21,7 @@ struct MainEntrypoint: Scene {
     
     /// Sets if the current device used is an iPad base on vertical and horizontal size class.
     private var itsAnIPadDevice: Bool {
-        #if os(iOS)
         vSizeClass == .regular && hSizeClass == .regular
-        #elseif os(macOS)
-        false
-        #endif
-    }
-    
-    /// Set if the current device used is a Mac base on the OS target identifier.
-    private var isMacOS: Bool {
-        #if os(macOS)
-        true
-        #else
-        false
-        #endif
     }
     
     /// Set if the current screen that has been displeyed is the Splash Screen.
@@ -72,7 +59,6 @@ struct MainEntrypoint: Scene {
             .environmentObject(cupcakeRepo)
             .environmentObject(orderRepo)
             .environment(\.itsAnIPadDevice, itsAnIPadDevice)
-            .environment(\.isMacOS, isMacOS)
             .task(priority: .high) {
                 do {
                     try await userRepo.load()
@@ -107,7 +93,4 @@ struct MainEntrypoint: Scene {
 extension EnvironmentValues {
     /// Identifies whether the current device is an iPad.
     @Entry var itsAnIPadDevice = false
-    
-    /// Identifies whether the current device is a Mac.
-    @Entry var isMacOS = false
 }

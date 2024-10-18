@@ -28,9 +28,6 @@ struct BagView: View {
                     filerList: Status.allCases
                 )
                 .labelsHidden()
-                #if os(macOS)
-                .padding(.top, 5)
-                #endif
                 
                 ScrollView {
                     Group {
@@ -83,7 +80,7 @@ struct BagView: View {
                     viewModel.disconnect()
                 }
             }
-            #if os(iOS) && CLIENT
+            #if CLIENT
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     InformationLabel(
