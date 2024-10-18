@@ -49,7 +49,6 @@ Even there, to access all functionality of the app, is required an user account.
 - Xcode 16+
 - iOS 18+
 - iPadOS 18+
-- macOS Sequoia 15+ *(In development)*
 
 # Workflow
 * Reporting bugs:<br> 
@@ -75,4 +74,5 @@ If you have any feedback or suggestions for the Cupcake Corner project, please l
 
 
 # Demonstration
-[Click here](https://youtu.be/JXeca_3qchQ) to go to my YouTube channel, and see a a brief demonstration of how the project is working.
+[Click here](https://youtu.be/q0Q198W7aDU) to go to my YouTube channel, and see a brief demonstration of how the updated project is working
+[Click here](https://youtu.be/JXeca_3qchQ) to go to my YouTube channel, and see a a brief demonstration of how the original project is working.
