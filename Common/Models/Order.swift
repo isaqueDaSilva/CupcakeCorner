@@ -119,7 +119,7 @@ extension Order {
         }
         
         if result.deliveredTime != deliveredTime {
-            deliveredTime = deliveredTime
+            deliveredTime = result.deliveredTime
         }
         
         return self
