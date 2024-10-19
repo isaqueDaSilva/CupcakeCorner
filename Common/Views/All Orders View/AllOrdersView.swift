@@ -23,18 +23,8 @@ struct AllOrdersView: View {
                     if !orderRepo.filteredOrder.isEmpty {
                         ForEach(orderRepo.filteredOrder) { order in
                             ItemCard(
-                                name: OrderDescriptionService.displayName(order.userName),
-                                description: OrderDescriptionService.displayDescription(
-                                    with: order.quantity,
-                                    order.cupcake?.flavor,
-                                    order.addSprinkles,
-                                    order.extraFrosting,
-                                    order.status,
-                                    order.orderTime,
-                                    order.readyForDeliveryTime,
-                                    order.deliveredTime,
-                                    and: order.paymentMethod
-                                ),
+                                name: order.title,
+                                description: order.description,
                                 image: order.cupcake?.image,
                                 price: order.finalPrice
                             )

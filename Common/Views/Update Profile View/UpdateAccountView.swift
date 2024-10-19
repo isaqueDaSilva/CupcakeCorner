@@ -29,9 +29,7 @@ struct UpdateAccountView: View {
                 }
             }
             .navigationTitle("Update Account")
-            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
-            #endif
             .alert(
                 viewModel.alert.title,
                 isPresented: $viewModel.showingAlert

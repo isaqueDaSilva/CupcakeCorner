@@ -56,8 +56,10 @@ struct OrderView: View {
     init(
         isCupcakeNew: Bool = false,
         _ cupcakeID: UUID,
-        and price: Double
+        and price: Double,
+        action: @escaping () -> Void
     ) {
+        action()
         _viewModel = .init(
             wrappedValue: .init(
                 with: cupcakeID,
@@ -332,7 +334,7 @@ extension OrderView {
         OrderView(
             .init(),
             and: .random(in: 1...100)
-        )
+        ) { }
         .environmentObject(UserRepository(storageManager: managerPreview))
         .environmentObject(CupcakeRepository(storageManager: managerPreview))
         .environment(\.itsAnIPadDevice, itsAnIPadDevice)
@@ -355,7 +357,7 @@ extension OrderView {
             isCupcakeNew: true,
             .init(),
             and: .random(in: 1...100)
-        )
+        ) {}
         .environmentObject(UserRepository(storageManager: managerPreview))
         .environmentObject(CupcakeRepository(storageManager: managerPreview))
         .environment(\.itsAnIPadDevice, itsAnIPadDevice)

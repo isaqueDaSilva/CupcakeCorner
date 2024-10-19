@@ -28,9 +28,7 @@ struct ActionButton: View {
                 case .load, .faliedToLoad:
                     VStack {
                         Text(label)
-                            #if os(iOS)
                             .bold()
-                            #endif
                     }
                 case .loading:
                     VStack {

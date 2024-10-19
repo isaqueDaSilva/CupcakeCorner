@@ -11,12 +11,7 @@ import SwiftUI
 
 @MainActor
 final class CupcakeRepository: ObservableObject {
-    @Published var cupcakes = [UUID: Cupcake]() {
-        didSet {
-            cupcakeList = cupcakes.valuesArray.sorted(by: { $0.createAt > $1.createAt })
-            avarge = cupcakes.count > 0 ? totalSales / cupcakes.count : 0
-        }
-    }
+    @Published var cupcakes = [UUID: Cupcake]()
     
     @Published var selectedCupcake: Cupcake?
     
@@ -24,9 +19,13 @@ final class CupcakeRepository: ObservableObject {
         cupcakeList.reduce(0, { $0 + $1.salesQuantity })
     }
     
-    @Published var avarge = 0
+    var avarge: Int {
+        cupcakes.count > 0 ? totalSales / cupcakes.count : 0
+    }
     
-    var cupcakeList: [Cupcake] = []
+    var cupcakeList: [Cupcake] {
+        cupcakes.valuesArray.sorted(by: { $0.createAt > $1.createAt })
+    }
     
     #if CLIENT
     var newestCupcake: Cupcake?

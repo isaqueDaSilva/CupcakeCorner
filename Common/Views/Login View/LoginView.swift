@@ -21,9 +21,7 @@ struct LoginView: View {
                 Image(.cupcakeLogo)
                     .resizable()
                     .scaledToFit()
-                    #if os(iOS)
                     .frame(width: 200, height: 200)
-                    #endif
                 
                 fields
                 

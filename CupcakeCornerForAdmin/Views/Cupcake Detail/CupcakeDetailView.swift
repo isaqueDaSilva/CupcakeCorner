@@ -120,6 +120,10 @@ struct CupcakeDetailView: View {
             .environmentObject(cupcakeRepo)
         }
     }
+    
+    init(action: @escaping () -> Void) {
+        action()
+    }
 }
 
 extension CupcakeDetailView {
@@ -146,7 +150,7 @@ extension CupcakeDetailView {
     }
     
     NavigationStack {
-        CupcakeDetailView()
+        CupcakeDetailView() { }
             .environmentObject(CupcakeRepository(storageManager: manager))
             .environment(\.itsAnIPadDevice, itsAnIPadDevice)
     }

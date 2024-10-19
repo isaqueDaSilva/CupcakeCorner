@@ -9,7 +9,6 @@
 import Foundation
 import KeychainService
 import NetworkHandler
-import SwiftData
 
 extension AccountView {
     @MainActor

@@ -57,6 +57,7 @@ struct BagView: View {
             .navigationTitle("Client Orders")
             #endif
             .onAppear {
+                orderRepo.changeIsBagViewShowState(by: true)
                 viewDisplayedCount += 1
                 
                 if viewModel.wsService == nil && viewDisplayedCount == 1 {
@@ -64,6 +65,9 @@ struct BagView: View {
                 }
                 
                 orderRepo.newOrdersCount = 0
+            }
+            .onDisappear {
+                orderRepo.changeIsBagViewShowState(by: false)
             }
             .refreshable {
                 restartConnection()
@@ -137,18 +141,8 @@ extension BagView {
             if !orderRepo.filteredOrder.isEmpty {
                 ForEach(orderRepo.filteredOrder, id: \.id) { order in
                     ItemCard(
-                        name: OrderDescriptionService.displayName(order.userName),
-                        description: OrderDescriptionService.displayDescription(
-                            with: order.quantity,
-                            order.cupcake?.flavor,
-                            order.addSprinkles,
-                            order.extraFrosting,
-                            order.status,
-                            order.orderTime,
-                            order.readyForDeliveryTime,
-                            order.deliveredTime,
-                            and: order.paymentMethod
-                        ),
+                        name: order.title,
+                        description: order.description,
                         image: order.cupcake?.image,
                         price: order.finalPrice
                     )

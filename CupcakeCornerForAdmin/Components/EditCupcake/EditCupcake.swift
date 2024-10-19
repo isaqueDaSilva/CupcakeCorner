@@ -79,9 +79,7 @@ struct EditCupcake: View {
                 .padding()
             }
             .navigationTitle(navigationTitle)
-            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
-            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {

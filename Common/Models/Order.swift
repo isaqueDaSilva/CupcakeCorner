@@ -160,3 +160,44 @@ extension Order {
     }
 }
 #endif
+
+extension Order: CustomStringConvertible {
+    var title: String {
+        #if CLIENT
+        cupcake?.flavor ?? "No Flavor Saved"
+        #elseif ADMIN
+        userName
+        #endif
+    }
+    
+    var description: String {
+        #if CLIENT
+        let text = """
+        Quantity: \(quantity)
+        Add Sprinkles: \(addSprinkles ? "Yes" : "No")
+        Extra Frosting: \(extraFrosting ? "Yes" : "No")
+        Status: \(status.displayedName)
+        Order Time: \(orderTime.dateString())
+        Out For Delivery: \(readyForDeliveryTime?.dateString() ?? "N/A"),
+        Delivered: \(deliveredTime?.dateString() ?? "N/A")
+        Payment Method: \(paymentMethod?.displayedName ?? "No Payment Method Avaiable.")
+        """
+        return text
+
+        #elseif ADMIN
+        let text = """
+        Payment Method: \(paymentMethod?.displayedName ?? "No Payment Method Avaiable.")
+        \(cupcake?.flavor ?? "No Flavor Saved")
+        Quantity: \(quantity)
+        Add Sprinkles: \(addSprinkles ? "Yes" : "No")
+        Extra Frosting: \(extraFrosting ? "Yes" : "No")
+        Status: \(status.displayedName)
+        Order Time: \(orderTime.dateString())
+        Out For Delivery: \(readyForDeliveryTime?.dateString() ?? "N/A")
+        Delivered: \(deliveredTime?.dateString() ?? "N/A")
+        """
+
+        return text
+        #endif
+    }
+}

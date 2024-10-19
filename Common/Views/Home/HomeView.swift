@@ -57,9 +57,7 @@ extension HomeView {
             ) {
                 BagView()
             }
-            #if os(iOS)
             .badge(orderRepo.newOrdersCount)
-            #endif
             
             Tab(
                 TabSelection.profile.title,

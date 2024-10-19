@@ -76,15 +76,18 @@ struct CupcakeView: View {
                 }
             }
             .navigationDestination(for: Cupcake.self) { cupcake in
-                cupcakeRepo.set(cupcake)
                 
                 #if CLIENT
-                return OrderView(
+                OrderView(
                     cupcake.id,
                     and: cupcake.price
-                )
+                ) {
+                    cupcakeRepo.set(cupcake)
+                }
                 #elseif ADMIN
-                return CupcakeDetailView()
+                CupcakeDetailView {
+                    cupcakeRepo.set(cupcake)
+                }
                 #endif
             }
             .alert(
@@ -165,12 +168,10 @@ extension CupcakeView {
     @ViewBuilder
     private func buyButton(_ cupcake: Cupcake) -> some View {
         HStack {
-            #if os(iOS)
             Text("From \(cupcake.price.currency)")
                 .font(.subheadline)
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
-            #endif
             NavigationLink(value: cupcake) {
                 Text("Buy")
                     .foregroundStyle(.blue)
