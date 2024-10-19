@@ -115,7 +115,6 @@ final actor StorageManager: ModelActor {
     ) throws(StorageManagerError) -> [T] {
         if savedModels.isEmpty {
             let models = try find(T.self, with: predicate, and: sortedBy)
-            print(models.count)
             if models.isEmpty {
                 var models = [T]()
                 

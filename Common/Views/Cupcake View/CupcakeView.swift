@@ -66,7 +66,6 @@ struct CupcakeView: View {
             }
             .onAppear {
                 viewDisplayedCount += 1
-                print(viewDisplayedCount)
                 if viewDisplayedCount == 1 && cupcakeRepo.cupcakes.isEmpty {
                     viewModel.fetchCupcakes(with: cupcakeRepo.cupcakes.isEmpty) { cupcakesResult in
                         try await cupcakeRepo.load(with: cupcakesResult)
